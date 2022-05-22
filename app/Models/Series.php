@@ -20,7 +20,7 @@ class Series extends Model
             ->saveSlugsTo('slug');
     }
 
-    public function comments(){
+    public function messages(){
         return $this->hasMany(Message::class);
     }
 }

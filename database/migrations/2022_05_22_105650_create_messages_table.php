@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('slug', 255);
             $table->foreignIdFor(Series::class, 'series_id');
             $table->text('description');
-            $table->string('preacher', 1000);
+            $table->foreignIdFor(Minister::class, 'minister_id');
             $table->date('date_preached');
             $table->string('image_path', 1000);
             $table->string('audio_path', 1000);

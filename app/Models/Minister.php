@@ -7,24 +7,24 @@ use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Message extends Model
+class Minister extends Model
 {
     use HasFactory, HasSlug;
 
-    protected $fillable = ['title', 'slug', 'description', 'series_id', 'minister_id', 'date_preached', 'image_path', 'audio_path'];
+    protected $fillable = ['name', 'slug', 'about', 'position', 'phone', 'email'];
 
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom('title')
+            ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
     }
 
-    public function series(){
-        return $this->belongsTo(Series::class);
+    public function messages(){
+        return $this->hasMany(Message::class);
     }
 
-    public function minister(){
-        return $this->belongsTo(Minister::class);
+    public function books(){
+        return $this->hasMany(Book::class);
     }
 }
