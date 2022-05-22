@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Series;
+use Illuminate\Http\UploadedFile;
+use App\Http\Resources\SeriesResource;
 use App\Http\Requests\StoreSeriesRequest;
 use App\Http\Requests\UpdateSeriesRequest;
 
@@ -36,7 +38,16 @@ class SeriesController extends Controller
      */
     public function store(StoreSeriesRequest $request)
     {
-        //
+        $all = $request->all();
+        $image = $all['filepath'];
+        unset($all['filepath']);
+        if($image instanceof UploadedFile){
+            $filename = Str::random()."_".$image->getClientOriginalName();
+            $image->move(public_path('img'), $filename);
+            $all['filepath'] = ('img/'.$filename);
+        }
+        $series = Series::create($all);
+        return new SeriesResource($series);
     }
 
     /**

@@ -25,7 +25,8 @@ class StoreSeriesRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:500',
-            'description' => 'string'
+            'description' => 'string',
+            'filepath' => 'mimes:jpg,jpeg,png'
         ];
     }
 }
