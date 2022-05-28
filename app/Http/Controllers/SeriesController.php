@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Series;
+use Illuminate\Support\Str;
 use Illuminate\Http\UploadedFile;
 use App\Http\Resources\SeriesResource;
 use App\Http\Requests\StoreSeriesRequest;
