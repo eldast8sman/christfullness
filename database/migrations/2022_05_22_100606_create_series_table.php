@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('slug', 255);
             $table->text('description')->nullable();
             $table->string('filepath', 255);
+            $table->string('compressed')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->timestamps();

@@ -11,7 +11,7 @@ class Series extends Model
 {
     use HasFactory, HasSlug;
 
-    protected $fillable = ['title', 'slug', 'description', 'filepath', 'start_date', 'end_date'];
+    protected $fillable = ['title', 'slug', 'description', 'filepath', 'compressed', 'start_date', 'end_date'];
 
     public function getSlugOptions(): SlugOptions
     {

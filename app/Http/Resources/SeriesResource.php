@@ -23,7 +23,7 @@ class SeriesResource extends JsonResource
             'end_date' => $this->end_date,
             'created_at' => $this->created,
             'updated_at' => $this->updated,
-            'messages' => MessageResorce::collection($this->messages)
+            'messages' => ""//MessageResource::collection($this->messages)
         ];
     }
 }
