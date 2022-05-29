@@ -25,7 +25,7 @@ class SeriesController extends Controller
             return response([
                 'status' => 'success',
                 'message' => 'Series found successfully',
-                'data' => $series
+                'data' => $series->get()
             ], 200);
         } else {
             return response([
@@ -58,19 +58,23 @@ class SeriesController extends Controller
         $image = $all['filepath'];
         unset($all['filepath']);
         if($image instanceof UploadedFile){
-            $filename = Str::random()."_".$image->getClientOriginalName();
+            $filename = Str::random()."_".Str::slug($image->getClientOriginalName());
             $image->move(public_path('img'), $filename);
             $all['filepath'] = ('img/'.$filename);
             $Image = Image::make($all['filepath']);
             $Image->resize(50, null, function($constraint){
-                $constraint->aspectRation();
+                $constraint->aspectRatio();
                 $constraint->upsize();
             })->save(public_path('compressed_img/'.$filename));
-            $all['compressed'] = public_path('compressed_img/'.$filename);
+            $all['compressed'] = 'compressed_img/'.$filename;
         }
         $series = Series::create($all);
         if($series){
-
+            return response([
+                'status' => 'success',
+                'message' => 'Series created successfully',
+                'data' => $series
+            ]);
         } else {
             return response([
                 'status' => 'failed',
@@ -88,19 +92,19 @@ class SeriesController extends Controller
     public function show(Series $series, $slug)
     {
         $series = Series::where('slug', $slug)->first();
-        if($series){
-            $series->messages = $this->messages;
-            return response()->json([
+        if(!empty($series)){
+            $series->messages = $series->messages();
+            return response([
                 'status' => 'success',
                 'message' => 'Series found successfully',
                 'data' => $series
-            ])->status(200);
+            ], 200);
         } else {
-            return response()->json([
+            return response([
                 'status' => 'failed',
                 'message' => 'Series not found',
                 'data' => []
-            ])->status(404);
+            ], 404);
         }
     }
 
@@ -122,9 +126,9 @@ class SeriesController extends Controller
      * @param  \App\Models\Series  $series
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSeriesRequest $request, Series $series)
+    public function update(UpdateSeriesRequest $request, $id)
     {
-        $series = Series::find($series);
+        $series = Series::find($id);
         if($series){
             $all = $request->all();
             if(!empty($all['filepath'])){
@@ -139,11 +143,13 @@ class SeriesController extends Controller
                     $all['filepath'] = $filename;
                     $Image = Image::make($all['filepath']);
                     $Image->resize(50, null, function($constraint){
-                        $constraint->aspectRation();
+                        $constraint->aspectRatio();
                         $constraint->upsize();
                     })->save(public_path('compressed_img/'.$filename));
-                    $all['compressed'] = public_path('compressed_img/'.$filename);
+                    $all['compressed'] = 'compressed_img/'.$filename;
                 }
+            } else {
+                unset($all['filepath']);
             }
             if($series->update($all)) {
                 $series->filepath = url($series->filepath);
