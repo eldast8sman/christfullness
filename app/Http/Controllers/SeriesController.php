@@ -21,20 +21,18 @@ class SeriesController extends Controller
     public function index()
     {
         $series = Series::orderBy('created_at', 'DESC');
-        if($series){
-            $series->filepath = url($series->filepath);
-            $series->compressed = url($series->compressed);
-            return response()->json([
+        if($series->count() > 0){
+            return response([
                 'status' => 'success',
                 'message' => 'Series found successfully',
-                'data' => $series->toArray(),
-            ])->status(200);
+                'data' => $series
+            ], 200);
         } else {
-            return response()->json([
+            return response([
                 'status' => 'failed',
                 'message' => 'No Series found',
                 'data' => []
-            ])->status(404);
+            ], 404);
         }
     }
 
@@ -71,7 +69,14 @@ class SeriesController extends Controller
             $all['compressed'] = public_path('compressed_img/'.$filename);
         }
         $series = Series::create($all);
-        return new SeriesResource($series);
+        if($series){
+
+        } else {
+            return response([
+                'status' => 'failed',
+                'message' => 'Series not created'
+            ], 500);
+        }
     }
 
     /**
@@ -88,7 +93,7 @@ class SeriesController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Series found successfully',
-                'data' => $series->toArray()
+                'data' => $series
             ])->status(200);
         } else {
             return response()->json([
@@ -143,23 +148,23 @@ class SeriesController extends Controller
             if($series->update($all)) {
                 $series->filepath = url($series->filepath);
                 $series->compressed = url($series->compressed);
-                return response()->json([
+                return response([
                     'status' => 'success',
                     'message' => 'Series updated successfully',
-                    'data' => $series->toArray(),
-                ])->status(500);
+                    'data' => $series
+                ], 200);
             } else {
-                return response()->json([
+                return response([
                     'status' => 'failed',
                     'message' => 'An error occurred while updating',
                     'data' => $all
-                ])->status(500);
+                ], 500);
             }
         } else {
-            return response()->json([
+            return response([
                 'status' => 'failed',
                 'message' => 'Series not found'
-            ])->status(404);
+            ], 404);
         }
     }
 
@@ -185,16 +190,16 @@ class SeriesController extends Controller
                 }
             }
             $series->delete();
-            return response()->json([
+            return response([
                 'status' => 'success',
                 'message' => 'Series deleted successfully',
-                'data' => $series->toArray()
-            ])->status(200);
+                'data' => $series
+            ], 200);
         } else {
-            return response()->json([
+            return response([
                 'status' => 'failed',
                 'message' => 'Series failed to delete successfully',
-            ])->status(404);
+            ], 404);
         }
     }
 }
