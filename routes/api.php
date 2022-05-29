@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SeriesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,8 +19,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/series', [Series::class, 'index'])->name('series');
-Route::post('/series', [Series::class, 'store'])->name('createSeries');
-Route::get('/series/{slug}', [Series::class, 'show'])->name('getSeriesBySlug');
-Route::put('/series/{id}', [Series::class, 'update'])->name('updateSeries');
-Route::delete('/series/{id}', [Series::class, 'delete'])->name('deleteSeries');
+Route::get('/series', [SeriesController::class, 'index'])->name('series');
+Route::post('/series', [SeriesController::class, 'store'])->name('createSeries');
+Route::get('/series/{slug}', [SeriesController::class, 'show'])->name('getSeriesBySlug');
+Route::put('/series/{id}', [SeriesController::class, 'update'])->name('updateSeries');
+Route::delete('/series/{id}', [SeriesController::class, 'delete'])->name('deleteSeries');
