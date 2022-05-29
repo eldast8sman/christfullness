@@ -17,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/series', [Series::class, 'index'])->name('series');
+Route::post('/series', [Series::class, 'store'])->name('createSeries');
+Route::get('/series/{slug}', [Series::class, 'show'])->name('getSeriesBySlug');
+Route::put('/series/{id}', [Series::class, 'update'])->name('updateSeries');
+Route::delete('/series/{id}', [Series::class, 'delete'])->name('deleteSeries');
