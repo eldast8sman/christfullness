@@ -169,9 +169,9 @@ class SeriesController extends Controller
      * @param  \App\Models\Series  $series
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Series $series)
+    public function destroy(Series $series, $id)
     {
-        $series = Series::find($series);
+        $series = Series::find($id);
         if($series){
             if(!empty($series->messages)){
                 foreach($series->messages as $message){
