@@ -1,7 +1,8 @@
 /node_modules
 /public/hot
 /public/storage
-/public/img/*
+/public/img/series/*.jpg
+/public/img/series/compressed/*.jpg
 /public/audio/*
 /storage/*.key
 /vendor

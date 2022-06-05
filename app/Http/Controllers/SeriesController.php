@@ -61,10 +61,10 @@ class SeriesController extends Controller
         $all = $request->all();
         $image = $all['filepath'];
         unset($all['filepath']);
-        $upload = FileController::uploadfile($image);
+        $upload = FileController::uploadfile($image, 'series');
         if($upload){
-            $all['filepath'] = public_path('img/'.$upload);
-            $all['compressed'] = public_path('img/compressed/'.$upload);
+            $all['filepath'] = 'img/series'.$upload;
+            $all['compressed'] = 'img/series/compressed/'.$upload;
         }
         $series = Series::create($all);
         if($series){
@@ -143,10 +143,10 @@ class SeriesController extends Controller
                     if(FileController::check_file($series->compressed)){
                         FileController::delete_file($series->compressed);
                     }
-                    $upload = FileController::uploadfile($image);
+                    $upload = FileController::uploadfile($image, 'series');
                     if($upload){
-                        $all['filepath'] = public_path('img/'.$upload);
-                        $all['compressed'] = public_path('img/compressed/'.$upload);
+                        $all['filepath'] = public_path('img/series/'.$upload);
+                        $all['compressed'] = public_path('img/series/compressed/'.$upload);
                     }
                 }
             } else {

@@ -10,19 +10,19 @@ use Intervention\Image\Facades\Image;
 
 class FileController extends Controller
 {
-    public static function uploadfile($filepath){
+    public static function uploadfile($filepath, $destination){
         if($filepath instanceof UploadedFile){
             $time = time();
             $filename = Str::random().$time;
             $extension = $filepath->getClientOriginalExtension();
             $name = $filename.'.'.$extension;
             if(($extension == 'jpg') || ($extension == 'jpeg') || ($extension == 'gif') || ($extension == 'png')){
-                $filepath->move(public_path('img'), $name);
+                $filepath->move(public_path('img/'.$destination.'/'), $name);
                 $Image = Image::make('img/'.$name);
                 $Image->resize(50, null, function($constraint){
                     $constraint->aspectRatio();
                     $constraint->upsize();
-                })->save(public_path('img/compressed'.$name));
+                })->save(public_path('img/'.$destination.'/compressed/'.$name));
                 return $name;
             } elseif(($extension == 'mp3') || ($extension == 'mpeg3')){
                 $filepath->move(public_path('audio'), $name);
