@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('position', 255);
             $table->string('phone', 255)->nullable();
             $table->string('email', 255)->nullable();
+            $table->string('filepath', 255);
+            $table->string('compressed', 255);
             $table->timestamps();
         });
     }

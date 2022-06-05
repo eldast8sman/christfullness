@@ -146,8 +146,8 @@ class SeriesController extends Controller
                     }
                     $upload = FileController::uploadfile($image, 'series');
                     if($upload){
-                        $all['filepath'] = public_path('img/series/'.$upload);
-                        $all['compressed'] = public_path('img/series/compressed/'.$upload);
+                        $all['filepath'] = 'img/series/'.$upload;
+                        $all['compressed'] = 'img/series/compressed/'.$upload;
                     }
                 }
             } else {

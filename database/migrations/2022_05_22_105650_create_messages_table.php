@@ -24,6 +24,7 @@ return new class extends Migration
             $table->foreignIdFor(Minister::class, 'minister_id');
             $table->date('date_preached');
             $table->string('image_path', 1000);
+            $table->string('compressed_image', 1000);
             $table->string('audio_path', 1000);
             $table->timestamps();
         });
