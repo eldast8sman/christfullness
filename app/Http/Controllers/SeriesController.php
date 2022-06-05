@@ -20,12 +20,16 @@ class SeriesController extends Controller
      */
     public function index()
     {
-        $series = Series::orderBy('created_at', 'DESC');
-        if($series->count() > 0){
+        $series = Series::orderBy('created_at', 'DESC')->get();
+        if(!empty($series)){
+            foreach($series as $ser){
+                $ser->filepath = url($ser->filepath);
+                $ser->compressed = url($ser->compressed);
+            }
             return response([
                 'status' => 'success',
                 'message' => 'Series found successfully',
-                'data' => $series->get()
+                'data' => $series
             ], 200);
         } else {
             return response([
@@ -57,19 +61,15 @@ class SeriesController extends Controller
         $all = $request->all();
         $image = $all['filepath'];
         unset($all['filepath']);
-        if($image instanceof UploadedFile){
-            $filename = Str::random()."_".Str::slug($image->getClientOriginalName());
-            $image->move(public_path('img'), $filename);
-            $all['filepath'] = ('img/'.$filename);
-            $Image = Image::make($all['filepath']);
-            $Image->resize(50, null, function($constraint){
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            })->save(public_path('compressed_img/'.$filename));
-            $all['compressed'] = 'compressed_img/'.$filename;
+        $upload = FileController::uploadfile($image);
+        if($upload){
+            $all['filepath'] = public_path('img/'.$upload);
+            $all['compressed'] = public_path('img/compressed/'.$upload);
         }
         $series = Series::create($all);
         if($series){
+            $series->filepath = url($series->filepath);
+            $series->compressed = url($series->compressed);
             return response([
                 'status' => 'success',
                 'message' => 'Series created successfully',
@@ -94,6 +94,8 @@ class SeriesController extends Controller
         $series = Series::where('slug', $slug)->first();
         if(!empty($series)){
             $series->messages = $series->messages();
+            $series->filepath = url($series->filepath);
+            $series->compressed = url($series->compressed);
             return response([
                 'status' => 'success',
                 'message' => 'Series found successfully',
@@ -135,18 +137,17 @@ class SeriesController extends Controller
                 $image = $all['filepath'];
                 unset($all['filepath']);
                 if($image instanceof UploadedFile){
-                    if(File::exists($series->filepath)){
-                        File::delete($series->filepath);
+                    if(FileController::check_file($series->filepath)){
+                        FileController::delete_file($series->filepath);
                     }
-                    $filename = Str::random()."_".$image->getClientOriginalName();
-                    $image->move(public_path('img'), $filename);
-                    $all['filepath'] = $filename;
-                    $Image = Image::make($all['filepath']);
-                    $Image->resize(50, null, function($constraint){
-                        $constraint->aspectRatio();
-                        $constraint->upsize();
-                    })->save(public_path('compressed_img/'.$filename));
-                    $all['compressed'] = 'compressed_img/'.$filename;
+                    if(FileController::check_file($series->compressed)){
+                        FileController::delete_file($series->compressed);
+                    }
+                    $upload = FileController::uploadfile($image);
+                    if($upload){
+                        $all['filepath'] = public_path('img/'.$upload);
+                        $all['compressed'] = public_path('img/compressed/'.$upload);
+                    }
                 }
             } else {
                 unset($all['filepath']);
@@ -188,11 +189,11 @@ class SeriesController extends Controller
                 foreach($series->messages as $message){
                     $message->delete();
                 }
-                if(File::exists($series->filepath)){
-                    File::delete($series->filepath);
+                if(FileController::check_file($series->filepath)){
+                    FileController::delete_file($series->filepath);
                 }
-                if(File::exists($series->compressed)){
-                    File::delete($series->compressed);
+                if(FileController::check_file($series->compressed)){
+                    FileController::delete_file($series->compressed);
                 }
             }
             $series->delete();
