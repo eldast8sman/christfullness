@@ -2,7 +2,11 @@
 /public/hot
 /public/storage
 /public/img/series/*.jpg
+/public/img/series/*.png
+/public/img/series/*.jpeg
 /public/img/series/compressed/*.jpg
+/public/img/series/compressed/*.png
+/public/img/series/compressed/*.jpeg
 /public/audio/*
 /storage/*.key
 /vendor

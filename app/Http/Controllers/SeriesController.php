@@ -20,8 +20,9 @@ class SeriesController extends Controller
      */
     public function index()
     {
-        $series = Series::orderBy('created_at', 'DESC')->get();
-        if(!empty($series)){
+        $series_data = Series::orderBy('created_at', 'DESC');
+        if($series_data->count() > 0){
+            $series = $series_data->get();
             foreach($series as $ser){
                 $ser->filepath = url($ser->filepath);
                 $ser->compressed = url($ser->compressed);
@@ -63,7 +64,7 @@ class SeriesController extends Controller
         unset($all['filepath']);
         $upload = FileController::uploadfile($image, 'series');
         if($upload){
-            $all['filepath'] = 'img/series'.$upload;
+            $all['filepath'] = 'img/series/'.$upload;
             $all['compressed'] = 'img/series/compressed/'.$upload;
         }
         $series = Series::create($all);

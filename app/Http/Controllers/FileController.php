@@ -18,7 +18,7 @@ class FileController extends Controller
             $name = $filename.'.'.$extension;
             if(($extension == 'jpg') || ($extension == 'jpeg') || ($extension == 'gif') || ($extension == 'png')){
                 $filepath->move(public_path('img/'.$destination.'/'), $name);
-                $Image = Image::make('img/'.$name);
+                $Image = Image::make('img/'.$destination.'/'.$name);
                 $Image->resize(50, null, function($constraint){
                     $constraint->aspectRatio();
                     $constraint->upsize();
