@@ -15,12 +15,13 @@ return new class extends Migration
     {
         Schema::create('ministers', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('slug');
+            $table->string('name', 500);
+            $table->string('slug', 600);
             $table->text('about');
             $table->string('position', 255);
             $table->string('phone', 255)->nullable();
             $table->string('email', 255)->nullable();
+            $table->boolean('status');
             $table->string('filepath', 255);
             $table->string('compressed', 255);
             $table->timestamps();

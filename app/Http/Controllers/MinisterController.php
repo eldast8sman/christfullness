@@ -36,6 +36,28 @@ class MinisterController extends Controller
         }
     }
 
+    public function internalMinisters(){
+        $ministers = Minister::where('status', true)->orderBy('name', 'asc');
+        if($ministers->count() > 0){
+            $all_mins = $ministers->get();
+            foreach($all_mins as $minister){
+                $minister->filepath = url($minister->filepath);
+                $minister->compressed = url($minister->compressed);
+            }
+            return response([
+                'status' => 'success',
+                'message' => 'Ministers fetched successfully',
+                'data' => $all_mins
+            ], 200);
+        } else {
+            return response([
+                'status' => 'failed',
+                'message' => 'No Message was found',
+                'data' => []
+            ], 404);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *

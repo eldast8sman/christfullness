@@ -26,6 +26,7 @@ Route::get('/series/{slug}', [SeriesController::class, 'show'])->name('getSeries
 Route::post('/series/{id}', [SeriesController::class, 'update'])->name('updateSeries');
 Route::delete('/series/{id}', [SeriesController::class, 'delete'])->name('deleteSeries');
 Route::get('/ministers', [MinisterController::class, 'index'])->name('ministers');
+Route::get('/ministers/internal', [MinisterController::class, 'internalMinisters'])->name('internaalMinisters');
 Route::post('/ministers', [MinisterController::class, 'store'])->name('createMinister');
 Route::get('minister/{id}', [MinisterController::class, 'show'])->name('getMinisterById');
 Route::get('minister/by-slug/{slug}', MinisterController::class, 'bySlug')->name('getMinisterBySlug');

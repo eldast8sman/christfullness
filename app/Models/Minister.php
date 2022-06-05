@@ -11,7 +11,7 @@ class Minister extends Model
 {
     use HasFactory, HasSlug;
 
-    protected $fillable = ['name', 'slug', 'about', 'position', 'phone', 'email', 'filepath', 'compressed'];
+    protected $fillable = ['name', 'slug', 'about', 'position', 'phone', 'email', 'status', 'filepath', 'compressed'];
 
     public function getSlugOptions(): SlugOptions
     {
