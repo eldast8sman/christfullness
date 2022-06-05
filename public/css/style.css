@@ -1,6 +1,7 @@
 /********** Template CSS **********/
+
 :root {
-    --primary: #3CB815;
+    --primary: #3f84c0;
     --secondary: #F65005;
     --light: #F7F8FC;
     --dark: #111111;
@@ -31,6 +32,7 @@
 
 
 /*** Spinner ***/
+
 #spinner {
     opacity: 0;
     visibility: hidden;
@@ -46,6 +48,7 @@
 
 
 /*** Button ***/
+
 .btn {
     font-weight: 500;
     transition: .5s;
@@ -85,6 +88,7 @@
 
 
 /*** Navbar ***/
+
 .fixed-top {
     transition: .5s;
 }
@@ -121,7 +125,6 @@
         border-top: 1px solid rgba(0, 0, 0, .07);
         background: #FFFFFF;
     }
-
     .navbar .navbar-nav .nav-link {
         padding: 10px 0;
     }
@@ -137,7 +140,6 @@
         transition: .5s;
         opacity: 0;
     }
-
     .navbar .nav-item:hover .dropdown-menu {
         transform: rotateX(0deg);
         visibility: visible;
@@ -148,6 +150,7 @@
 
 
 /*** Header ***/
+
 .carousel-caption {
     top: 0;
     left: 0;
@@ -179,7 +182,6 @@
         position: relative;
         min-height: 450px;
     }
-    
     #header-carousel .carousel-item img {
         position: absolute;
         width: 100%;
@@ -201,6 +203,7 @@
 
 
 /*** Section Header ***/
+
 .section-header {
     position: relative;
     padding-top: 25px;
@@ -235,8 +238,8 @@
 }
 
 
-
 /*** About ***/
+
 .about-img img {
     position: relative;
     z-index: 2;
@@ -261,6 +264,7 @@
 
 
 /*** Product ***/
+
 .nav-pills .nav-item .btn {
     color: var(--dark);
 }
@@ -288,6 +292,7 @@
 
 
 /*** Testimonial ***/
+
 .testimonial-carousel .owl-item .testimonial-item img {
     width: 60px;
     height: 60px;
@@ -339,6 +344,7 @@
 
 
 /*** Footer ***/
+
 .footer {
     color: #999999;
 }
