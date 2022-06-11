@@ -20,10 +20,16 @@ class Message extends Model
             ->saveSlugsTo('slug');
     }
 
+    /**
+     * Fetches the Series that the Message belongs to
+     */
     public function series(){
         return $this->belongsTo(Series::class);
     }
 
+    /**
+     * Fetches the Minister the Message belongs to
+     */
     public function minister(){
         return $this->belongsTo(Minister::class);
     }

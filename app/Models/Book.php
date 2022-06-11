@@ -11,7 +11,7 @@ class Book extends Model
 {
     use HasFactory, HasSlug;
     
-    protected $fillable = ['title', 'slug', 'summary', 'minister_id', 'book_path', 'image_path'];
+    protected $fillable = ['title', 'slug', 'summary', 'minister_id', 'book_path', 'image_path', 'compressed_image'];
 
     public function getSlugOptions(): SlugOptions
     {
@@ -20,6 +20,9 @@ class Book extends Model
             ->saveSlugsTo('slug');
     }
 
+    /**
+     * Fetches the Author of the Book
+     */
     public function author(){
         return $this->belongsTo(Minister::class);
     }

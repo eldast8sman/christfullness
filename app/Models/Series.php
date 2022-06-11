@@ -20,6 +20,9 @@ class Series extends Model
             ->saveSlugsTo('slug');
     }
 
+    /**
+     * Fetches all the Messages that belong to the Series
+     */
     public function messages(){
         return $this->hasMany(Message::class);
     }

@@ -20,10 +20,16 @@ class Minister extends Model
             ->saveSlugsTo('slug');
     }
 
+    /**
+     * Fetches all the Messages that belongs to the Minister
+     */
     public function messages(){
         return $this->hasMany(Message::class);
     }
 
+    /**
+     * Fetches all the Books that belongs to the Minister
+     */
     public function books(){
         return $this->hasMany(Book::class);
     }

@@ -246,7 +246,7 @@ class MessageController extends Controller
     {
         $message = Message::find($id);
         if($message){
-            FileController::delete_file($message->filepath);
+            FileController::delete_file($message->image_path);
             FileController::delete_file($message->compressed_image);
             FileController::delete_file($message->audio_path);
             $message->delete();

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreignIdFor(Minister::class, 'minister_id');
             $table->string('book_path', 255);
             $table->string('image_path', 255);
+            $table->string('compressed_image', 255);
             $table->timestamps();
         });
     }
