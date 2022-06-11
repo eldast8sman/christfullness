@@ -129,6 +129,8 @@ class MinisterController extends Controller
     public function bySlug(Minister $minister, $slug){
         $minister = Minister::where('slug', $slug)->first();
         if(!empty($minister)){
+            $minister->filepath = url($minister->filepath);
+            $minister->compressed = url($minister->compressed);
             return response([
                 'status' => 'success',
                 'message' => 'Minister Found Successfully',
@@ -170,12 +172,9 @@ class MinisterController extends Controller
                 unset($all['filepath']);
                 $upload = FileController::uploadfile($image, 'ministers');
                 if($upload){
-                    if(FileController::check_file($minister->filepath)){
-                        FileController::delete_file($minister->filepath);
-                    }
-                    if(FileController::check_file($minister->compressed)){
-                        FileController::delete_file($minister->compressed);
-                    }
+                    FileController::delete_file($minister->filepath);
+                    FileController::delete_file($minister->compressed);
+                    
                     $all['filepath'] = 'img/ministers/'.$upload;
                     $all['compressed'] = 'img/ministers/compressed/'.$upload;
                 }
@@ -215,15 +214,18 @@ class MinisterController extends Controller
     {
         $minister = Minister::find($id);
         if($minister){
-            foreach($minister->messages() as $message){
-                $message->delete();
+            if($minister->messages()->count() > 0){
+                foreach($minister->messages() as $message){
+                    FileController::delete_file($message->image_path);
+                    FileController::delete_file($message->compressed_image);
+                    FileController::delete_file($message->audio_path);
+                    $message->delete();
+                }
             }
-            if(FileController::check_file($minister->filepath)){
-                FileController::delete_file($minister->filepath);
-            }
-            if(FileController::check_file($minister->compressed)){
-                FileController::delete_file($minister->compressed);
-            }
+            
+            FileController::delete_file($minister->filepath);
+            FileController::delete_file($minister->compressed);
+            
             $minister->delete();
             return response([
                 'status' => 'success',

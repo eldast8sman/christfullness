@@ -75,7 +75,7 @@ class SeriesController extends Controller
                 'status' => 'success',
                 'message' => 'Series created successfully',
                 'data' => $series
-            ]);
+            ], 200);
         } else {
             return response([
                 'status' => 'failed',
@@ -138,12 +138,9 @@ class SeriesController extends Controller
                 $image = $all['filepath'];
                 unset($all['filepath']);
                 if($image instanceof UploadedFile){
-                    if(FileController::check_file($series->filepath)){
-                        FileController::delete_file($series->filepath);
-                    }
-                    if(FileController::check_file($series->compressed)){
-                        FileController::delete_file($series->compressed);
-                    }
+                    FileController::delete_file($series->filepath);
+                    FileController::delete_file($series->compressed);
+                    
                     $upload = FileController::uploadfile($image, 'series');
                     if($upload){
                         $all['filepath'] = 'img/series/'.$upload;
@@ -186,16 +183,15 @@ class SeriesController extends Controller
     {
         $series = Series::find($id);
         if($series){
-            if(!empty($series->messages)){
-                foreach($series->messages as $message){
+            if($series->messages()->count() > 0){
+                foreach($series->messages() as $message){
+                    FileController::delete_file($message->image_path);
+                    FileController::delete_file($message->compressed_image);
+                    FileController::delete_file($message->audio_path);
                     $message->delete();
                 }
-                if(FileController::check_file($series->filepath)){
-                    FileController::delete_file($series->filepath);
-                }
-                if(FileController::check_file($series->compressed)){
-                    FileController::delete_file($series->compressed);
-                }
+                FileController::delete_file($series->filepath);
+                FileController::delete_file($series->compressed);                
             }
             $series->delete();
             return response([

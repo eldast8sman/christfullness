@@ -25,7 +25,7 @@ class FileController extends Controller
                 })->save(public_path('img/'.$destination.'/compressed/'.$name));
                 return $name;
             } elseif(($extension == 'mp3') || ($extension == 'mpeg3')){
-                $filepath->move(public_path('audio'), $name);
+                $filepath->move(public_path('audio/'.$destination.'/'), $name);
                 return $name;
             } else {
                 return false;
@@ -42,8 +42,12 @@ class FileController extends Controller
     }
 
     public static function delete_file($filepath){
-        if(File::delete($filepath)){
-            return true;
+        if(self::check_file($filepath)){
+            if(File::delete($filepath)){
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
