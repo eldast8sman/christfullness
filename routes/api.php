@@ -52,3 +52,9 @@ Route::get('/videos/{id}', [VideoController::class, 'show'])->name('getVideoById
 Route::get('/videos/by-slug/{slug}', [VideoController::class, 'bySlug'])->name('getVideoBySlug');
 Route::put('/videos/{id}', [VideoController::class, 'update'])->name('updateVideo');
 Route::delete('/videos/{id}', [VideoController::class, 'destroy'])->name('deleteVideo');
+Route::post('/photos', [PhotoController::class, 'store'])->name('createPhoto');
+Route::get('/photos', [PhotoController::class, 'index'])->name('photos');
+Route::get('/photos/{id}', PhotoController::class, 'show')->name('getPhotoById');
+Route::get('/photos/by-slug/{slug}', [PhotoController::class, 'bySlug'])->name('getPhotoBySlug');
+Route::post('/photos/{id}', [PhotoController::class, 'update'])->name('updatePhoto');
+Route::delete('/photos/{id}', [PhotoController::class, 'desroy'])->name('deletePhoto');

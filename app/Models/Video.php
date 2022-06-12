@@ -11,7 +11,7 @@ class Video extends Model
 {
     use HasFactory, HasSlug;
 
-    protected $fillable = ['title', 'slug', 'platform', 'link', 'details'];
+    protected $fillable = ['title', 'slug', 'platform', 'link', 'output_link', 'details'];
 
     public function getSlugOptions(): SlugOptions
     {

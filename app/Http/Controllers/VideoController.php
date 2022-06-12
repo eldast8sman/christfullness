@@ -49,7 +49,9 @@ class VideoController extends Controller
      */
     public function store(StoreVideoRequest $request)
     {
-        $video = Video::create($request->all());
+        $all = $request->all();
+        $all['output_link'] = $this->output_link($all['platform'], $all['link']);
+        $video = Video::create($all);
         if($video){
             return response([
                 'status' => 'success',
@@ -175,5 +177,19 @@ class VideoController extends Controller
                 'data' => [] 
             ], 404);
         }
+    }
+
+    /**
+     * Converts the Video Raw Link to an embed Link
+     */
+    public function output_link($platform, $link){
+        $platform = strtolower($platform);
+        if($platform == "youtube"){
+            $extract = substr($link, 17);
+            $output = "https://youtube.com/embed/".$extract;
+        } else {
+            $output = "";
+        }
+        return $output;
     }
 }

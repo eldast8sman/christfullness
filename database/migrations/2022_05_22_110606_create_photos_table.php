@@ -15,6 +15,11 @@ return new class extends Migration
     {
         Schema::create('photos', function (Blueprint $table) {
             $table->id();
+            $table->string('caption', 255);
+            $table->string('slug', 255);
+            $table->longText('details');
+            $table->string('filepath', 255);
+            $table->string('compressed', 255);
             $table->timestamps();
         });
     }

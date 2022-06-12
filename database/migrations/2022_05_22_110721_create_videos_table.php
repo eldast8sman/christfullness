@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('slug', 500);
             $table->string('platform', 255);
             $table->string('link', 1000);
+            $table->string('output_link', 1000);
             $table->longText('details');
             $table->timestamps();
         });
