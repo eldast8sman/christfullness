@@ -3,9 +3,11 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\SeriesController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\MinisterController;
+use App\Http\Controllers\DevotionalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,7 +56,15 @@ Route::put('/videos/{id}', [VideoController::class, 'update'])->name('updateVide
 Route::delete('/videos/{id}', [VideoController::class, 'destroy'])->name('deleteVideo');
 Route::post('/photos', [PhotoController::class, 'store'])->name('createPhoto');
 Route::get('/photos', [PhotoController::class, 'index'])->name('photos');
-Route::get('/photos/{id}', PhotoController::class, 'show')->name('getPhotoById');
+Route::get('/photos/{id}', [PhotoController::class, 'show'])->name('getPhotoById');
 Route::get('/photos/by-slug/{slug}', [PhotoController::class, 'bySlug'])->name('getPhotoBySlug');
 Route::post('/photos/{id}', [PhotoController::class, 'update'])->name('updatePhoto');
 Route::delete('/photos/{id}', [PhotoController::class, 'desroy'])->name('deletePhoto');
+Route::post('/devotionals', [DevotionalController::class, 'store'])->name('createDevotional');
+Route::get('/devotionals', [DevotionalController::class, 'index'])->name('allDevotionals');
+Route::get('/devotionals/by-date/today', DevotionalController::class, 'todayDevotional')->name('todayDevotional');
+Route::get('/devotionals/by-date/previous', [DevotionalController::class, 'previousDevotionals'])->name('previousDevotionals');
+Route::get('/devotionals/{id}', [DevotionalController::class, 'show'])->name('getDevotionalById');
+Route::get('/devotionals/by-slug/{slug}', [DevotionalController::class, 'bySlug'])->name('getDevotionalBySlug');
+Route::put('/devotionals/{id}', [DevotionalController::class, 'update'])->name('updateDevotional');
+Route::delete('/devotionals/{id}', [DevotionalController::class, 'destroy'])->name('deleteDevotional');
