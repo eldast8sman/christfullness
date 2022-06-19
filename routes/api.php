@@ -62,7 +62,7 @@ Route::post('/photos/{id}', [PhotoController::class, 'update'])->name('updatePho
 Route::delete('/photos/{id}', [PhotoController::class, 'desroy'])->name('deletePhoto');
 Route::post('/devotionals', [DevotionalController::class, 'store'])->name('createDevotional');
 Route::get('/devotionals', [DevotionalController::class, 'index'])->name('allDevotionals');
-Route::get('/devotionals/by-date/today', DevotionalController::class, 'todayDevotional')->name('todayDevotional');
+Route::get('/devotionals/by-date/today', [DevotionalController::class, 'todayDevotional'])->name('todayDevotional');
 Route::get('/devotionals/by-date/previous', [DevotionalController::class, 'previousDevotionals'])->name('previousDevotionals');
 Route::get('/devotionals/{id}', [DevotionalController::class, 'show'])->name('getDevotionalById');
 Route::get('/devotionals/by-slug/{slug}', [DevotionalController::class, 'bySlug'])->name('getDevotionalBySlug');
