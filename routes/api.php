@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\SeriesController;
@@ -20,22 +21,35 @@ use App\Http\Controllers\DevotionalController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::middleware('auth:sanctum')->group(function(){
+    Route::post('/series', [SeriesController::class, 'store'])->name('createSeries');
+
+    Route::post('/series/{id}', [SeriesController::class, 'update'])->name('updateSeries');
+    Route::delete('/series/{id}', [SeriesController::class, 'delete'])->name('deleteSeries');
+
+    Route::get('/ministers', [MinisterController::class, 'index'])->name('ministers');
+    Route::post('/ministers', [MinisterController::class, 'store'])->name('createMinister');
+    Route::post('/ministers/{id}', [MinisterController::class, 'update'])->name('updateMinister');
+    Route::delete('/ministers/{id}', [MinisterController::class, 'destroy'])->name('deleteMinister');
+    Route::post('/logout', [AuthController::class, 'logout']);
 });
 
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+
 Route::get('/series', [SeriesController::class, 'index'])->name('series');
-Route::post('/series', [SeriesController::class, 'store'])->name('createSeries');
 Route::get('/series/{slug}', [SeriesController::class, 'show'])->name('getSeriesBySlug');
-Route::post('/series/{id}', [SeriesController::class, 'update'])->name('updateSeries');
-Route::delete('/series/{id}', [SeriesController::class, 'delete'])->name('deleteSeries');
-Route::get('/ministers', [MinisterController::class, 'index'])->name('ministers');
+
+
 Route::get('/ministers/internal', [MinisterController::class, 'internalMinisters'])->name('internaalMinisters');
-Route::post('/ministers', [MinisterController::class, 'store'])->name('createMinister');
+
 Route::get('ministers/{id}', [MinisterController::class, 'show'])->name('getMinisterById');
 Route::get('ministers/by-slug/{slug}', [MinisterController::class, 'bySlug'])->name('getMinisterBySlug');
-Route::post('/ministers/{id}', [MinisterController::class, 'update'])->name('updateMinister');
-Route::delete('/ministers/{id}', [MinisterController::class, 'destroy'])->name('deleteMinister');
+
 Route::get('/messages', [MessageController::class, 'index'])->name('messages');
 Route::post('/messages', [MessageController::class, 'store'])->name('createMessage');
 Route::get('/messages/{id}', [MessageController::class, 'show'])->name('getMessageById');
