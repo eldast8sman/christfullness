@@ -21,4 +21,6 @@ Route::get('/', function () {
 Route::prefix('dashboard')->group(function(){
     Route::get('/', [AdminController::class, 'index']);
     Route::get('/login', [AdminController::class, 'login']);
+
+    Route::get('/admins', [AdminController::class, 'admins']);
 });
