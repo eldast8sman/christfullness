@@ -7,12 +7,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>@yield('title')</title>
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="admin/images/favicon.png">
-    <link rel="stylesheet" href="admin/vendor/owl-carousel/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="admin/vendor/owl-carousel/css/owl.theme.default.min.css">
-    <link href="admin/vendor/jqvmap/css/jqvmap.min.css" rel="stylesheet">
-    <link href="admin/css/style.css" rel="stylesheet">
-    <script src="admin/js/login.js"></script>
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset("admin/images/favicon.png") }}">
+    <link rel="stylesheet" href="{{ asset("admin/vendor/owl-carousel/css/owl.carousel.min.css") }}">
+    <link rel="stylesheet" href="{{ asset("admin/vendor/owl-carousel/css/owl.theme.default.min.css") }}">
+    <link href="{{ asset("admin/vendor/jqvmap/css/jqvmap.min.css") }}" rel="stylesheet">
+    <link href="{{ asset("admin/css/style.css") }}" rel="stylesheet">
+    <script src="{{ asset("admin/js/login.js") }}"></script>
 
 
 
@@ -45,9 +45,9 @@
         ***********************************-->
         <div class="nav-header">
             <a href="index.html" class="brand-logo">
-                <img class="logo-abbr" src="admin/images/logo.png" alt="">
-                <img class="logo-compact" src="admin/images/logo-text.png" alt="">
-                <img class="brand-title" src="admin/images/logo-text.png" alt="">
+                <img class="logo-abbr" src="{{ asset("admin/images/logo.png") }}" alt="">
+                <img class="logo-compact" src="{{ asset("admin/images/logo-text.png") }}" alt="">
+                <img class="brand-title" src="{{ asset("admin/images/logo-text.png") }}" alt="">
             </a>
 
             <div class="nav-control">
@@ -328,24 +328,24 @@
         Scripts
     ***********************************-->
     <!-- Required vendors -->
-    <script src="admin/vendor/global/global.min.js"></script>
-    <script src="admin/js/quixnav-init.js"></script>
-    <script src="admin/js/custom.min.js"></script>
+    <script src="{{ asset("admin/vendor/global/global.min.js") }}"></script>
+    <script src="{{ asset("admin/js/quixnav-init.js") }}"></script>
+    <script src="{{ asset("admin/js/custom.min.js") }}"></script>
 
 
     <!-- Vectormap -->
-    <script src="admin/vendor/raphael/raphael.min.js"></script>
-    <script src="admin/vendor/morris/morris.min.js"></script>
+    <script src="{{ asset("admin/vendor/raphael/raphael.min.js") }}"></script>
+    <script src="{{ asset("admin/vendor/morris/morris.min.js") }}"></script>
 
 
-    <script src="admin/vendor/circle-progress/circle-progress.min.js"></script>
+    <script src="{{ asset("admin/vendor/circle-progress/circle-progress.min.js") }}"></script>
     {{-- <script src="admin/vendor/chart.js/Chart.bundle.min.js"></script> --}}
 
-    <script src="admin/vendor/gaugeJS/dist/gauge.min.js"></script>
+    <script src="{{ asset("admin/vendor/gaugeJS/dist/gauge.min.js") }}"></script>
 
     <!--  flot-chart js -->
-    <script src="admin/vendor/flot/jquery.flot.js"></script>
-    <script src="admin/vendor/flot/jquery.flot.resize.js"></script>
+    <script src="{{ asset("admin/vendor/flot/jquery.flot.js") }}"></script>
+    <script src="{{ asset("admin/vendor/flot/jquery.flot.resize.js") }}"></script>
 
     <!-- Owl Carousel -->
     {{-- <script src="admin/vendor/owl-carousel/js/owl.carousel.min.js"></script> --}}
@@ -353,10 +353,10 @@
     <!-- Counter Up -->
     {{-- <script src="admin/vendor/jqvmap/js/jquery.vmap.min.js"></script>
     <script src="admin/vendor/jqvmap/js/jquery.vmap.usa.js"></script> --}}
-    <script src="admin/vendor/jquery.counterup/jquery.counterup.min.js"></script>
+    <script src="{{ asset("admin/vendor/jquery.counterup/jquery.counterup.min.js") }}"></script>
 
 
-    <script src="admin/js/dashboard/dashboard-1.js"></script>
+    <script src="{{ asset("admin/js/dashboard/dashboard-1.js") }}"></script>
 
 </body>
 
