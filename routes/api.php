@@ -26,6 +26,11 @@ use App\Http\Controllers\DevotionalController;
 // });
 
 Route::middleware('auth:sanctum')->group(function(){
+    
+    Route::get('users/{id}', [AuthController::class, 'show']);
+    Route::delete('/users/{id}', [AuthController::class, 'destroy']);
+    Route::put('users/{id}', [AuthController::class, 'update']);
+    
     Route::post('/series', [SeriesController::class, 'store'])->name('createSeries');
 
     Route::post('/series/{id}', [SeriesController::class, 'update'])->name('updateSeries');
@@ -39,6 +44,7 @@ Route::middleware('auth:sanctum')->group(function(){
 });
 
 Route::post('/register', [AuthController::class, 'register']);
+
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/series', [SeriesController::class, 'index'])->name('series');

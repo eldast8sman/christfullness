@@ -31,6 +31,54 @@ class AuthController extends Controller
         }
     }
 
+    public function show($id){
+        $user = User::where('id', $id)->first();
+        if(!empty($user)){
+            return response([
+                'status' => 'success',
+                'message' => 'User fetched successfully',
+                'data' => $user
+            ], 200);
+        } else {
+            return response([
+                'status' => 'failed',
+                'message' => 'No Admin found',
+                'data' => []
+            ], 404);
+        }
+    }
+
+    public function update(Request $request, $id){
+        $data = $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email|string'
+        ]);
+        if(empty($data['password'])){
+            unset($data['password']);
+        } else {
+            $data['password'] = bcrypt($data['password']);
+        }
+
+        $user = User::find($id);
+        $user->update($data);
+
+        return response([
+            'status' => 'success',
+            'message' => 'User Edited Successfully',
+            'data' => $user
+        ], 200);
+    }
+
+    public function destroy($id){
+        $user = User::find($id);
+        $user->delete();
+        return response([
+            'status' => 'success',
+            'message' => 'User deleted successfully',
+            'data' => $user
+        ], 200);
+    }
+
     public function register(Request $request){
         $data = $request->validate([
             'name' => 'required|string',

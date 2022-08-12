@@ -23,4 +23,5 @@ Route::prefix('dashboard')->group(function(){
     Route::get('/login', [AdminController::class, 'login']);
 
     Route::get('/admins', [AdminController::class, 'admins']);
+    Route::get('/admin/{id}', [AdminController::class, 'show_admin']);
 });

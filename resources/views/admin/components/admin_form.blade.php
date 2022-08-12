@@ -1,0 +1,62 @@
+<form class="admin_form">
+    <input type="hidden" id="action" value="{{ $action }}" />
+    @component('admin.components.forms.input')
+       @slot('input_label')
+           Name
+       @endslot
+       @slot('input_type')
+           text
+       @endslot 
+       @slot('input_id')
+           admin_name
+       @endslot
+       @slot('input_placeholder')
+           Name
+       @endslot
+       @slot('input_value')
+           
+       @endslot
+    @endcomponent
+    @component('admin.components.forms.input')
+       @slot('input_label')
+           Email
+       @endslot
+       @slot('input_type')
+           email
+       @endslot 
+       @slot('input_id')
+           admin_email
+       @endslot
+       @slot('input_placeholder')
+           Email
+       @endslot
+       @slot('input_value')
+           
+       @endslot
+    @endcomponent
+    @component('admin.components.forms.input')
+       @slot('input_label')
+           Password
+       @endslot
+       @slot('input_type')
+           password
+       @endslot 
+       @slot('input_id')
+           admin_password
+       @endslot
+       @slot('input_placeholder')
+           Password
+       @endslot
+       @slot('input_value')
+           
+       @endslot
+    @endcomponent
+    @component('admin.components.forms.submit')
+        @slot('submit_id')
+            admin_submit
+        @endslot
+        @slot('submit_value')
+            Submit
+        @endslot
+    @endcomponent
+</form>
