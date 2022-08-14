@@ -24,9 +24,10 @@ class UpdateMinisterRequest extends FormRequest
     public function rules()
     {
         return [
+            'appearance' => 'required|integer',
             'name' => 'required|string|max:500',
             'position' => 'required|string|max:255',
-            'filepath' => 'required|mimes:jpg,jpeg,png,gif'
+            'filepath' => 'mimes:jpg,jpeg,png'
         ];
     }
 }

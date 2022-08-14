@@ -188,6 +188,94 @@ for(let i=0; i < admin_del_buttons.length; i++){
     }
 }
 
+$("form.minister_form").submit(function(e){
+    e.preventDefault();
+
+    var appearance = $("select#minister_appearance").val();
+    var name = $("input#minister_name").val();
+    var position = $("input#minister_position").val();
+
+    if((appearance != "") && (name != "") && (position != "")){
+        var fd = new FormData(document.querySelector(".minister_form"));
+        toaster_success("Minister Data Uploading");
+        if($("input#action").val() == "create"){
+            var url = API_URL+"ministers";
+        } else if($("input#action").val() == "update"){
+            var minister_id = $("input#minister_id").val();
+            var url = API_URL+"ministers/"+minister_id;
+        }
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: fd,
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                "Authorization": "Bearer "+sessionStorage.getItem('token')
+            },
+            success: function(response){
+                if(response.status == "success"){
+                    toaster_success(response.message);
+                    if($('input#action').val() == "create"){
+                        window.location = ADMIN_URL+"ministers";
+                    } else {
+                        window.location = ADMIN_URL+"ministers/"+response.data.slug
+                    }
+                } else {
+                    toaster_error(response.message);
+                }
+            },
+            error: function(response){
+                console.log(response.responseText);
+                toaster_error(response.responseText);
+            }
+        });
+        return false;
+    } else {
+        var error_message = "";
+        if(appearance == ""){
+            error_message += "Appearance Position must be selected! ";
+        }
+        if(name == ""){
+            error_message += "Minister Name must be provided! ";
+        }
+        if(position == ""){
+            error_message += "Minister's Post must be provided! ";
+        }
+        toaster_error(error_message);
+    }
+});
+
+del_minister = document.querySelector("#delete_minister");
+
+del_minister.onclick = function(e){
+    var minister_id = e.target.dataset['id'];
+
+    $.ajax({
+        type: "DELETE",
+        url: API_URL+"ministers/"+minister_id,
+        dataType: "json",
+        headers: {
+            "Authorization": "Bearer "+sessionStorage.getItem('token'),
+            "Content-Type": "application/json"
+        },
+        success: function(response){
+            if(response.status == "success"){
+                toaster_success(response.message);
+
+                window.location = ADMIN_URL+"ministers";
+            } else {
+                toaster_error(response.message);
+            }
+        },
+        error: function(response){
+            toaster_error(response.responseText);
+        }
+    })
+}
+
 function toaster_error(error_message){
     toastr.error(error_message, "Error", {
         positionClass: "toast-top-right",

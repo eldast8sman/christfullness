@@ -24,4 +24,11 @@ Route::prefix('dashboard')->group(function(){
 
     Route::get('/admins', [AdminController::class, 'admins']);
     Route::get('/admin/{id}', [AdminController::class, 'show_admin']);
+
+    Route::get('/ministers', [AdminController::class, 'ministers'])->name('Ministers');
+    Route::get('/ministers/{slug}', [AdminController::class, 'showMinister'])->name('minister');
+
+    Route::get('/message-series', [AdminController::class, 'series'])->name('series');
+
+    Route::post('/logout', [AuthController::class, 'logout']);
 });

@@ -15,7 +15,7 @@ class MinisterController extends Controller
      */
     public function index()
     {
-        $ministers = Minister::orderBy('name', 'asc');
+        $ministers = Minister::orderBy('appearance', 'asc');
         if($ministers->count() > 0){
             $all_mins = $ministers->get();
             foreach($all_mins as $minister){
@@ -37,7 +37,7 @@ class MinisterController extends Controller
     }
 
     public function internalMinisters(){
-        $ministers = Minister::where('status', true)->orderBy('name', 'asc');
+        $ministers = Minister::where('status', true)->orderBy('appearance', 'asc')->orderBy('updated_at', 'desc');
         if($ministers->count() > 0){
             $all_mins = $ministers->get();
             foreach($all_mins as $minister){
@@ -84,12 +84,13 @@ class MinisterController extends Controller
             $all['filepath'] = 'img/ministers/'.$upload;
             $all['compressed'] = 'img/ministers/compressed/'.$upload;
         }
+        
         $minister = Minister::create($all);
         if($minister){
             $minister->filepath = url($minister->filepath);
             $minister->compressed = url($minister->compressed);
             return response([
-                'status' => 'failed',
+                'status' => 'success',
                 'message' => 'Minister successfully Added',
                 'data' => $minister
             ], 200);

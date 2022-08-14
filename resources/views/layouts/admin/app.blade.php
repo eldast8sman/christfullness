@@ -185,16 +185,16 @@
                         </ul>
                     </li>
                     <li class="nav-label">Persons</li>
-                    <li><a href="http://127.0.0.1:8000/dashboard/ministers"><i class="icon icon-single-04"></i><span class="nav-text">Ministers</span></a></li>
-                    <li><a href="http://127.0.0.1:8000/dashboard/admins"><i class="icon icon-single-04"></i><span class="nav-text">Admins</span></a></li>
+                    <li><a href="{{ env('ADMIN_URL') }}ministers"><i class="icon icon-single-04"></i><span class="nav-text">Ministers</span></a></li>
+                    <li><a href="{{ env('ADMIN_URL') }}admins"><i class="icon icon-single-04"></i><span class="nav-text">Admins</span></a></li>
                     
                     
                     
-                    <li class="nav-label">Apps</li>
+                    <li class="nav-label">Resources</li>
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
-                                class="icon icon-app-store"></i><span class="nav-text">Apps</span></a>
+                                class="icon icon-app-store"></i><span class="nav-text">Media</span></a>
                         <ul aria-expanded="false">
-                            <li><a href="./app-profile.html">Profile</a></li>
+                            <li><a href="{{ env('ADMIN_URL') }}message-series">Message Series</a></li>
                             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Email</a>
                                 <ul aria-expanded="false">
                                     <li><a href="./email-compose.html">Compose</a></li>

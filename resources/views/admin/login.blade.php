@@ -15,6 +15,9 @@
             @slot('input_type')
                 email
             @endslot
+            @slot('input_name')
+                email
+            @endslot
             @slot('input_id')
                 email
             @endslot
@@ -30,6 +33,9 @@
                 Password
             @endslot
             @slot('input_type')
+                password
+            @endslot
+            @slot('input_name')
                 password
             @endslot
             @slot('input_id')

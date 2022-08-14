@@ -7,6 +7,9 @@
        @slot('input_type')
            text
        @endslot 
+       @slot('input_name')
+           name
+       @endslot
        @slot('input_id')
            admin_name
        @endslot
@@ -24,6 +27,9 @@
        @slot('input_type')
            email
        @endslot 
+       @slot('input_name')
+           email
+       @endslot
        @slot('input_id')
            admin_email
        @endslot
@@ -41,6 +47,9 @@
        @slot('input_type')
            password
        @endslot 
+       @slot('input_name')
+           password
+       @endslot
        @slot('input_id')
            admin_password
        @endslot

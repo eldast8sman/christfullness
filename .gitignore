@@ -4,6 +4,9 @@
 /public/img/series/*.jpg
 /public/img/series/*.png
 /public/img/series/*.jpeg
+/public/img/ministers/*.jpg
+/public/img/ministers/*.png
+/public/img/ministers/*.jpeg
 /public/img/messages/*.jpg
 /public/img/messages/*.png
 /public/img/messages/*.jpeg
@@ -13,6 +16,9 @@
 /public/img/series/compressed/*.jpg
 /public/img/series/compressed/*.png
 /public/img/series/compressed/*.jpeg
+/public/img/ministers/compressed/*.jpg
+/public/img/ministers/compressed/*.png
+/public/img/ministers/compressed/*.jpeg
 /public/img/messages/compressed/*.jpg
 /public/img/messages/compressed/*.png
 /public/img/messages/compressed/*.jpeg
