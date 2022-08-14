@@ -48,6 +48,33 @@ $(".loginForm").submit(function(e) {
 
 });
 
+$("a#dash_logout").click(function(e){
+    e.preventDefault();
+
+    toaster_success("Logging Out");
+
+    $.ajax({
+        type: "POST",
+        url: API_URL+"logout",
+        headers: {
+            "Authorization": "Bearer "+sessionStorage.getItem('token'),
+            "Content-Type": "application/json"
+        },
+        success: function(response){
+            sessionStorage.setItem("token", "");
+            sessionStorage.setItem("name", "");
+            sessionStorage.setItem("email", "");
+            toaster_success("Successfully Logged Out");
+
+            window.location = ADMIN_URL;
+        },
+        error: function(response){
+            console.log(response.responseText);
+            toaster_error("Oops! "+response.responseText);
+        }
+    })
+});
+
 if($("input#action").val() == "update"){
     var admin_id = $("input#admin_id").val();
     var password_div = $("input#admin_password").parent();
@@ -249,31 +276,111 @@ $("form.minister_form").submit(function(e){
 });
 
 del_minister = document.querySelector("#delete_minister");
-
-del_minister.onclick = function(e){
-    var minister_id = e.target.dataset['id'];
-
-    $.ajax({
-        type: "DELETE",
-        url: API_URL+"ministers/"+minister_id,
-        dataType: "json",
-        headers: {
-            "Authorization": "Bearer "+sessionStorage.getItem('token'),
-            "Content-Type": "application/json"
-        },
-        success: function(response){
-            if(response.status == "success"){
-                toaster_success(response.message);
-
-                window.location = ADMIN_URL+"ministers";
-            } else {
-                toaster_error(response.message);
+if(del_minister){
+    del_minister.onclick = function(e){
+        var minister_id = e.target.dataset['id'];
+    
+        $.ajax({
+            type: "DELETE",
+            url: API_URL+"ministers/"+minister_id,
+            dataType: "json",
+            headers: {
+                "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                "Content-Type": "application/json"
+            },
+            success: function(response){
+                if(response.status == "success"){
+                    toaster_success(response.message);
+    
+                    window.location = ADMIN_URL+"ministers";
+                } else {
+                    toaster_error(response.message);
+                }
+            },
+            error: function(response){
+                toaster_error(response.responseText);
             }
-        },
-        error: function(response){
-            toaster_error(response.responseText);
+        })
+    }
+}
+
+
+$("form.series_form").submit(function(e){
+    e.preventDefault();
+
+    var title = $("input#series_title").val();
+    console.log(title);
+    if(title != ""){
+        var fd = new FormData(document.querySelector(".series_form"));
+        toaster_success("Series Data Uploading");
+        if($("input#action").val() == "create"){
+            var url = API_URL+"series";
+        } else if($("input#action").val() == "update"){
+            var series_id = $("input#series_id").val();
+            var url = API_URL+"series/"+series_id;
         }
-    })
+        
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: fd,
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                "Authorization": "Bearer "+sessionStorage.getItem('token')
+            },
+            success: function(response){
+                if(response.status == "success"){
+                    toaster_success(response.message);
+                    if($('input#action').val() == "create"){
+                        window.location = ADMIN_URL+"message-series";
+                    } else {
+                        window.location = ADMIN_URL+"message-series/"+response.data.slug
+                    }
+                } else {
+                    toaster_error(response.message);
+                }
+            },
+            error: function(response){
+                console.log(response.responseText);
+                toaster_error(response.responseText);
+            }
+        });
+        return false;
+    } else {
+        toaster_error('Title must be provided');
+    }
+})
+
+del_series = document.querySelector("#delete_series");
+if(del_series){
+    del_series.onclick = function(e){
+        var series_id = e.target.dataset['id'];
+    
+        $.ajax({
+            type: "DELETE",
+            url: API_URL+"series/"+series_id,
+            dataType: "json",
+            headers: {
+                "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                "Content-Type": "application/json"
+            },
+            success: function(response){
+                if(response.status == "success"){
+                    toaster_success(response.message);
+    
+                    window.location = ADMIN_URL+"message-series";
+                } else {
+                    toaster_error(response.message);
+                }
+            },
+            error: function(response){
+                toaster_error(response.responseText);
+            }
+        })
+    }
 }
 
 function toaster_error(error_message){

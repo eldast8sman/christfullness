@@ -56,8 +56,21 @@ class AdminController extends Controller
     }
 
     public function series(){
-        $series = Series::orderBy('start_date', 'desc')->paginate(20);
+        $series = Series::orderBy('start_date', 'desc')->get();
+        foreach($series as $ser){
+            $ser->filepath = url($ser->filepath);
+            $ser->compressed = url($ser->compressed);
+        }
         return view('admin.series', [
+            'series' => $series
+        ]);
+    }
+
+    public function showSeries($slug){
+        $series = Series::where('slug', $slug)->first();
+        $series->filepath = url($series->filepath);
+        $series->compressed = url($series->compressed);
+        return view('admin.single_series', [
             'series' => $series
         ]);
     }

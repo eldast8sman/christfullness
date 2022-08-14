@@ -43,10 +43,10 @@
                                     @foreach ($ministers as $minister)
                                         <tr id="minister{{ $minister->id }}">
                                             <td>{{ $minister->appearance }}</td>
-                                            <td><img src="{{ $minister->compressed }}" style="max-width:200px"></td>
+                                            <td><img src="{{ $minister->compressed }}" style="max-width:300px"></td>
                                             <td>{{ $minister->name }}</td>
                                             <td>{{ $minister->position }}</td>
-                                            <td><a href="{{ env('APP_URL') }}/dashboard/ministers/{{ $minister->slug }}" class="text-primary">More Details</a></td>
+                                            <td><a href="{{ env('ADMIN_URL') }}ministers/{{ $minister->slug }}" class="text-primary">More Details</a></td>
                                         </tr>
                                     @endforeach
                                 @endslot
@@ -56,7 +56,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-6 col-md-9">
+                <div class="col-lg-6 col-md-9 col-sm-12">
                     @component('admin.components.cards')
                         @slot('title')
                             Add a Minister

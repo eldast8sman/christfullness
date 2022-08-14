@@ -29,6 +29,7 @@ Route::prefix('dashboard')->group(function(){
     Route::get('/ministers/{slug}', [AdminController::class, 'showMinister'])->name('minister');
 
     Route::get('/message-series', [AdminController::class, 'series'])->name('series');
+    Route::get('/message-series/{slug}', [AdminController::class, 'showSeries'])->name('showseries');
 
     Route::post('/logout', [AuthController::class, 'logout']);
 });

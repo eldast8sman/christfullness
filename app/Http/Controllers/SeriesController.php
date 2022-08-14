@@ -189,10 +189,10 @@ class SeriesController extends Controller
                     FileController::delete_file($message->compressed_image);
                     FileController::delete_file($message->audio_path);
                     $message->delete();
-                }
-                FileController::delete_file($series->filepath);
-                FileController::delete_file($series->compressed);                
+                }                
             }
+            FileController::delete_file($series->filepath);
+            FileController::delete_file($series->compressed);
             $series->delete();
             return response([
                 'status' => 'success',
