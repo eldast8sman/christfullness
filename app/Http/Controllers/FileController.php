@@ -27,7 +27,7 @@ class FileController extends Controller
                     $constraint->upsize();
                 })->save(public_path('img/'.$destination.'/compressed/'.$name));
                 return $name;
-            } elseif(($extension == 'mp3') || ($extension == 'mpeg3')){
+            } elseif(($extension == 'mp3') || ($extension == 'mpeg3') || ($extension == "mpeg")){
                 $filepath->move(public_path('audio/'.$destination.'/'), $name);
                 return $name;
             } elseif($extension == 'pdf'){

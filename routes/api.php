@@ -42,7 +42,6 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::delete('/ministers/{id}', [MinisterController::class, 'destroy'])->name('deleteMinister');
 
     Route::post('/messages', [MessageController::class, 'store'])->name('createMessage');
-    Route::get('/messages/{id}', [MessageController::class, 'show'])->name('getMessageById');
     Route::post('/messages/{id}', [MessageController::class, 'update'])->name('updateMessage');
     Route::delete('/messages/{id}', [MessageController::class, 'destroy'])->name('deleteMessage');
 
@@ -81,6 +80,7 @@ Route::get('/ministers/internal', [MinisterController::class, 'internalMinisters
 Route::get('ministers/by-slug/{slug}', [MinisterController::class, 'bySlug'])->name('getMinisterBySlug');
 
 Route::get('/messages', [MessageController::class, 'index'])->name('messages');
+Route::get('/messages/{id}', [MessageController::class, 'show'])->name('getMessageById');
 Route::get('/messages/by-slug/{slug}', [MessageController::class, 'bySlug'])->name('getMessageBySlug');
 
 Route::get('/books', [BookController::class, 'index'])->name('books');

@@ -383,6 +383,110 @@ if(del_series){
     }
 }
 
+$("form.message_form").submit(function(e){
+    e.preventDefault();
+
+    var title = $("input#message_title").val();
+    var minister = $("input#message_minister").val();
+    var image_files = $('#image_upload')[0].files;
+    var audio_files = $("input#audio_upload")[0].files;
+    var data_id = e.target.dataset['id'];
+    if(data_id == ""){
+        if((title == "") || (minister == "") || (image_files.length < 1) || (audio_files.length < 1)){
+            var error_message = "";
+            if(title == ""){
+                error_message += "Message Title must be provided! ";
+            }
+            if(minister == ""){
+                error_message += "Minister must be provided! ";
+            }
+            if(image_files.length < 1){
+                error_message += "Message Album Art must be uploaded! ";
+            }
+            if(audio_files.length < 1){
+                error_message += "Message Audio File must be uploaded! ";
+            }
+            toaster_error(error_message);
+            return false;
+        }
+
+        image_file = image_files[0].type;
+        if((image_file != "image/jpg") && (image_file != "image/jpeg") && (image_file != "image/png")){
+            toaster_error("Wrong Image Filetype");
+            return false;
+        }
+
+        audio_file = audio_files[0].type;
+        if((audio_file != "audio/mp3") && (audio_file != "audio/mpeg3") && (audio_file != "audio/mpeg")){
+            toaster_error("Wrong Audio File upload");
+            console.log(audio_file);
+            return false;
+        }
+
+        url = API_URL+"messages";
+    } else {
+        if((title == "") || (minister == "")){
+            var error_message = "";
+            if(title == ""){
+                error_message += "Message Title must be provided! ";
+            }
+            if(minister == ""){
+                error_message += "Minister must be provided! ";
+            }
+            toaster_error(error_message);
+            return false;
+        }
+
+        if(image_files.length > 0){
+            image_file = image_files[0].type;
+            if((image_file != "image/jpg") && (image_file != "image/jpeg") && (image_file != "image/png")){
+                toaster_error("Wrong Image Filetype");
+                return false;
+            }
+        }
+        
+        if(audio_files.length > 0){
+            audio_file = audio_files[0].type;
+            if((audio_file != "audio/mp3") && (audio_file != "audio/mpeg3") && (audio_file != "audio/mpeg")){
+                toaster_error("Wrong Audio File upload");
+                return false;
+            }
+        }
+        
+        url = API_URL+"messages/"+data_id;
+    }
+    var fd = new FormData(document.querySelector(".message_form"));
+    toaster_success("Message Uploading...");
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: fd,
+        dataType: "json",
+        processData: false,
+        contentType: false,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            "Authorization": "Bearer "+sessionStorage.getItem('token')
+        },
+        success: function(response){
+            if(response.status == "success"){
+                toaster_success(response.message);
+                if(data_id == ""){
+                    window.location = ADMIN_URL+"messages";
+                } else {
+                    window.location = ADMIN_URL+"messages"+response.data.slug
+                }
+            } else {
+                toaster_error(response.message);
+            }
+        },
+        error: function(response){
+            console.log(response.responseText);
+            toaster_error(response.responseText);
+        }
+    })
+})
+
 function toaster_error(error_message){
     toastr.error(error_message, "Error", {
         positionClass: "toast-top-right",
@@ -423,4 +527,10 @@ function toaster_success(success_message){
         hideMethod: "fadeOut",
         tapToDismiss: !1
     })
+}
+
+if($("table#series_table")){
+    $('#series_table').DataTable({
+        order: [[2, 'desc']],
+    });
 }

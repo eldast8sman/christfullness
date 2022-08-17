@@ -11,7 +11,7 @@ class Message extends Model
 {
     use HasFactory, HasSlug;
 
-    protected $fillable = ['title', 'slug', 'description', 'series_id', 'minister_id', 'date_preached', 'image_path', 'compressed_image', 'audio_path'];
+    protected $fillable = ['title', 'slug', 'description', 'series_id', 'minister_id', 'date_preached', 'image_path', 'compressed_image', 'audio_path', 'details'];
 
     public function getSlugOptions(): SlugOptions
     {

@@ -28,7 +28,7 @@ class UpdateMessageRequest extends FormRequest
             'series_id' => 'integer:exists:\App\Models\Series,id',
             'minister_id' => 'required|integer|exists:\App\Models\Minister,id',
             'image_path' => 'mimes:jpg,jpeg,png,gif',
-            'audio_path' => 'mime:mp3,mpeg3'
+            'audio_path' => 'mimes:audio/mpeg,mp3,mpeg3,mpeg'
         ];
     }
 }

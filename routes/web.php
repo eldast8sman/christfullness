@@ -31,5 +31,7 @@ Route::prefix('dashboard')->group(function(){
     Route::get('/message-series', [AdminController::class, 'series'])->name('series');
     Route::get('/message-series/{slug}', [AdminController::class, 'showSeries'])->name('showseries');
 
+    Route::get('/messages', [AdminController::class, 'messages'])->name('messages');
+    
     Route::post('/logout', [AuthController::class, 'logout']);
 });

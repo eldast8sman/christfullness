@@ -12,11 +12,9 @@
     <link rel="stylesheet" href="{{ asset("admin/vendor/owl-carousel/css/owl.theme.default.min.css") }}">
     <link href="{{ asset("admin/vendor/jqvmap/css/jqvmap.min.css") }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset("admin/vendor/toastr/css/toastr.min.css") }}">
+    <link rel="stylesheet" href="{{ asset("admin/vendor/datatables/css/jquery.dataTables.min.css") }}">
     <link href="{{ asset("admin/css/style.css") }}" rel="stylesheet">
     <script src="{{ asset("admin/js/login.js") }}"></script>
-
-
-
 </head>
 
 <body>
@@ -195,14 +193,7 @@
                                 class="icon icon-app-store"></i><span class="nav-text">Media</span></a>
                         <ul aria-expanded="false">
                             <li><a href="{{ env('ADMIN_URL') }}message-series">Message Series</a></li>
-                            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Email</a>
-                                <ul aria-expanded="false">
-                                    <li><a href="./email-compose.html">Compose</a></li>
-                                    <li><a href="./email-inbox.html">Inbox</a></li>
-                                    <li><a href="./email-read.html">Read</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="./app-calender.html">Calendar</a></li>
+                            <li><a href="{{ env('ADMIN_URL') }}messages">Messages</a></li>
                         </ul>
                     </li>
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
@@ -339,6 +330,7 @@
     <script src="{{asset("admin/js/quixnav-init.js")}}"></script>
     <script src="{{asset("admin/js/custom.min.js")}}"></script>
     <script src="{{asset("admin/vendor/toastr/js/toastr.min.js")}}"></script>
+    <script src="{{ asset("admin/vendor/datatables/js/jquery.dataTables.min.js") }}"></script>
     <script src="{{asset("admin/js/app.js")}}"></script>
 </body>
 

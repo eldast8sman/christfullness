@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Series;
+use App\Models\Message;
 use App\Models\Minister;
 use Illuminate\Http\Request;
 
@@ -72,6 +73,23 @@ class AdminController extends Controller
         $series->compressed = url($series->compressed);
         return view('admin.single_series', [
             'series' => $series
+        ]);
+    }
+
+    public function messages(){
+        $messages = Message::orderBy('date_preached', 'desc')->paginate(2);
+        foreach($messages as $message){
+            $message->image_path = url($message->image_path);
+            $message->compressed_image = url($message->compressed_image);
+            $message->audio_path = url($message->audio_path);
+        }
+        $ministers = Minister::orderBy('name', 'asc')->get();
+        $series = Series::orderBy('start_date', 'desc')->get();
+
+        return view('admin.messages', [
+            'messages' => $messages,
+            'series' => $series,
+            'ministers' => $ministers
         ]);
     }
 }

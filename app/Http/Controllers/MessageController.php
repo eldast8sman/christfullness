@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Series;
 use App\Models\Message;
+use App\Models\Minister;
 use Illuminate\Http\UploadedFile;
 use App\Http\Requests\StoreMessageRequest;
 use App\Http\Requests\UpdateMessageRequest;
@@ -64,14 +66,19 @@ class MessageController extends Controller
         $upload_image = FileController::uploadfile($image, 'messages');
         if($upload_image){
             $all['image_path'] = 'img/messages/'.$upload_image;
-            $all['compressed_image'] = 'img/messages/compressed'.$upload_image;
+            $all['compressed_image'] = 'img/messages/compressed/'.$upload_image;
         }
         $upload_audio = FileController::uploadfile($audio, 'messages');
         if($upload_audio){
-            $all['audio_path'] = $upload_audio;
+            $all['audio_path'] = 'audio/messages/'.$upload_audio;
         }
+        $series = Series::where('id', $all['series_id'])->first();
+        $minister = Minister::where('id', $all['minister_id'])->first();
+        $all['details'] = $all['title'].' '.$all['description'].' '.$series->title.' '.$minister->name.' '.date('l, jS \of F, Y');
         $message = Message::create($all);
         if($message){
+            $series = $message->series()->get();
+            $minister = $message->minister()->get();
             $message->image_path = url($message->image_path);
             $message->compressed_image = url($message->compressed_image);
             $message->audio_path = url($message->audio_path);
@@ -214,6 +221,10 @@ class MessageController extends Controller
                 unset($all['audio_path']);
             }
             if($audio->update($all)){
+                $series = $message->series()->get();
+                $minister = $message->minister()->get();
+                $message->details = $message->title.' '.$message->description.' '.$series->title.' '.$minister->name.' '.date('l, jS \of F, Y', strtotime($message->date_preached));
+                $message->save();
                 $audio->image_path = url($audio->image_path);
                 $audio->compressed_image = url($audio->compressed_image);
                 $audio->audio_path = url($audio->audio_path);
