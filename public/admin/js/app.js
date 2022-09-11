@@ -40,8 +40,8 @@ $(".loginForm").submit(function(e) {
                     toaster_error(response.message);
                 }
             },
-            error: function(data) {
-                toaster_error("Oops! Something went wrong "+respose.responseText);
+            error: function(response) {
+                toaster_error("Oops! Something went wrong "+response.responseText);
             }
         })
     }
@@ -354,6 +354,49 @@ $("form.series_form").submit(function(e){
     }
 })
 
+var series_message_div = document.querySelectorAll(".show_series_message");
+for(let i=0; i<=series_message_div.length-1; i++){
+    series = series_message_div[i];
+    
+    series.onclick = function(e){
+        var id = e.target.dataset['id'];
+
+        $.ajax({
+            type: "GET",
+            url: API_URL+"messages/"+id,
+            dataType: "json",
+            headers: {
+                "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                "Content-Type": "application/json"
+            },
+            success: function(response){
+                if(response.status == "success"){
+                    var data = response.data;
+
+                    $("#series_message_modal h5.modal-title").html(data.title);
+                    var output = '<div class="row"><img src="'+data.image_path+'" style="width: 400px; max-width:80%; margin: 0 auto" /></div>';
+                    output +=   '<div class="row">';
+                    output +=       '<div class="col-lg-6 col-md-9 col-sm-12 mx-auto my-2"><audio src="'+data.audio_path+'" style="margin: 0 auto" controls></audio></div>'
+                    output +=   '</div>';
+                    output +=   '<div class="row text-dark">';
+                    output +=       '<div class="col-lg-9 col-md-12 mx-auto">';
+                    output +=           '<p><strong>Date Preached: </strong>'+ data.date_preached +'</p>';
+                    output +=           '<p>'+data.description+'</p>';
+                    output +=       '</div>';
+                    output +=   '</div>';
+                    $("#series_message_modal div.modal-body").html(output);
+                } else {
+                    $("#series_message_modal .modal-body").html(response.message);
+                }
+            },
+            error: function(response){
+                toaster_error(response.responseText);
+            }
+        })
+    };
+    //console.log(i);
+}
+
 del_series = document.querySelector("#delete_series");
 if(del_series){
     del_series.onclick = function(e){
@@ -472,9 +515,14 @@ $("form.message_form").submit(function(e){
             if(response.status == "success"){
                 toaster_success(response.message);
                 if(data_id == ""){
-                    window.location = ADMIN_URL+"messages";
+                    var redirect = $("input#redirect");
+                    if(redirect){
+                        window.location= ADMIN_URL+"message-series/"+redirect.val();
+                    } else {
+                        window.location = ADMIN_URL+"messages";
+                    }
                 } else {
-                    window.location = ADMIN_URL+"messages"+response.data.slug
+                    window.location = ADMIN_URL+"messages/"+response.data.slug
                 }
             } else {
                 toaster_error(response.message);
@@ -485,7 +533,36 @@ $("form.message_form").submit(function(e){
             toaster_error(response.responseText);
         }
     })
-})
+});
+
+del_message = document.querySelector("#delete_message");
+if(del_message){
+    del_message.onclick = function(e){
+        var msg_id = e.target.dataset['id'];
+    
+        $.ajax({
+            type: "DELETE",
+            url: API_URL+"messages/"+msg_id,
+            dataType: "json",
+            headers: {
+                "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                "Content-Type": "application/json"
+            },
+            success: function(response){
+                if(response.status == "success"){
+                    toaster_success(response.message);
+    
+                    window.location = ADMIN_URL+"messages";
+                } else {
+                    toaster_error(response.message);
+                }
+            },
+            error: function(response){
+                toaster_error(response.responseText);
+            }
+        })
+    }
+}
 
 function toaster_error(error_message){
     toastr.error(error_message, "Error", {

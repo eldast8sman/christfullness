@@ -19,19 +19,24 @@ Route::get('/', function () {
 });
 
 Route::prefix('dashboard')->group(function(){
-    Route::get('/', [AdminController::class, 'index']);
-    Route::get('/login', [AdminController::class, 'login']);
+    Route::controller(AdminController::class)->group(function(){
+        Route::get('/', 'index');
+        Route::get('/login', 'login');
 
-    Route::get('/admins', [AdminController::class, 'admins']);
-    Route::get('/admin/{id}', [AdminController::class, 'show_admin']);
+        Route::get('/admins', 'admins');
+        Route::get('/admin/{id}', 'show_admin');
 
-    Route::get('/ministers', [AdminController::class, 'ministers'])->name('Ministers');
-    Route::get('/ministers/{slug}', [AdminController::class, 'showMinister'])->name('minister');
+        Route::get('/ministers', 'ministers')->name('Ministers');
+        Route::get('/ministers/{slug}', 'showMinister')->name('minister');
 
-    Route::get('/message-series', [AdminController::class, 'series'])->name('series');
-    Route::get('/message-series/{slug}', [AdminController::class, 'showSeries'])->name('showseries');
+        Route::get('/message-series', 'series')->name('series');
+        Route::get('/message-series/{slug}', 'showSeries')->name('showseries');
 
-    Route::get('/messages', [AdminController::class, 'messages'])->name('messages');
-    
-    Route::post('/logout', [AuthController::class, 'logout']);
+        Route::get('/messages', 'messages')->name('messages');
+        Route::get('/messages/{slug}', 'showMessage')->name('message');
+
+        Route::get('/devotionals', 'devotionals')->name('devotionals');
+        
+        Route::post('/logout', 'logout');
+    });
 });

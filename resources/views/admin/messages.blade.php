@@ -47,10 +47,10 @@
                                                         background-position: center center;
                                                         margin: 0 auto;
                                                     "></div>
-                                                    <p style="height: 50px">
-                                                        <h5 class="text-primary">{{ $message->title }}</h5>
+                                                    <div class="mt-2" style="height: 80px">
+                                                        <h6 class="text-primary">{{ $message->title }}</h6>
                                                         <i>{{ $message->minister->name }}</i>
-                                                    </p>
+                                                    </div>
                                                 @endslot
                                             @endcomponent
                                         </a>
@@ -92,7 +92,7 @@
                                             @endslot
                                             @slot('minister_options')
                                                 @foreach ($ministers as $minister)
-                                                    <option value="{{ $minister->id }}">{{ $minister->name }}</option>
+                                                    <option value="{{ $minister->id }}">{{ $minister->name."(".$minister->title.")" }}</option>
                                                 @endforeach
                                             @endslot
                                         @endcomponent

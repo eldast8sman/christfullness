@@ -17,6 +17,26 @@
     @endcomponent
     @component('admin.components.forms.input')
         @slot('input_label')
+            Title
+        @endslot
+        @slot('input_type')
+            text
+        @endslot
+        @slot('input_name')
+           title
+        @endslot
+        @slot('input_id')
+            minister_title
+        @endslot
+        @slot('input_placeholder')
+            Title of Minister
+        @endslot
+        @slot('input_value')
+            {{ $title_value }}
+        @endslot
+    @endcomponent
+    @component('admin.components.forms.input')
+        @slot('input_label')
             Name
         @endslot
         @slot('input_type')

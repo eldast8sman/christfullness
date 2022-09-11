@@ -196,6 +196,7 @@
                             <li><a href="{{ env('ADMIN_URL') }}messages">Messages</a></li>
                         </ul>
                     </li>
+                    <li><a href="{{ env('ADMIN_URL') }}devotionals"><i class="icon icon-form"></i>Devotionals</a></li>
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
                                 class="icon icon-chart-bar-33"></i><span class="nav-text">Charts</span></a>
                         <ul aria-expanded="false">

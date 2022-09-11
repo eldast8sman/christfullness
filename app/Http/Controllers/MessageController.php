@@ -101,19 +101,19 @@ class MessageController extends Controller
      * @param  \App\Models\Message  $message
      * @return \Illuminate\Http\Response
      */
-    public function show(Message $message, $id)
+    public function show($id)
     {
         $message = Message::where('id', $id)->first();
         if(!empty($message)){
             $message->audio_path = url($message->audio_path);
             $message->image_path = url($message->image_path);
             $message->compressed_image = url($message->compressed_image);
-            $minister = $message->minister()->get();
+            $minister = $message->minister()->first();
             $minister->filepath = url($minister->filepath);
             $minister->compressed = url($minister->compressed);
             $message->minster = $minister;
             if(!empty($message->series_id)){
-                $series = $message->series()->get();
+                $series = $message->series()->first();
             }
             if(isset($series)){
                 $series->filepath = url($series->filepath);
@@ -141,12 +141,12 @@ class MessageController extends Controller
             $message->audio_path = url($message->audio_path);
             $message->image_path = url($message->image_path);
             $message->compressed_image = url($message->compressed_image);
-            $minister = $message->minister()->get();
+            $minister = $message->minister()->first();
             $minister->filepath = url($minister->filepath);
             $minister->compressed = url($minister->compressed);
             $message->minster = $minister;
             if(!empty($message->series_id)){
-                $series = $message->series()->get();
+                $series = $message->series()->first();
             }
             if(isset($series)){
                 $series->filepath = url($series->filepath);
@@ -220,18 +220,17 @@ class MessageController extends Controller
             } else {
                 unset($all['audio_path']);
             }
-            if($audio->update($all)){
-                $series = $message->series()->get();
-                $minister = $message->minister()->get();
-                $message->details = $message->title.' '.$message->description.' '.$series->title.' '.$minister->name.' '.date('l, jS \of F, Y', strtotime($message->date_preached));
-                $message->save();
-                $audio->image_path = url($audio->image_path);
-                $audio->compressed_image = url($audio->compressed_image);
-                $audio->audio_path = url($audio->audio_path);
+            $series = Series::where('id', $all['series_id'])->first();
+            $minister = Minister::where('id', $all['minister_id'])->first();
+            $all['details'] = $all['title'].' '.$all['description'].' '.$series->title.' '.$minister->name.' '.date('l, jS \of F, Y');
+            if($message->update($all)){
+                $message->image_path = url($message->image_path);
+                $message->compressed_image = url($message->compressed_image);
+                $message->audio_path = url($message->audio_path);
                 return response([
                     'status' => 'success',
                     'message' => 'Message updated successfully',
-                    'data' => $audio
+                    'data' => $message
                 ], 200);
             } else {
                 return response([
@@ -255,7 +254,7 @@ class MessageController extends Controller
      */
     public function destroy(Message $message, $id)
     {
-        $message = Message::find($id);
+        $message = Message::where('id', $id)->first();
         if($message){
             FileController::delete_file($message->image_path);
             FileController::delete_file($message->compressed_image);
@@ -265,7 +264,7 @@ class MessageController extends Controller
                 'status' => 'success',
                 'message' => 'Message Deleted successfully',
                 'data' => $message
-            ], 204);
+            ], 200);
         } else {
             return response([
                 'status' => 'failed',

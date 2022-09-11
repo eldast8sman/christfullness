@@ -71,13 +71,22 @@ class AdminController extends Controller
         $series = Series::where('slug', $slug)->first();
         $series->filepath = url($series->filepath);
         $series->compressed = url($series->compressed);
+        $ministers = Minister::orderBy('name', 'asc')->get();
+        $messages = $series->messages()->orderBy('date_preached', 'desc')->get();
+        foreach($messages as $message){
+            $message->image_path = url($message->image_path);
+            $message->compressed_image = url($message->compressed_image);
+            $message->audio_path = url($message->audio_path);
+        }
         return view('admin.single_series', [
-            'series' => $series
+            'series' => $series,
+            'ministers' => $ministers,
+            'messages' => $messages
         ]);
     }
 
     public function messages(){
-        $messages = Message::orderBy('date_preached', 'desc')->paginate(2);
+        $messages = Message::orderBy('date_preached', 'desc')->paginate(20);
         foreach($messages as $message){
             $message->image_path = url($message->image_path);
             $message->compressed_image = url($message->compressed_image);
@@ -88,6 +97,32 @@ class AdminController extends Controller
 
         return view('admin.messages', [
             'messages' => $messages,
+            'series' => $series,
+            'ministers' => $ministers
+        ]);
+    }
+
+    public function showMessage($slug){
+        $message = Message::where('slug', $slug)->first();
+        if(!empty($message->series_id)){
+            $series = $message->series()->first();
+            $series->filepath = url($series->filepath);
+            $series->compressed = url($series->compressed);            
+            $message->series = $series;
+        }
+        $minister = $message->minister()->first();
+        $minister->filepath = url($minister->filepath);
+        $minister->compressed = url($minister->compressed);
+        $message->image_path = url($message->image_path);
+        $message->audio_path = url($message->audio_path);
+        $message->compressed_image = url($message->compressed_image);
+        $message->minister = $minister;
+
+        $ministers = Minister::orderBy('name', 'asc')->get();
+        $series = Series::orderBy('start_date', 'desc')->get();
+
+        return view('admin.message', [
+            'message' => $message,
             'series' => $series,
             'ministers' => $ministers
         ]);

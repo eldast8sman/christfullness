@@ -23,7 +23,7 @@
                 <div class="col-12">
                     @component('admin.components.cards')
                         @slot('title')
-                            {{ $minister->name }}
+                            {{ $minister->title." ".$minister->name }}
                         @endslot
                         @slot('body')
                             <div class="row">
@@ -59,6 +59,9 @@
                                                                     @endif
                                                                 >{{ $i }}</option>
                                                             @endfor
+                                                        @endslot
+                                                        @slot('title_value')
+                                                            {{ $minister->title }}
                                                         @endslot
                                                         @slot('name_value')
                                                             {{ $minister->name }}

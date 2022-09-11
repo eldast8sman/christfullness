@@ -29,13 +29,53 @@
                         @endslot             
                         @slot('body')
                             <div class="col-lg-6 col-md-9 col-sm-12 mx-auto my-3">
-                                <img src="{{ $series->filepath }}" style="width: 600px; max-width: 90%; height:auto; margin: 0 auto" />
+                                <img src="{{ $series->filepath }}" style="width: 600px; max-width: 90%; height:auto; margin: 0 auto" alt="{{ $series->title }}" />
                             </div>
                             <div class="col-lg-9 col-md-12 mx-auto text-justify text-dark">
                                 <p>{{ $series->description }}</p>
                                 <p>
+                                    <button class="btn btn-success" data-toggle="modal" data-target="#add_message_modal">Add Message</button>
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit_series_modal">Edit</button>
                                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_series_modal">Delete</button>
+
+                                    @component('admin.components.long_modal')
+                                        @slot('modal_id')
+                                            add_message_modal
+                                        @endslot
+                                        @slot('modal_title')
+                                            Add Message to Series
+                                        @endslot
+                                        @slot('modal_body')
+                                            <div class="col012 py-3">
+                                                <input type="hidden" name="series" id="redirect" value="{{ $series->slug }}">
+                                                @component('admin.components.message_form')
+                                                    @slot('data_id')
+                                                        
+                                                    @endslot
+                                                    @slot('title_value')
+                                                        
+                                                    @endslot
+                                                    @slot('description_value')
+                                                        
+                                                    @endslot
+                                                    @slot('date_preached_value')
+                                                        
+                                                    @endslot
+                                                    @slot('series_options')
+                                                        <option value="{{ $series->id }}" selected>{{ $series->title }}</option>
+                                                    @endslot
+                                                    @slot('minister_options')
+                                                        @foreach ($ministers as $minister)
+                                                            <option value="{{ $minister->id }}">{{ $minister->name."(".$minister->title.")" }}</option>
+                                                        @endforeach
+                                                    @endslot
+                                                @endcomponent
+                                            </div>
+                                        @endslot
+                                        @slot('modal_footer')
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                        @endslot
+                                    @endcomponent
 
                                     @component('admin.components.long_modal')
                                         @slot('modal_id')
@@ -92,6 +132,51 @@
                     @endcomponent
                 </div>
             </div>
+            @if (!empty($messages))
+                @component('admin.components.cards')
+                    @slot('title')
+                        Messages
+                    @endslot
+                    @slot('body')
+                        <div class="row">
+                            @foreach ($messages as $message)
+                                <div class="col-lg-3 col-md-4 col-sm-12 mt-3">
+                                    @component('admin.components.cards')
+                                        @slot('title')
+                                            {{ $message->title }}
+                                        @endslot
+                                        @slot('body')
+                                            <div data-toggle="modal" data-target="#series_message_modal">
+                                                <div class="col-12" style="height:200px;
+                                                                        background-image: url({{ $message->compressed_image }});
+                                                                        background-size: cover;
+                                                                        background-position: center center;
+                                                                        background-repeat: no-repeat"></div>
+                                                <div>{{ $message->title }}</div>
+                                            </div>
+                                            <button class="btn btn-primary show_series_message" data-toggle="modal" data-target="#series_message_modal" data-id="{{ $message->id }}">More Details</button>
+                                        @endslot
+                                    @endcomponent
+                                </div>
+                            @endforeach
+                            @component('admin.components.long_modal')
+                                @slot('modal_id')
+                                    series_message_modal
+                                @endslot
+                                @slot('modal_title')
+                                    
+                                @endslot
+                                @slot('modal_body')
+                                    
+                                @endslot
+                                @slot('modal_footer')
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                @endslot
+                            @endcomponent
+                        </div>
+                    @endslot
+                @endcomponent
+            @endif
         </div>
     </div>
 @endsection

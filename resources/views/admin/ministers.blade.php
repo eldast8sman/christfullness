@@ -44,7 +44,7 @@
                                         <tr id="minister{{ $minister->id }}">
                                             <td>{{ $minister->appearance }}</td>
                                             <td><img src="{{ $minister->compressed }}" style="max-width:300px"></td>
-                                            <td>{{ $minister->name }}</td>
+                                            <td>{{ $minister->title." ".$minister->name }}</td>
                                             <td>{{ $minister->position }}</td>
                                             <td><a href="{{ env('ADMIN_URL') }}ministers/{{ $minister->slug }}" class="text-primary">More Details</a></td>
                                         </tr>
@@ -70,6 +70,9 @@
                                     @for ($i=1; $i<=$count+1; $i++)
                                         <option value="{{ $i }}">{{ $i }}</option>
                                     @endfor
+                                @endslot
+                                @slot('title_value')
+                                    
                                 @endslot
                                 @slot('name_value')
                                     

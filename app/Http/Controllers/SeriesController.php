@@ -10,6 +10,7 @@ use Intervention\Image\Facades\Image;
 use App\Http\Resources\SeriesResource;
 use App\Http\Requests\StoreSeriesRequest;
 use App\Http\Requests\UpdateSeriesRequest;
+use App\Models\Minister;
 
 class SeriesController extends Controller
 {
