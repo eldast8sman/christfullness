@@ -131,7 +131,7 @@ class AdminController extends Controller
     }
 
     public function devotionals(){
-        $today_dev = Devotional::where('deveotional_date', date('Y-m-d'))->first();
+        $today_dev = Devotional::where('devotional_date', date('Y-m-d'))->first();
     }
 
     public function books(){

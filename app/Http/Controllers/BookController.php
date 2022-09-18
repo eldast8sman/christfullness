@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Minister;
 use Illuminate\Http\UploadedFile;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
@@ -69,6 +70,9 @@ class BookController extends Controller
         if($upload_book){
             $all['book_path'] = 'document/books/'.$upload_book;
         }
+        
+        $minister = Minister::find($all['minister_id']);
+        $all['details'] = $all['title'].' '.$all['summary'].' '.$minister->name; 
         $book = Book::create($all);
         if($book){
             $book->image_path = url($book->image_path);
