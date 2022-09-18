@@ -1,7 +1,7 @@
-<form class="message_form" data-id="{{ $data_id }}" enctype="multipart/form-data">
+<form class="book_form" data-id="{{ $data_id }}" enctype="multipart/form-data">
     @component('admin.components.forms.input')
         @slot('input_label')
-            Message Title
+            Book Title
         @endslot
         @slot('input_type')
             text
@@ -10,10 +10,10 @@
             title
         @endslot
         @slot('input_id')
-            message_title
+            book_title
         @endslot
         @slot('input_placeholder')
-            Message Title
+            Book Title
         @endslot
         @slot('input_value')
             {{ $title_value }}
@@ -24,88 +24,53 @@
             Short Summary
         @endslot
         @slot('textarea_id')
-            message_description
+            book_summary
         @endslot
         @slot('textarea_name')
-            description
+            summary
         @endslot
         @slot('textarea_placeholder')
-            Short Summary of the Message
+            Short Summary of the Book
         @endslot
         @slot('textarea_rows')
             5
         @endslot
         @slot('textarea_value')
-            {{ $description_value }}
-        @endslot
-    @endcomponent
-    @component('admin.components.forms.input')
-        @slot('input_label')
-            Date Preached
-        @endslot
-        @slot('input_type')
-            date
-        @endslot
-        @slot('input_name')
-            date_preached
-        @endslot
-        @slot('input_id')
-            message_date_preached
-        @endslot
-        @slot('input_placeholder')
-            Date the Message was Preached
-        @endslot
-        @slot('input_value')
-            {{ $date_preached_value }}
+            {{ $summary_value }}
         @endslot
     @endcomponent
     @component('admin.components.forms.select')
         @slot('select_label')
-            Series
-        @endslot
-        @slot('select_name')
-            series_id
-        @endslot
-        @slot('select_id')
-            message_series
-        @endslot
-        @slot('select_options')
-            <option value="">--Series--</option>
-            {{ $series_options }}
-        @endslot
-    @endcomponent
-    @component('admin.components.forms.select')
-        @slot('select_label')
-            Minister
+            Author
         @endslot
         @slot('select_name')
             minister_id
         @endslot
         @slot('select_id')
-            message_minister
+            book_author
         @endslot
         @slot('select_options')
-            <option value="">--Minister--</option>
-            {{ $minister_options }}
+            <option value="">--Author--</option>
+            {{ $author_options }}
         @endslot
     @endcomponent
     @component('admin.components.forms.file_input')
         @slot('input_label')
-            Audio File
-        @endslot
-        @slot('input_id')
-            audio_upload
+            Book PDF file
         @endslot
         @slot('input_name')
-            audio_path
+            book_path
+        @endslot
+        @slot('input_id')
+            pdf_upload
         @endslot
         @slot('input_accept')
-            audio/mp3, audio/mpeg3, audio/mpeg
+            application/pdf
         @endslot
     @endcomponent
     @component('admin.components.forms.file_input')
         @slot('input_label')
-            Album Art
+            Book Cover
         @endslot
         @slot('input_id')
             image_upload
@@ -119,7 +84,7 @@
     @endcomponent
     @component('admin.components.forms.submit')
         @slot('submit_id')
-            message_submit
+            book_submit
         @endslot
         @slot('submit_value')
             Submit

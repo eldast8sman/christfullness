@@ -11,7 +11,16 @@ class Devotional extends Model
 {
     use HasFactory, HasSlug;
 
-    protected $fillable = ['devotional_date', 'topic', 'bible_text', 'memory_verse_text', 'memory_verse', 'devotional', 'further_reading', 'prayers'];
+    protected $fillable = [
+        'devotional_date', 
+        'topic', 
+        'bible_text', 
+        'memory_verse_text', 
+        'memory_verse', 
+        'devotional', 
+        'further_reading', 
+        'prayers'
+    ];
 
     public function getSlugOptions(): SlugOptions
     {

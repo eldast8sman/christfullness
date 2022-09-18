@@ -232,13 +232,13 @@ class BookController extends Controller
         if($book){
             FileController::delete_file($book->image_path);
             FileController::delete_file($book->compressed_image);
-            FileController::delete_file($book->audio_path);
+            FileController::delete_file($book->pdf_path);
             $book->delete();
             return response([
                 'status' => 'success',
                 'message' => 'Book Deleted successfully',
                 'data' => $book
-            ], 204);
+            ], 200);
         } else {
             return response([
                 'status' => 'failed',

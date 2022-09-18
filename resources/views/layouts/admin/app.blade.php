@@ -194,6 +194,7 @@
                         <ul aria-expanded="false">
                             <li><a href="{{ env('ADMIN_URL') }}message-series">Message Series</a></li>
                             <li><a href="{{ env('ADMIN_URL') }}messages">Messages</a></li>
+                            <li><a href="{{ env('ADMIN_URL') }}books">Books</a></li>
                         </ul>
                     </li>
                     <li><a href="{{ env('ADMIN_URL') }}devotionals"><i class="icon icon-form"></i>Devotionals</a></li>

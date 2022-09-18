@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use App\Models\User;
 use App\Models\Series;
 use App\Models\Message;
 use App\Models\Minister;
+use App\Models\Devotional;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -124,6 +126,41 @@ class AdminController extends Controller
         return view('admin.message', [
             'message' => $message,
             'series' => $series,
+            'ministers' => $ministers
+        ]);
+    }
+
+    public function devotionals(){
+        $today_dev = Devotional::where('deveotional_date', date('Y-m-d'))->first();
+    }
+
+    public function books(){
+        $books = Book::orderBy('created_at', 'desc')->paginate(2);
+        foreach($books as $book){
+            $book->book_path = url($book->book_path);
+            $book->image_path = url($book->image_path);
+            $book->compressed_image = url($book->compressed_image);
+            $book->author = $book->author();
+        }
+        $ministers = Minister::orderBy('name', 'asc')->get();
+
+        return view('admin.books', [
+            'books' => $books,
+            'ministers' => $ministers
+        ]);
+    }
+
+    public function book($slug){
+        $book = Book::where('slug', $slug)->first();
+        $book->book_path = url($book->book_path);
+        $book->image_path = url($book->image_path);
+        $book->compressed_image = url($book->compressed_image);
+        $book->author = $book->author();
+        $book->author->filepath = url($book->author->filepath);
+        $ministers = Minister::orderBy('name', 'asc')->get();
+
+        return view('admin.book', [
+            'book' => $book,
             'ministers' => $ministers
         ]);
     }

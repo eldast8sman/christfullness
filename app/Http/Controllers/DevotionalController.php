@@ -31,7 +31,7 @@ class DevotionalController extends Controller
         }
     }
     
-     public function todayDeveotional()
+    public function todayDevotional()
     {
         $today = date('Y-m-d');
         $devotional = Devotional::where('devotional_date', $today)->first();

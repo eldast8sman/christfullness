@@ -35,6 +35,9 @@ Route::prefix('dashboard')->group(function(){
         Route::get('/messages', 'messages')->name('messages');
         Route::get('/messages/{slug}', 'showMessage')->name('message');
 
+        Route::get('/books', 'books')->name('books');
+        Route::get('/books/{slug}', 'book')->name('book');
+
         Route::get('/devotionals', 'devotionals')->name('devotionals');
         
         Route::post('/logout', 'logout');

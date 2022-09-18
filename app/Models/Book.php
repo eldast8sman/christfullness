@@ -24,6 +24,6 @@ class Book extends Model
      * Fetches the Author of the Book
      */
     public function author(){
-        return $this->belongsTo(Minister::class);
+        return Minister::find($this->minister_id);
     }
 }
