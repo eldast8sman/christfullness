@@ -15,7 +15,7 @@ class VideoController extends Controller
      */
     public function index()
     {
-        $videos = Video::orderBy('created_at', 'desc')->paginate();
+        $videos = Video::orderBy('created_at', 'desc')->paginate(20);
         if(!empty($videos)){
             return response([
                 'status' => 'success',

@@ -698,6 +698,115 @@ if(del_book){
     }
 }
 
+$("form.devotional_form").submit(function(e){
+    e.preventDefault(e);
+
+    var dev_date = $("input#devotional_date").val();
+    var minister = $("select#minister_id").val();
+    var topic = $("input#topic").val();
+    var bible_text = $("input#bible_text").val();
+    var memory_verse_text = $("input#memory_verse_text").val();
+    var memory_verse = $("textarea#memory_verse").val();
+    var devotional = $("textarea#devotional").val();
+
+    if((dev_date == "") || (minister == "") || (topic == "") || (bible_text == "") || (memory_verse_text == "") || (memory_verse == "") || (devotional == "")){
+        var error_message = "";
+        if(dev_date == ""){
+            error_message += "Devotional Date must be selected! ";
+        }
+        if(minister == ""){
+            error_message += "Minister must be selected! ";
+        }
+        if(bible_text == ""){
+            error_message += "Bible Text must be provided! ";
+        }
+        if(memory_verse_text == ""){
+            error_message += "Memory Verse Reference must be provided! ";
+        }
+        if(memory_verse == ""){
+            error_message += "Memory Verse must be provided! ";
+        }
+        if(devotional == ""){
+            error_message += "Devotional must  be provided!";
+        }
+        toaster_error(error_message);
+        return false;
+    } else {
+        var data_id = e.target.dataset['id'];
+
+        if(data_id == ""){
+            var url = API_URL+"devotionals";
+            var method = "POST";
+        } else {
+            var url = API_URL+"devotionals/"+data_id;
+            var method = "POST";
+        }
+
+        var fd = new FormData(document.querySelector(".devotional_form"));
+        // console.log(method);
+        // console.log(url);
+        // console.log(fd.get());
+
+        $.ajax({
+            type: method,
+            url: url,
+            data: fd,
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                "Authorization": "Bearer "+sessionStorage.getItem('token')
+            },
+            success: function(response){
+                if(response.status == "success"){
+                    toaster_success(response.message);
+                    if(data_id == ""){
+                        window.location= ADMIN_URL+"devotionals"
+                    } else {
+                        window.location = ADMIN_URL+"devotionals/"+response.data.slug
+                    }
+                } else {
+                    toaster_error(response.message);
+                }
+            },
+            error: function(response){
+                console.log(response.responseText);
+                toaster_error(response.responseText);
+            }
+        })
+    }
+});
+
+del_dev = document.querySelector("#delete_devotional");
+if(del_dev){
+    del_dev.onclick = function(e){
+        var dev_id = e.target.dataset['id'];
+    
+        $.ajax({
+            type: "DELETE",
+            url: API_URL+"devotionals/"+dev_id,
+            dataType: "json",
+            headers: {
+                "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                "Content-Type": "application/json"
+            },
+            success: function(response){
+                if(response.status == "success"){
+                    toaster_success(response.message);
+    
+                    window.location = ADMIN_URL+"devotionals";
+                } else {
+                    toaster_error(response.message);
+                }
+            },
+            error: function(response){
+                toaster_error(response.responseText);
+            }
+        })
+    }
+}
+
 function toaster_error(error_message){
     toastr.error(error_message, "Error", {
         positionClass: "toast-top-right",

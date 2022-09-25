@@ -39,6 +39,10 @@ Route::prefix('dashboard')->group(function(){
         Route::get('/books/{slug}', 'book')->name('book');
 
         Route::get('/devotionals', 'devotionals')->name('devotionals');
+        Route::get('/devotionals/{slug}', 'devotional')->name('devotional');
+
+        Route::get('/videos', 'vidoes')->name('videos');
+        Route::get('/video/{slug}', 'video')->name('video');
         
         Route::post('/logout', 'logout');
     });

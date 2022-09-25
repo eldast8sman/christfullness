@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\User;
+use App\Models\Video;
 use App\Models\Series;
 use App\Models\Message;
 use App\Models\Minister;
@@ -131,11 +132,32 @@ class AdminController extends Controller
     }
 
     public function devotionals(){
-        $today_dev = Devotional::where('devotional_date', date('Y-m-d'))->first();
+        $devotionals = Devotional::orderBy('devotional_date', 'desc')->paginate(20);
+        foreach($devotionals as $devotional){
+            $devotional->minister = Minister::find($devotional->minister_id);
+        }
+        $ministers = Minister::orderBy('name', 'asc')->get();
+
+        return view('admin.devotionals', [
+            'devotionals' => $devotionals,
+            'ministers' => $ministers
+        ]);
+    }
+
+    public function devotional($slug){
+        $devotional = Devotional::where('slug', $slug)->first();
+        $devotional->minister = Minister::find($devotional->minister_id);
+
+        $ministers = Minister::orderBy('name', 'asc')->get();
+
+        return view('admin.devotional', [
+            'devotional' => $devotional,
+            'ministers' => $ministers
+        ]);
     }
 
     public function books(){
-        $books = Book::orderBy('created_at', 'desc')->paginate(2);
+        $books = Book::orderBy('created_at', 'desc')->paginate(20);
         foreach($books as $book){
             $book->book_path = url($book->book_path);
             $book->image_path = url($book->image_path);
@@ -162,6 +184,20 @@ class AdminController extends Controller
         return view('admin.book', [
             'book' => $book,
             'ministers' => $ministers
+        ]);
+    }
+
+    public function videos(){
+        $videos = Video::orderBy('created_at', 'desc')->paginate(20);
+        return view('admin.videos', [
+            'videos' => $videos,
+        ]);
+    }
+
+    public function video($slug){
+        $video = Video::where('slug', $slug)->first();
+        return view('admin.video', [
+            'video' => $video
         ]);
     }
 }

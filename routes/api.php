@@ -62,7 +62,7 @@ Route::middleware('auth:sanctum')->group(function(){
 
     Route::post('/devotionals', [DevotionalController::class, 'store'])->name('createDevotional');
     Route::get('/devotionals/{id}', [DevotionalController::class, 'show'])->name('getDevotionalById');
-    Route::put('/devotionals/{id}', [DevotionalController::class, 'update'])->name('updateDevotional');
+    Route::post('/devotionals/{id}', [DevotionalController::class, 'update'])->name('updateDevotional');
     Route::delete('/devotionals/{id}', [DevotionalController::class, 'destroy'])->name('deleteDevotional');
 
     Route::post('/logout', [AuthController::class, 'logout']);

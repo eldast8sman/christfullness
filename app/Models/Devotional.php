@@ -12,8 +12,10 @@ class Devotional extends Model
     use HasFactory, HasSlug;
 
     protected $fillable = [
+        'minister_id',
         'devotional_date', 
-        'topic', 
+        'topic',
+        'slug', 
         'bible_text', 
         'memory_verse_text', 
         'memory_verse', 

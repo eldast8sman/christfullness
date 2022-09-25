@@ -24,9 +24,10 @@ class UpdateDevotionalRequest extends FormRequest
     public function rules()
     {
         return [
+            'minister_id' => 'required|integer|exists:ministers,id',
             'devotional_date' => 'required|date',
             'topic' => 'required|string|max:255',
-            'bible_text' => 'required|text|max:255',
+            'bible_text' => 'required|string|max:255',
             'memory_verse_text' => 'required|string|max:255',
             'memory_verse' => 'required|string',
             'devotional' => 'required'

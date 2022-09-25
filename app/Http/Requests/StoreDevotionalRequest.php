@@ -24,9 +24,10 @@ class StoreDevotionalRequest extends FormRequest
     public function rules()
     {
         return [
-            'devotional_date' => 'required|date',
+            'minister_id' => 'required|integer|exists:ministers,id',
+            'devotional_date' => 'required|date|unique:devotionals',
             'topic' => 'required|string|max:255',
-            'bible_text' => 'required|text|max:255',
+            'bible_text' => 'required|string|max:255',
             'memory_verse_text' => 'required|string|max:255',
             'memory_verse' => 'required|string',
             'devotional' => 'required'
