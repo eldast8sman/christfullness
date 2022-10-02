@@ -195,9 +195,10 @@
                             <li><a href="{{ env('ADMIN_URL') }}message-series">Message Series</a></li>
                             <li><a href="{{ env('ADMIN_URL') }}messages">Messages</a></li>
                             <li><a href="{{ env('ADMIN_URL') }}books">Books</a></li>
+                            <li><a href="{{ env('ADMIN_URL') }}videos">Videos</a></li>
                         </ul>
                     </li>
-                    <li><a href="{{ env('ADMIN_URL') }}devotionals"><i class="icon icon-form"></i>Devotionals</a></li>
+                    <li><a href="{{ env('ADMIN_URL') }}devotionals"><i class="icon icon-form"></i><span class="nav-text">Devotionals</span></a></li>
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
                                 class="icon icon-chart-bar-33"></i><span class="nav-text">Charts</span></a>
                         <ul aria-expanded="false">

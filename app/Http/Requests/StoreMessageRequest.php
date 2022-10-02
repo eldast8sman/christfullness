@@ -25,7 +25,7 @@ class StoreMessageRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
-            'series_id' => 'integer:exists:\App\Models\Series,id',
+            'series_id' => 'integer|exists:\App\Models\Series,id',
             'minister_id' => 'required|integer|exists:\App\Models\Minister,id',
             'image_path' => 'required|mimes:jpg,jpeg,png,gif'
         ];

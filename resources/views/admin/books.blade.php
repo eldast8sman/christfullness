@@ -32,7 +32,7 @@
                             </p>
                             <div class="row">
                                 @foreach ($books as $book)
-                                    <div class="col-xl-3 col-lg-4 col-md-6 col">
+                                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
                                         <a href="{{ env('ADMIN_URL') }}books/{{ $book->slug }}">
                                             @component('admin.components.cards')
                                                 @slot('title')

@@ -807,6 +807,109 @@ if(del_dev){
     }
 }
 
+var video_forms = document.querySelectorAll(".video_form");
+for(let i=0; i < video_forms.length; i++){
+    video_form = video_forms[i];
+
+    video_form.onsubmit = function(e){
+        e.preventDefault();
+
+        var title = $("input#video_title").val();
+        var platform = $("select#video_platform").val();
+        var link = $("input#video_link").val();
+
+        if((title == "") || (platform == "") || (link == "")){
+            var error_message = "";
+            if(title == ""){
+                error_message += "Video must have a Title! ";
+            }
+            if(platform == ""){
+                error_message += "Video Platform must be provided";
+            }
+            if(link == ""){
+                error_message += "Video Link must be provided";
+            }
+            toaster_error(error_message);
+            return false;
+        } else {
+            var data_id = e.target.dataset['id'];
+
+            if(data_id == ""){
+                var url = API_URL+"videos";
+            } else {
+                var url = API_URL+"videos/"+data_id;
+            }
+
+            var fd = new FormData(e.target);
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: fd,
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    "Authorization": "Bearer "+sessionStorage.getItem('token')
+                },
+                success: function(response){
+                    if(response.status == "success"){
+                        toaster_success(response.message);
+                        if(data_id == ""){
+                            window.location= ADMIN_URL+"videos"
+                        } else {
+                            var page = $("input#video_page").val();
+                            window.location = ADMIN_URL+"videos?page="+page
+                        }
+                    } else {
+                        toaster_error(response.message);
+                    }
+                },
+                error: function(response){
+                    console.log(response.responseText);
+                    toaster_error(response.responseText);
+                }
+            })
+        }
+    }
+}
+
+var video_del_buttons = document.querySelectorAll(".delete_video");
+for(let i=0; i < video_del_buttons.length; i++){
+    del_button = video_del_buttons[i];
+
+    del_button.onclick = function(e){
+        var video_id = e.target.dataset['id'];
+
+        $.ajax({
+            type: "DELETE",
+            url: API_URL+"videos/"+video_id,
+            dataType: "json",
+            headers: {
+                "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                "Content-Type": "application/json"
+            },
+            success: function(response){
+                if(response.status == "success"){
+                    toaster_success("Deleting Video...");
+
+                    function redirect(){
+                        window.location = ADMIN_URL+"videos";
+                    }
+
+                    setTimeout(redirect(), 2500);
+                } else {
+                    toaster_success(response.message);
+                }
+            },
+            error: function(response){
+                toaster_error(response.responseText);
+            }
+        })
+    }
+}
+
 function toaster_error(error_message){
     toastr.error(error_message, "Error", {
         positionClass: "toast-top-right",

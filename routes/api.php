@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\VideoController;
 use App\Http\Controllers\SeriesController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\MinisterController;

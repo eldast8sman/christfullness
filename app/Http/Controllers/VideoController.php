@@ -51,6 +51,7 @@ class VideoController extends Controller
     {
         $all = $request->all();
         $all['output_link'] = $this->output_link($all['platform'], $all['link']);
+        $all['all_details'] = $all['title'].' '.$all['details'];
         $video = Video::create($all);
         if($video){
             return response([
@@ -133,7 +134,10 @@ class VideoController extends Controller
     {
         $video = Video::find($id);
         if($video){
-            if($video->update($request->all())){
+            $all = $request->all();
+            $all['output_link'] = $this->output_link($all['platform'], $all['link']);
+            $all['all_details'] = $all['title'].' '.$all['details'];
+            if($video->update($all)){
                 return response([
                     'status' => 'success',
                     'message' => 'Video Updated successfully',
@@ -169,7 +173,7 @@ class VideoController extends Controller
                 'status' => 'success',
                 'message' => 'Video successfully deleted',
                 'data' => $video
-            ], 204);
+            ], 200);
         } else {
             return response([
                 'status' => 'failed',
@@ -186,7 +190,7 @@ class VideoController extends Controller
         $platform = strtolower($platform);
         if($platform == "youtube"){
             $extract = substr($link, 17);
-            $output = "https://youtube.com/embed/".$extract;
+            $output = "https://www.youtube.com/embed/".$extract;
         } else {
             $output = "";
         }

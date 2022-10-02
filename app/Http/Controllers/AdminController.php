@@ -189,8 +189,10 @@ class AdminController extends Controller
 
     public function videos(){
         $videos = Video::orderBy('created_at', 'desc')->paginate(20);
+        $page = !empty($_GET['page']) ? $_GET['page'] : 1;
         return view('admin.videos', [
             'videos' => $videos,
+            'page' => $page
         ]);
     }
 
