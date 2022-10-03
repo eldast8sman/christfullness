@@ -16,6 +16,9 @@
 /public/img/articles/*.jpg
 /public/img/articles/*.png
 /public/img/articles/*.jpeg
+/public/img/photos/*.jpg
+/public/img/photos/*.png
+/public/img/photos/*.jpeg
 /public/img/series/compressed/*.jpg
 /public/img/series/compressed/*.png
 /public/img/series/compressed/*.jpeg
@@ -31,6 +34,9 @@
 /public/img/articles/compressed/*.jpg
 /public/img/articles/compressed/*.png
 /public/img/articles/compressed/*.jpeg
+/public/img/photos/compressed/*.jpg
+/public/img/photos/compressed/*.png
+/public/img/photos/compressed/*.jpeg
 /public/audio/*.mp3
 /public/audio/messages/*.mp3
 /public/document/books/*.pdf

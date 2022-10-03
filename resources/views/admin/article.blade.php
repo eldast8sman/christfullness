@@ -83,7 +83,7 @@
                                             delete_article_modal
                                         @endslot
                                         @slot('modal_title')
-                                            Delete {{ $article->tite }}
+                                            Delete {{ $article->title }}
                                         @endslot
                                         @slot('modal_body')
                                             Do you really want to delete {{ $article->title }} as an Article from this App? <br />

@@ -63,6 +63,7 @@ class PhotoController extends Controller
             $all['filepath'] = 'img/photos/'.$upload;
             $all['compressed'] = 'img/photos/compressed/'.$upload;
         }
+        $all['all_details'] = $all['caption'].' '.$all['details'];
         $photo = Photo::create($all);
         if($photo){
             $photo->filepath = url($photo->filepath);
@@ -165,6 +166,7 @@ class PhotoController extends Controller
             } else {
                 unset($all['filepath']);
             }
+            $all['all_details'] = $all['caption'].' '.$all['details'];
             if($photo->update($all)){
                 $photo->filepath = url($photo->filepath);
                 $photo->compressed = url($photo->compressed);

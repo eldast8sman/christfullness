@@ -196,6 +196,7 @@
                             <li><a href="{{ env('ADMIN_URL') }}message-series">Message Series</a></li>
                             <li><a href="{{ env('ADMIN_URL') }}messages">Messages</a></li>
                             <li><a href="{{ env('ADMIN_URL') }}books">Books</a></li>
+                            <li><a href="{{ env('ADMIN_URL') }}photos">Photos</a></li>
                             <li><a href="{{ env('ADMIN_URL') }}videos">Videos</a></li>
                         </ul>
                     </li>

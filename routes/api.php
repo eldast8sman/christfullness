@@ -74,7 +74,7 @@ Route::middleware('auth:sanctum')->group(function(){
         Route::post('/photos', 'store')->name('createPhoto');
         Route::get('/photos/{id}', 'show')->name('getPhotoById');
         Route::post('/photos/{id}', 'update')->name('updatePhoto');
-        Route::delete('/photos/{id}', 'desroy')->name('deletePhoto');
+        Route::delete('/photos/{id}', 'destroy')->name('deletePhoto');
     });
 
     Route::controller(DevotionalController::class)->group(function(){

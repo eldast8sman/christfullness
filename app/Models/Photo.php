@@ -11,12 +11,12 @@ class Photo extends Model
 {
     use HasFactory, HasSlug;
 
-    protected $fillable = ['caption', 'slug', 'details', 'filepath', 'compressed'];
+    protected $fillable = ['caption', 'slug', 'details', 'all_details', 'filepath', 'compressed'];
 
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom('title')
+            ->generateSlugsFrom('caption')
             ->saveSlugsTo('slug');
     }
 }

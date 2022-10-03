@@ -950,7 +950,7 @@ $("form.article_form").submit(function(e){
 
         url = API_URL+"articles";
     } else {
-        if((title == "") || (author == "") || (article == "") || (published == "") || (image_files.length < 1)){
+        if((title == "") || (author == "") || (article == "") || (published == "")){
             var error_message = "";
             if(title == ""){
                 error_message += "Article Title must be provided! ";
@@ -1031,6 +1031,106 @@ if(del_article){
                     toaster_success(response.message);
     
                     window.location = ADMIN_URL+"articles";
+                } else {
+                    toaster_error(response.message);
+                }
+            },
+            error: function(response){
+                toaster_error(response.responseText);
+            }
+        })
+    }
+}
+
+$("form.photo_form").submit(function(e){
+    e.preventDefault();
+
+    var caption = $("input#article_title").val();
+    var image_files = $('#image_upload')[0].files;
+    var data_id = e.target.dataset['id'];
+
+    if(data_id == ""){
+        if((caption == "") || (image_files.length < 1)){
+            var error_message = "";
+            if(caption == ""){
+                error_message += "Photo Caption must be provided! ";
+            }
+            toaster_error(error_message);
+            return false;
+        }
+
+        image_file = image_files[0].type;
+        if((image_file != "image/jpg") && (image_file != "image/jpeg") && (image_file != "image/png")){
+            toaster_error("Wrong Image Filetype");
+            return false;
+        }
+
+        url = API_URL+"photos";
+    } else {
+        if(caption == ""){
+            toaster_error('Photo Caption must be provided');
+        }
+
+        if(image_files.length > 0){
+            image_file = image_files[0].type;
+            if((image_file != "image/jpg") && (image_file != "image/jpeg") && (image_file != "image/png")){
+                toaster_error("Wrong Image Filetype");
+                return false;
+            }
+        }
+        
+        url = API_URL+"photos/"+data_id;
+    }
+    var fd = new FormData(document.querySelector(".photo_form"));
+    toaster_success("Photo Uploading...");
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: fd,
+        dataType: "json",
+        processData: false,
+        contentType: false,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            "Authorization": "Bearer "+sessionStorage.getItem('token')
+        },
+        success: function(response){
+            if(response.status == "success"){
+                toaster_success(response.message);
+                if(data_id == ""){
+                    window.location= ADMIN_URL+"photos"
+                } else {
+                    window.location = ADMIN_URL+"photos/"+response.data.slug
+                }
+            } else {
+                toaster_error(response.message);
+            }
+        },
+        error: function(response){
+            console.log(response.responseText);
+            toaster_error(response.responseText);
+        }
+    })
+});
+
+del_photo = document.querySelector("#delete_photo");
+if(del_photo){
+    del_photo.onclick = function(e){
+        var photo_id = e.target.dataset['id'];
+    
+        $.ajax({
+            type: "DELETE",
+            url: API_URL+"photos/"+photo_id,
+            dataType: "json",
+            headers: {
+                "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                "Content-Type": "application/json"
+            },
+            success: function(response){
+                if(response.status == "success"){
+                    toaster_success(response.message);
+    
+                    window.location = ADMIN_URL+"photos";
                 } else {
                     toaster_error(response.message);
                 }

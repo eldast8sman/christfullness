@@ -10,6 +10,7 @@ use App\Models\Series;
 use App\Models\Message;
 use App\Models\Minister;
 use App\Models\Devotional;
+use App\Models\Photo;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -215,6 +216,26 @@ class AdminController extends Controller
 
         return view('admin.article', [
             'article' => $article
+        ]);
+    }
+
+    public function photos(){
+        $photos = Photo::orderBy('created_at', 'desc')->paginate(20);
+        foreach($photos as $photo){
+            $photo->filepath = url($photo->filepath);
+            $photo->compressed = url($photo->compressed);
+        }
+        return view('admin.photos', [
+            'photos' => $photos
+        ]);
+    }
+
+    public function photo($slug){
+        $photo = Photo::where('slug', $slug)->first();
+        $photo->filepath = url($photo->filepath);
+        $photo->compressed = url($photo->compressed);
+        return view('admin.photo', [
+            'photo' => $photo
         ]);
     }
 }
