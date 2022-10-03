@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -28,45 +29,68 @@ use App\Http\Controllers\DevotionalController;
 
 Route::middleware('auth:sanctum')->group(function(){
     
-    Route::get('users/{id}', [AuthController::class, 'show']);
-    Route::delete('/users/{id}', [AuthController::class, 'destroy']);
-    Route::put('users/{id}', [AuthController::class, 'update']);
+    Route::controller(AuthController::class)->group(function(){
+        Route::get('users/{id}', 'show');
+        Route::delete('/users/{id}', 'destroy');
+        Route::put('users/{id}', 'update');
+        Route::post('/logout', 'logout');
+    });
     
-    Route::post('/series', [SeriesController::class, 'store'])->name('createSeries');
-    Route::post('/series/{id}', [SeriesController::class, 'update'])->name('updateSeries');
-    Route::delete('/series/{id}', [SeriesController::class, 'destroy'])->name('deleteSeries');
+    Route::controller(SeriesController::class)->group(function(){
+        Route::post('/series', 'store')->name('createSeries');
+        Route::post('/series/{id}', 'update')->name('updateSeries');
+        Route::delete('/series/{id}', 'destroy')->name('deleteSeries');
+    });
 
-    Route::get('/ministers', [MinisterController::class, 'index'])->name('ministers');
-    Route::post('/ministers', [MinisterController::class, 'store'])->name('createMinister');
-    Route::get('ministers/{id}', [MinisterController::class, 'show'])->name('getMinisterById');
-    Route::post('/ministers/{id}', [MinisterController::class, 'update'])->name('updateMinister');
-    Route::delete('/ministers/{id}', [MinisterController::class, 'destroy'])->name('deleteMinister');
+    Route::controller(MinisterController::class)->group(function(){
+        Route::get('/ministers', 'index')->name('ministers');
+        Route::post('/ministers', 'store')->name('createMinister');
+        Route::get('ministers/{id}', 'show')->name('getMinisterById');
+        Route::post('/ministers/{id}', 'update')->name('updateMinister');
+        Route::delete('/ministers/{id}', 'destroy')->name('deleteMinister');
+    });
 
-    Route::post('/messages', [MessageController::class, 'store'])->name('createMessage');
-    Route::post('/messages/{id}', [MessageController::class, 'update'])->name('updateMessage');
-    Route::delete('/messages/{id}', [MessageController::class, 'destroy'])->name('deleteMessage');
+    Route::controller(MessageController::class)->group(function(){
+        Route::post('/messages', 'store')->name('createMessage');
+        Route::post('/messages/{id}', 'update')->name('updateMessage');
+        Route::delete('/messages/{id}', 'destroy')->name('deleteMessage');
+    });
 
-    Route::post('/books', [BookController::class, 'store'])->name('createBook');
-    Route::get('/books/{id}', [BookController::class, 'show'])->name('getBookById');
-    Route::post('books/{id}', [BookController::class, 'update'])->name('updateBook');
-    Route::delete('books/{id}', [BookController::class, 'destroy'])->name('deleteBook');
+    Route::controller(BookController::class)->group(function(){
+        Route::post('/books', 'store')->name('createBook');
+        Route::get('/books/{id}', 'show')->name('getBookById');
+        Route::post('books/{id}', 'update')->name('updateBook');
+        Route::delete('books/{id}', 'destroy')->name('deleteBook');
+    });
 
-    Route::post('/videos', [VideoController::class, 'store'])->name('createVideo');
-    Route::get('/videos/{id}', [VideoController::class, 'show'])->name('getVideoById');
-    Route::post('/videos/{id}', [VideoController::class, 'update'])->name('updateVideo');
-    Route::delete('/videos/{id}', [VideoController::class, 'destroy'])->name('deleteVideo');
+    Route::controller(VideoController::class)->group(function(){
+        Route::post('/videos', 'store')->name('createVideo');
+        Route::get('/videos/{id}', 'show')->name('getVideoById');
+        Route::post('/videos/{id}', 'update')->name('updateVideo');
+        Route::delete('/videos/{id}', 'destroy')->name('deleteVideo');
+    });
+    
+    Route::controller(PhotoController::class)->group(function(){
+        Route::post('/photos', 'store')->name('createPhoto');
+        Route::get('/photos/{id}', 'show')->name('getPhotoById');
+        Route::post('/photos/{id}', 'update')->name('updatePhoto');
+        Route::delete('/photos/{id}', 'desroy')->name('deletePhoto');
+    });
 
-    Route::post('/photos', [PhotoController::class, 'store'])->name('createPhoto');
-    Route::get('/photos/{id}', [PhotoController::class, 'show'])->name('getPhotoById');
-    Route::post('/photos/{id}', [PhotoController::class, 'update'])->name('updatePhoto');
-    Route::delete('/photos/{id}', [PhotoController::class, 'desroy'])->name('deletePhoto');
+    Route::controller(DevotionalController::class)->group(function(){
+        Route::post('/devotionals', 'store')->name('createDevotional');
+        Route::get('/devotionals/{id}', 'show')->name('getDevotionalById');
+        Route::post('/devotionals/{id}', 'update')->name('updateDevotional');
+        Route::delete('/devotionals/{id}', 'destroy')->name('deleteDevotional');
+    });
 
-    Route::post('/devotionals', [DevotionalController::class, 'store'])->name('createDevotional');
-    Route::get('/devotionals/{id}', [DevotionalController::class, 'show'])->name('getDevotionalById');
-    Route::post('/devotionals/{id}', [DevotionalController::class, 'update'])->name('updateDevotional');
-    Route::delete('/devotionals/{id}', [DevotionalController::class, 'destroy'])->name('deleteDevotional');
-
-    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::controller(ArticleController::class)->group(function(){
+        Route::post('/articles', 'store')->name('createArticle');
+        Route::get('/articles/{id}', 'show')->name('getArticleById');
+        Route::post('/articles/{id}', 'update')->name('updateArticle');
+        Route::delete('/articles/{id}', 'destroy')->name('deleteArticle');
+    });
+    
 });
 
 Route::post('/register', [AuthController::class, 'register']);
@@ -97,3 +121,6 @@ Route::get('/devotionals', [DevotionalController::class, 'index'])->name('allDev
 Route::get('/devotionals/by-date/today', [DevotionalController::class, 'todayDevotional'])->name('todayDevotional');
 Route::get('/devotionals/by-date/previous', [DevotionalController::class, 'previousDevotionals'])->name('previousDevotionals');
 Route::get('/devotionals/by-slug/{slug}', [DevotionalController::class, 'bySlug'])->name('getDevotionalBySlug');
+
+Route::get('/articles', [ArticleController::class, 'index'])->name('articles');
+Route::get('/articles/{slug}', [ArticleController::class, 'bySlug'])->name('getArticleBySlug');

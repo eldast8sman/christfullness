@@ -62,7 +62,7 @@ class ArticleController extends Controller
             $all['image_path'] = 'img/articles/'.$upload_image;
             $all['compressed_image'] = 'img/articles/compressed/'.$upload_image;
         }
-        $all['details'] = $all['title'].' '.$all['article'].' '.$all['author'].' '.date('l, jS F, Y', strtotime($all['published']));
+        $all['all_details'] = $all['title'].' '.$all['article'].' '.$all['author'].' '.date('l, jS F, Y', strtotime($all['published']));
         $article = Article::create($all);
         if($article){
             $article->image_path = url($article->image_path);
@@ -167,6 +167,7 @@ class ArticleController extends Controller
             } else {
                 unset($all['image_path']);
             }
+            $all['all_details'] = $all['title'].' '.$all['article'].' '.$all['author'].' '.date('l, jS F, Y', strtotime($all['published']));
             if($article->update($all)){
                 $article->image_path = url($article->image_path);
                 $article->compressed_image = url($article->compressed_image);

@@ -32,7 +32,7 @@
                             </p>
                             <div class="row">
                                 @foreach ($messages as $message)
-                                    <div class="col-xl-3 col-lg-4 col-md-6 col">
+                                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4">
                                         <a href="{{ env('ADMIN_URL') }}messages/{{ $message->slug }}">
                                             @component('admin.components.cards')
                                                 @slot('title')

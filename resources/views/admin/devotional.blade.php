@@ -38,7 +38,7 @@
                                     {{ $devotional->memory_verse_text }}
                                 </p>
                                 <p>
-                                    <blockquote>{!! nl2br($devotional->devotional) !!}</blockquote>
+                                    <blockquote>{!! $devotional->devotional !!}</blockquote>
                                 </p>
                                 <p>
                                     <strong>Further Reading</strong><br />

@@ -25,7 +25,7 @@ class UpdateArticleRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
-            'article' => 'required_string',
+            'article' => 'required|string',
             'published' => 'required|date',
             'image_path' => 'mimes:jpg,jpeg,png'
         ];

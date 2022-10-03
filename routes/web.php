@@ -42,7 +42,9 @@ Route::prefix('dashboard')->group(function(){
         Route::get('/devotionals/{slug}', 'devotional')->name('devotional');
 
         Route::get('/videos', 'videos')->name('videos');
-        Route::get('/video/{slug}', 'video')->name('video');
+
+        Route::get('/articles', 'articles')->name('articles');
+        Route::get('/articles/{slug}', 'article')->name('article');
         
         Route::post('/logout', 'logout');
     });

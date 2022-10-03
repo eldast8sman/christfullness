@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
 use App\Models\Book;
 use App\Models\User;
 use App\Models\Video;
@@ -196,10 +197,24 @@ class AdminController extends Controller
         ]);
     }
 
-    public function video($slug){
-        $video = Video::where('slug', $slug)->first();
-        return view('admin.video', [
-            'video' => $video
+    public function articles(){
+        $articles = Article::orderBy('created_at', 'desc')->paginate(20);
+        foreach($articles as $article){
+            $article->image_path = url($article->image_path);
+            $article->compressed_image = url($article->compressed_image);
+        }
+        return view('admin.articles', [
+            'articles' => $articles
+        ]);
+    }
+
+    public function article($slug){
+        $article = Article::where('slug', $slug)->first();
+        $article->image_path = url($article->image_path);
+        $article->compressed_image = url($article->compressed_image);
+
+        return view('admin.article', [
+            'article' => $article
         ]);
     }
 }

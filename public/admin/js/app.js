@@ -910,6 +910,138 @@ for(let i=0; i < video_del_buttons.length; i++){
     }
 }
 
+$("form.article_form").submit(function(e){
+    e.preventDefault();
+
+    var title = $("input#article_title").val();
+    var author = $("input#article_author").val();
+    var article = $("textarea#article_article").val();
+    var image_files = $('#image_upload')[0].files;
+    var published = $("input#article_published").val();
+    var data_id = e.target.dataset['id'];
+
+    if(data_id == ""){
+        if((title == "") || (author == "") || (article == "") || (published == "") || (image_files.length < 1)){
+            var error_message = "";
+            if(title == ""){
+                error_message += "Article Title must be provided! ";
+            }
+            if(author == ""){
+                error_message += "Author must be provided! ";
+            }
+            if(article == ""){
+                error_message += "Article must be provided! ";
+            }
+            if(published == ""){
+                error_message += "Article's Published Date must be provided! ";
+            }
+            if(image_files.length < 1){
+                error_message += "Article Image must be uploaded! ";
+            }
+            toaster_error(error_message);
+            return false;
+        }
+
+        image_file = image_files[0].type;
+        if((image_file != "image/jpg") && (image_file != "image/jpeg") && (image_file != "image/png")){
+            toaster_error("Wrong Image Filetype");
+            return false;
+        }
+
+        url = API_URL+"articles";
+    } else {
+        if((title == "") || (author == "") || (article == "") || (published == "") || (image_files.length < 1)){
+            var error_message = "";
+            if(title == ""){
+                error_message += "Article Title must be provided! ";
+            }
+            if(author == ""){
+                error_message += "Author must be provided! ";
+            }
+            if(article == ""){
+                error_message += "Article must be provided! ";
+            }
+            if(published == ""){
+                error_message += "Article's Published Date must be provided! ";
+            }
+            if(image_files.length < 1){
+                error_message += "Article Image must be uploaded! ";
+            }
+            toaster_error(error_message);
+            return false;
+        }
+
+        if(image_files.length > 0){
+            image_file = image_files[0].type;
+            if((image_file != "image/jpg") && (image_file != "image/jpeg") && (image_file != "image/png")){
+                toaster_error("Wrong Image Filetype");
+                return false;
+            }
+        }
+        
+        url = API_URL+"articles/"+data_id;
+    }
+    var fd = new FormData(document.querySelector(".article_form"));
+    toaster_success("Article Uploading...");
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: fd,
+        dataType: "json",
+        processData: false,
+        contentType: false,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            "Authorization": "Bearer "+sessionStorage.getItem('token')
+        },
+        success: function(response){
+            if(response.status == "success"){
+                toaster_success(response.message);
+                if(data_id == ""){
+                    window.location= ADMIN_URL+"articles"
+                } else {
+                    window.location = ADMIN_URL+"articles/"+response.data.slug
+                }
+            } else {
+                toaster_error(response.message);
+            }
+        },
+        error: function(response){
+            console.log(response.responseText);
+            toaster_error(response.responseText);
+        }
+    })
+});
+
+del_article = document.querySelector("#delete_article");
+if(del_article){
+    del_article.onclick = function(e){
+        var article_id = e.target.dataset['id'];
+    
+        $.ajax({
+            type: "DELETE",
+            url: API_URL+"articles/"+article_id,
+            dataType: "json",
+            headers: {
+                "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                "Content-Type": "application/json"
+            },
+            success: function(response){
+                if(response.status == "success"){
+                    toaster_success(response.message);
+    
+                    window.location = ADMIN_URL+"articles";
+                } else {
+                    toaster_error(response.message);
+                }
+            },
+            error: function(response){
+                toaster_error(response.responseText);
+            }
+        })
+    }
+}
+
 function toaster_error(error_message){
     toastr.error(error_message, "Error", {
         positionClass: "toast-top-right",
@@ -956,4 +1088,12 @@ if($("table#series_table")){
     $('#series_table').DataTable({
         order: [[2, 'desc']],
     });
+}
+
+if($("textarea#article_article")){
+    $('#article_article').summernote();
+}
+
+if($("textarea#devotional")){
+    $('textarea#devotional').summernote();
 }
