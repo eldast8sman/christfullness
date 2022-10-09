@@ -22,7 +22,7 @@ class FileController extends Controller
             if(($extension == 'jpg') || ($extension == 'jpeg') || ($extension == 'gif') || ($extension == 'png')){
                 $filepath->move(public_path('img/'.$destination.'/'), $name);
                 $Image = Image::make('img/'.$destination.'/'.$name);
-                $Image->resize(50, null, function($constraint){
+                $Image->resize(120, null, function($constraint){
                     $constraint->aspectRatio();
                     $constraint->upsize();
                 })->save(public_path('img/'.$destination.'/compressed/'.$name));

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,10 +14,6 @@ use App\Http\Controllers\AdminController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('index');
-});
 
 Route::prefix('dashboard')->group(function(){
     Route::controller(AdminController::class)->group(function(){
@@ -51,4 +48,8 @@ Route::prefix('dashboard')->group(function(){
         
         Route::post('/logout', 'logout');
     });
+});
+
+Route::controller(PageController::class)->group(function(){
+    Route::get('/', 'index')->name('home');
 });

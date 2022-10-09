@@ -10,13 +10,17 @@ use App\Models\Series;
 use App\Models\Message;
 use App\Models\Minister;
 use App\Models\Devotional;
+use App\Models\PageHeader;
 use App\Models\Photo;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
     public function index(){
-        return view('admin.index');
+        $page_headers = PageHeader::orderBy('page', 'asc')->get();
+        return view('admin.index', [
+            'page_headers' => $page_headers
+        ]);
     }
 
     public function login(){

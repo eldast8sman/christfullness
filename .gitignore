@@ -19,6 +19,9 @@
 /public/img/photos/*.jpg
 /public/img/photos/*.png
 /public/img/photos/*.jpeg
+/public/img/headers/*.jpg
+/public/img/headers/*.png
+/public/img/headers/*.jpeg
 /public/img/series/compressed/*.jpg
 /public/img/series/compressed/*.png
 /public/img/series/compressed/*.jpeg
@@ -37,6 +40,9 @@
 /public/img/photos/compressed/*.jpg
 /public/img/photos/compressed/*.png
 /public/img/photos/compressed/*.jpeg
+/public/img/headers/compressed/*.jpg
+/public/img/headers/compressed/*.png
+/public/img/headers/compressed/*.jpeg
 /public/audio/*.mp3
 /public/audio/messages/*.mp3
 /public/document/books/*.pdf
