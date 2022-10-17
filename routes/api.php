@@ -11,6 +11,7 @@ use App\Http\Controllers\SeriesController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\MinisterController;
 use App\Http\Controllers\DevotionalController;
+use App\Http\Controllers\HomeSliderController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PageHeaderController;
 
@@ -97,6 +98,13 @@ Route::middleware('auth:sanctum')->group(function(){
         Route::post('/page_headers', 'store')->name('createPageHeader');
         Route::post('/page_headers/{id}', 'update')->name('updatePageHeader');
         Route::delete('/page_headers/{id}', 'destroy')->name('deletePageHeader');
+    });
+
+    Route::controller(HomeSliderController::class)->group(function(){
+        Route::post('/home_sliders', 'store')->name('createHomeSlider');
+        Route::get('/home_sliders/{id}', 'show')->name('homeSlider');
+        Route::post('/home_sliders/{id}', 'update')->name('updateHomeSlider');
+        Route::delete('/home_sliders/{id}', 'destroy')->name('deleteHomeSlider');
     });
     
 });
