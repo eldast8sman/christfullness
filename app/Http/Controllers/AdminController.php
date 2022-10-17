@@ -242,4 +242,14 @@ class AdminController extends Controller
             'photo' => $photo
         ]);
     }
+
+    public function page_headers(){
+        $headers = PageHeader::orderBy('page', 'asc')->get();
+        foreach($headers as $header){
+            $header->filename = url($header->filename);
+        }
+        return view('admin.page_headers', [
+            'headers' => $headers
+        ]);
+    }
 }

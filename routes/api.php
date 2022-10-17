@@ -11,6 +11,8 @@ use App\Http\Controllers\SeriesController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\MinisterController;
 use App\Http\Controllers\DevotionalController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\PageHeaderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,6 +92,12 @@ Route::middleware('auth:sanctum')->group(function(){
         Route::post('/articles/{id}', 'update')->name('updateArticle');
         Route::delete('/articles/{id}', 'destroy')->name('deleteArticle');
     });
+
+    Route::controller(PageHeaderController::class)->group(function(){
+        Route::post('/page_headers', 'store')->name('createPageHeader');
+        Route::post('/page_headers/{id}', 'update')->name('updatePageHeader');
+        Route::delete('/page_headers/{id}', 'destroy')->name('deletePageHeader');
+    });
     
 });
 
@@ -124,3 +132,6 @@ Route::get('/devotionals/by-slug/{slug}', [DevotionalController::class, 'bySlug'
 
 Route::get('/articles', [ArticleController::class, 'index'])->name('articles');
 Route::get('/articles/{slug}', [ArticleController::class, 'bySlug'])->name('getArticleBySlug');
+
+Route::get('/page_headers', [PageController::class, 'index'])->name('pageHeaders');
+Route::get('/page_headers/{id}', [PageHeaderController::class. 'show'])->name('pageHeader');

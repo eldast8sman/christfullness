@@ -904,6 +904,7 @@ for(let i=0; i < video_del_buttons.length; i++){
                 }
             },
             error: function(response){
+                console.log(response.responseText);
                 toaster_error(response.responseText);
             }
         })
@@ -1136,6 +1137,115 @@ if(del_photo){
                 }
             },
             error: function(response){
+                toaster_error(response.responseText);
+            }
+        })
+    }
+}
+
+var header_forms = document.querySelectorAll(".header_form");
+for(let i=0; i < header_forms.length; i++){
+    header_form = header_forms[i];
+
+    header_form.onsubmit = function(e){
+        e.preventDefault();
+
+        var page = $("input#page_page").val();
+        var title = $("input#page_title").val();
+        var filenames = $("input#image_upload")[0].files;
+
+        if((page == "") || (title == "") || (filenames.length < 1)){
+            var error_message = "";
+            if(page == ""){
+                error_message += "Page must be provided! ";
+            }
+            if(title == ""){
+                error_message += "Page Title must be provided! ";
+            }
+            if(filenames.length < 1){
+                error_message += "Page Header Image must be uploaded! ";
+            }
+            toaster_error(error_message);
+            return false;
+        }
+
+        var data_id = e.target.dataset['id'];
+        if(data_id == ""){
+            image_file = filenames[0].type
+            if((image_file != "image/jpg") && (image_file != "image/jpeg") && (image_file != "image/png")){
+                toaster_error("Wrong Image Filetype");
+                return false;
+            }
+            var url = API_URL+"page_headers"
+        } else {
+            if(filenames.length > 0){
+                image_file = filenames[0].type
+                if((image_file != "image/jpg") && (image_file != "image/jpeg") && (image_file != "image/png")){
+                    toaster_error("Wrong Image Filetype");
+                    return false;
+                }
+            }
+            var url = API_URL+"page_headers/"+data_id;
+        }
+
+        var fd = new FormData(e.target);
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: fd,
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            headers: {
+                'x-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                "Authorization": "Bearer "+sessionStorage.getItem('token')
+            },
+            success: function(response){
+                if(response.status == "success"){
+                    window.location = ADMIN_URL+"page_headers";
+                } else {
+                    toaster_error(response.message);
+                }
+            },
+            error: function(response){
+                console.log(response.responseText);
+                toaster_error(response.responseText);
+            }
+        });
+    }
+}
+
+var pageheader_del_buttons = document.querySelectorAll(".delete_pageheader");
+for(let i=0; i<pageheader_del_buttons.length; i++){
+    del_button = pageheader_del_buttons[i];
+
+    de_button.onclick = function(e){
+        var header_id = e.target.dataset['id'];
+
+        $.ajax({
+            type: "DELETE",
+            url: API_URL+"page_headers/"+header_id,
+            dataType: "json",
+            headers: {
+                "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                "Content-Type": "application/json"
+            },
+            success: function(response){
+                if(response.status == "success"){
+                    toaster_success("Deleting Video...");
+
+                    function redirect(){
+                        window.location = ADMIN_URL+"videos";
+                    }
+
+                    setTimeout(redirect(), 2500);
+                } else {
+                    toaster_error(response.message);
+                }
+            },
+            error: function(response){
+                console.log(response.responseText);
                 toaster_error(response.responseText);
             }
         })
