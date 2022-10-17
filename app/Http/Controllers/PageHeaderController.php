@@ -94,7 +94,7 @@ class PageHeaderController extends Controller
             }
             if($header->update($all)){
                 $header->filename = url($header->filename);
-                $header->compressed = url($header->filename);
+                $header->compressed = url($header->compressed);
                 return response([
                     'status' => 'success',
                     'message' => 'Page Header Updated successfully',

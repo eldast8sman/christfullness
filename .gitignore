@@ -22,6 +22,9 @@
 /public/img/headers/*.jpg
 /public/img/headers/*.png
 /public/img/headers/*.jpeg
+/public/img/sliders/*.jpg
+/public/img/sliders/*.png
+/public/img/sliders/*.jpeg
 /public/img/series/compressed/*.jpg
 /public/img/series/compressed/*.png
 /public/img/series/compressed/*.jpeg
@@ -43,6 +46,9 @@
 /public/img/headers/compressed/*.jpg
 /public/img/headers/compressed/*.png
 /public/img/headers/compressed/*.jpeg
+/public/img/sliders/compressed/*.jpg
+/public/img/sliders/compressed/*.png
+/public/img/sliders/compressed/*.jpeg
 /public/audio/*.mp3
 /public/audio/messages/*.mp3
 /public/document/books/*.pdf
