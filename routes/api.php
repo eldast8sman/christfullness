@@ -142,4 +142,6 @@ Route::get('/articles', [ArticleController::class, 'index'])->name('articles');
 Route::get('/articles/{slug}', [ArticleController::class, 'bySlug'])->name('getArticleBySlug');
 
 Route::get('/page_headers', [PageController::class, 'index'])->name('pageHeaders');
-Route::get('/page_headers/{id}', [PageHeaderController::class. 'show'])->name('pageHeader');
+Route::get('/page_headers/{id}', [PageHeaderController::class, 'show'])->name('pageHeader');
+
+Route::get('/home_sliders', [HomeSliderController::class, 'index'])->name('homeSliders');
