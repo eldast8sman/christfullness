@@ -31,7 +31,7 @@
                                 <button class="btn btn-primary" data-toggle="modal" data-target="#add_pageheader_modal">Add Page Header</button>
                             </p>
                             <div class="row">
-                                @foreach ($headers as $header)
+                                @foreach ($page_headers as $header)
                                     <div class="col-lg-6 col-md-12">
                                         @component('admin.components.cards')
                                             @slot('title')
@@ -55,7 +55,7 @@
                                                     @endslot
                                                     @slot('modal_body')
                                                         <div class="col-12 py-3">
-                                                            @component('')
+                                                            @component('admin.components.header_form')
                                                                 @slot('data_id')
                                                                     {{ $header->id }}
                                                                 @endslot
@@ -68,14 +68,17 @@
                                                             @endcomponent
                                                         </div>
                                                     @endslot
+                                                    @slot('modal_footer')
+                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                    @endslot
                                                 @endcomponent
 
                                                 @component('admin.components.small_modal')
                                                     @slot('modal_id')
-                                                        delete_video_modal_{{ $video->id }}
+                                                        delete_pageheader_modal_{{ $header->id }}
                                                     @endslot
                                                     @slot('modal_title')
-                                                        Delete {{ $video->tite }}
+                                                        Delete {{ $header->page }}
                                                     @endslot
                                                     @slot('modal_body')
                                                         Do you really want to delete {{ $header->page }} as a Page Header from this App? <br />

@@ -244,12 +244,13 @@ class AdminController extends Controller
     }
 
     public function page_headers(){
-        $headers = PageHeader::orderBy('page', 'asc')->get();
-        foreach($headers as $header){
-            $header->filename = url($header->filename);
+        $page_headers = PageHeader::orderBy('page', 'asc')->get();
+        foreach($page_headers as $page){
+            $page->filename = url($page->filename);
         }
+        //print_r($headers);
         return view('admin.page_headers', [
-            'headers' => $headers
+            'page_headers' => $page_headers
         ]);
     }
 }

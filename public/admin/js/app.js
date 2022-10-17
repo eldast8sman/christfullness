@@ -1152,9 +1152,8 @@ for(let i=0; i < header_forms.length; i++){
 
         var page = $("input#page_page").val();
         var title = $("input#page_title").val();
-        var filenames = $("input#image_upload")[0].files;
 
-        if((page == "") || (title == "") || (filenames.length < 1)){
+        if((page == "") || (title == "")){
             var error_message = "";
             if(page == ""){
                 error_message += "Page must be provided! ";
@@ -1162,29 +1161,14 @@ for(let i=0; i < header_forms.length; i++){
             if(title == ""){
                 error_message += "Page Title must be provided! ";
             }
-            if(filenames.length < 1){
-                error_message += "Page Header Image must be uploaded! ";
-            }
             toaster_error(error_message);
             return false;
         }
 
         var data_id = e.target.dataset['id'];
         if(data_id == ""){
-            image_file = filenames[0].type
-            if((image_file != "image/jpg") && (image_file != "image/jpeg") && (image_file != "image/png")){
-                toaster_error("Wrong Image Filetype");
-                return false;
-            }
             var url = API_URL+"page_headers"
         } else {
-            if(filenames.length > 0){
-                image_file = filenames[0].type
-                if((image_file != "image/jpg") && (image_file != "image/jpeg") && (image_file != "image/png")){
-                    toaster_error("Wrong Image Filetype");
-                    return false;
-                }
-            }
             var url = API_URL+"page_headers/"+data_id;
         }
 
@@ -1220,7 +1204,7 @@ var pageheader_del_buttons = document.querySelectorAll(".delete_pageheader");
 for(let i=0; i<pageheader_del_buttons.length; i++){
     del_button = pageheader_del_buttons[i];
 
-    de_button.onclick = function(e){
+    del_button.onclick = function(e){
         var header_id = e.target.dataset['id'];
 
         $.ajax({
@@ -1233,10 +1217,10 @@ for(let i=0; i<pageheader_del_buttons.length; i++){
             },
             success: function(response){
                 if(response.status == "success"){
-                    toaster_success("Deleting Video...");
+                    toaster_success("Deleting Page Header...");
 
                     function redirect(){
-                        window.location = ADMIN_URL+"videos";
+                        window.location = ADMIN_URL+"page_headers";
                     }
 
                     setTimeout(redirect(), 2500);
