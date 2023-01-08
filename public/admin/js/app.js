@@ -1241,6 +1241,8 @@ for(let i=0; i < slider_forms.length; i++){
     slider_form = slider_forms[i];
 
     slider_form.onsubmit = function(e){
+        e.preventDefault();
+        
         var position = $("select#slider_position").val();
         var caption = $("input#slider_caption").val();
         var slider_link = $("input#slider_link").val();

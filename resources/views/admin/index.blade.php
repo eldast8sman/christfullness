@@ -34,11 +34,11 @@
                                                     <p class="col-12">
                                                         <table>
                                                             <tr><td><strong>Link: </strong></td><td><a href="{{ $slider->link }}">{{ $slider->link }}</a></td></tr>
-                                                            <tr><td><strong>Call To Action</strong></td><td>{{ $slider->call_to_action }}</td></tr>
+                                                            <tr><td><strong>Call To Action: </strong></td><td><center>{{ $slider->call_to_action }}</center></td></tr>
                                                         </table>
                                                     </p>
                                                     <p class="12">
-                                                        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="edit_homeslider_modal_{{ $slider->id }}">Edit</button>
+                                                        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#edit_homeslider_modal_{{ $slider->id }}">Edit</button>
                                                         <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#delete_homeslider_modal_{{ $slider->id }}">Delete</button>
                                                     </p>
                                                     @component('admin.components.long_modal')
@@ -55,7 +55,7 @@
                                                                         {{ $slider->id }}
                                                                     @endslot
                                                                     @slot('select_options')
-                                                                        @for ($i = 1; $i < $slider_count; $i++)
+                                                                        @for ($i = 1; $i <= $slider_count; $i++)
                                                                             <option value="{{ $i }}"
                                                                                 @if ($i == $slider->position)
                                                                                     {{ " selected" }}
@@ -91,7 +91,7 @@
                                                             Do you really want to delete {{ $slider->caption }} as a Home Slider from this App? <br />
                                                             Please note that this is not reversible
                                                             <p class="text-center">
-                                                                <button class="btn btn-danger mt-4 delete_pageheader" data-id="{{ $slider->id }}">Delete</button>
+                                                                <button class="btn btn-danger mt-4 delete_homeslider" data-id="{{ $slider->id }}">Delete</button>
                                                             </p>
                                                         @endslot
                                                     @endcomponent
@@ -114,7 +114,10 @@
                                                     
                                                 @endslot
                                                 @slot('select_options')
-                                                    @for ($i = 1; $i < $slider_count+1; $i++)
+                                                    @if (empty($slider_count))
+                                                       {{ $slider_count = 0 }} 
+                                                    @endif
+                                                    @for ($i = 1; $i <= $slider_count+1; $i++)
                                                         <option value="{{ $i }}">{{ $i }}</option>
                                                     @endfor
                                                 @endslot
