@@ -13,9 +13,130 @@
             <div class="container-fluid">
                 {{-- Home Sliders Section --}}
                 <div class="row">
-                    {{-- @component('admin.components.cards')
-                        
-                    @endcomponent --}}
+                    <div class="col-12">
+                        @component('admin.components.cards')
+                            @slot('title')
+                                Home Sliders
+                            @endslot
+                            @slot('body')
+                                <p class="py-3">
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#add_homeslider_modal">Add Home Slider</button>
+                                </p>
+                                <div class="row">
+                                    @foreach ($sliders as $slider)
+                                        <div class="col-lg-6 col-md-12">
+                                            @component('admin.components.cards')
+                                                @slot('title')
+                                                    {{ $slider->caption }}
+                                                @endslot
+                                                @slot('body')
+                                                    <img src="{{ $slider->filename }}" alt="{{ $slider->caption }}" style="width: 100%; height: auto">
+                                                    <p class="col-12">
+                                                        <table>
+                                                            <tr><td><strong>Link: </strong></td><td><a href="{{ $slider->link }}">{{ $slider->link }}</a></td></tr>
+                                                            <tr><td><strong>Call To Action</strong></td><td>{{ $slider->call_to_action }}</td></tr>
+                                                        </table>
+                                                    </p>
+                                                    <p class="12">
+                                                        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="edit_homeslider_modal_{{ $slider->id }}">Edit</button>
+                                                        <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#delete_homeslider_modal_{{ $slider->id }}">Delete</button>
+                                                    </p>
+                                                    @component('admin.components.long_modal')
+                                                        @slot('modal_id')
+                                                            edit_homeslider_modal_{{ $slider->id }}
+                                                        @endslot
+                                                        @slot('modal_title')
+                                                            Edit Home Slider
+                                                        @endslot
+                                                        @slot('modal_body')
+                                                            <div class="col-12 py-3">
+                                                                @component('admin.components.slider_form')
+                                                                    @slot('data_id')
+                                                                        {{ $slider->id }}
+                                                                    @endslot
+                                                                    @slot('select_options')
+                                                                        @for ($i = 1; $i < $slider_count; $i++)
+                                                                            <option value="{{ $i }}"
+                                                                                @if ($i == $slider->position)
+                                                                                    {{ " selected" }}
+                                                                                @endif
+                                                                            >{{ $i }}</option>
+                                                                        @endfor
+                                                                    @endslot
+                                                                    @slot('caption_value')
+                                                                        {{ $slider->caption }}
+                                                                    @endslot
+                                                                    @slot('call_to_action_value')
+                                                                        {{ $slider->call_to_action }}
+                                                                    @endslot
+                                                                    @slot('link_value')
+                                                                        {{ $slider->link }}
+                                                                    @endslot
+                                                                @endcomponent
+                                                            </div>
+                                                        @endslot
+                                                        @slot('modal_footer')
+                                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                        @endslot
+                                                    @endcomponent
+
+                                                    @component('admin.components.small_modal')
+                                                        @slot('modal_id')
+                                                            delete_homeslider_modal_{{ $slider->id }}
+                                                        @endslot
+                                                        @slot('modal_title')
+                                                            Delete {{ $slider->caption }}
+                                                        @endslot
+                                                        @slot('modal_body')
+                                                            Do you really want to delete {{ $slider->caption }} as a Home Slider from this App? <br />
+                                                            Please note that this is not reversible
+                                                            <p class="text-center">
+                                                                <button class="btn btn-danger mt-4 delete_pageheader" data-id="{{ $slider->id }}">Delete</button>
+                                                            </p>
+                                                        @endslot
+                                                    @endcomponent
+                                                @endslot
+                                            @endcomponent
+                                        </div>
+                                    @endforeach
+                                </div>
+                                @component('admin.components.long_modal')
+                                    @slot('modal_id')
+                                        add_homeslider_modal
+                                    @endslot
+                                    @slot('modal_title')
+                                        Add Home Slider
+                                    @endslot
+                                    @slot('modal_body')
+                                        <div class="col-12 py-3">
+                                            @component('admin.components.slider_form')
+                                                @slot('data_id')
+                                                    
+                                                @endslot
+                                                @slot('select_options')
+                                                    @for ($i = 1; $i < $slider_count+1; $i++)
+                                                        <option value="{{ $i }}">{{ $i }}</option>
+                                                    @endfor
+                                                @endslot
+                                                @slot('caption_value')
+                                                    
+                                                @endslot
+                                                @slot('call_to_action_value')
+                                                    
+                                                @endslot
+                                                @slot('link_value')
+                                                    
+                                                @endslot
+                                            @endcomponent
+                                        </div>
+                                    @endslot
+                                    @slot('modal_footer')
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    @endslot
+                                @endcomponent
+                            @endslot
+                        @endcomponent
+                    </div>
                 </div>
                 {{-- Home Sliders Section --}}
                 <div class="row">

@@ -111,13 +111,14 @@
             <div class="quixnav-scroll">
                 <ul class="metismenu" id="menu">
                     <li class="nav-label first">Main Menu</li>
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                    <li><a href="{{ env('ADMIN_URL') }}">Home</a></li>
+                    {{-- <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
                                 class="icon icon-single-04"></i><span class="nav-text">Dashboard</span></a>
                         <ul aria-expanded="false">
                             <li><a href="./index.html">Dashboard 1</a></li>
                             <li><a href="./index2.html">Dashboard 2</a></li>
                         </ul>
-                    </li>
+                    </li> --}}
                     <li class="nav-label">Persons</li>
                     <li><a href="{{ env('ADMIN_URL') }}ministers"><i class="icon icon-single-04"></i><span class="nav-text">Ministers</span></a></li>
                     <li><a href="{{ env('ADMIN_URL') }}admins"><i class="icon icon-single-04"></i><span class="nav-text">Admins</span></a></li>

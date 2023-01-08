@@ -10,6 +10,7 @@ use App\Models\Series;
 use App\Models\Message;
 use App\Models\Minister;
 use App\Models\Devotional;
+use App\Models\HomeSlider;
 use App\Models\PageHeader;
 use App\Models\Photo;
 use Illuminate\Http\Request;
@@ -17,9 +18,14 @@ use Illuminate\Http\Request;
 class AdminController extends Controller
 {
     public function index(){
-        $page_headers = PageHeader::orderBy('page', 'asc')->get();
+        $sliders = HomeSlider::orderBy('position', 'asc')->get();
+        foreach($sliders as $slider){
+            $slider->filename = url($slider->filename);
+            $slider->compressed = url($slider->compressed);
+        }
         return view('admin.index', [
-            'page_headers' => $page_headers
+            'sliders' => $sliders,
+            'slider_count' => HomeSlider::count()
         ]);
     }
 

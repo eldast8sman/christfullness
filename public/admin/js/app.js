@@ -1236,6 +1236,105 @@ for(let i=0; i<pageheader_del_buttons.length; i++){
     }
 }
 
+var slider_forms = document.querySelectorAll(".slider_form");
+for(let i=0; i < slider_forms.length; i++){
+    slider_form = slider_forms[i];
+
+    slider_form.onsubmit = function(e){
+        var position = $("select#slider_position").val();
+        var caption = $("input#slider_caption").val();
+        var slider_link = $("input#slider_link").val();
+        var call_to_action = $("input#slider_call_to_action").val();
+
+        if((position == "") || (caption == "")){
+            var error_message = "";
+            if(position == ""){
+                error_message += "Slider Position must be Selected! ";
+            }
+            if(caption == ""){
+                error_message += "Slider Caption must be Provided! ";
+            }
+            toaster_error(error_message);
+            return false;
+        }
+
+        if((slider_link != "") && (call_to_action == "")){
+            error_message = "Call To Action must be provided if Link is Provided! ";
+            toaster_error(error_message);
+            return false;
+        }
+
+        var data_id = e.target.dataset['id'];
+        if(data_id == ""){
+            var url = API_URL+"home_sliders"
+        } else {
+            var url = API_URL+"home_sliders/"+data_id;
+        }
+
+        var fd = new FormData(e.target);
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: fd,
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            headers: {
+                'x-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                "Authorization": "Bearer "+sessionStorage.getItem('token')
+            },
+            success: function(response){
+                if(response.status == "success"){
+                    window.location = ADMIN_URL;
+                } else {
+                    toaster_error(response.message);
+                }
+            },
+            error: function(response){
+                console.log(response.responseText);
+                toaster_error(response.responseText);
+            }
+        });
+    }
+}
+
+var slider_del_buttons = document.querySelectorAll(".delete_homeslider");
+for(let i=0; i < slider_del_buttons.length; i++){
+    del_button = slider_del_buttons[i];
+
+    del_button.onclick = function(e){
+        var header_id = e.target.dataset['id'];
+
+        $.ajax({
+            type: "DELETE",
+            url: API_URL+"home_sliders/"+header_id,
+            dataType: "json",
+            headers: {
+                "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                "Content-Type": "application/json"
+            },
+            success: function(response){
+                if(response.status == "success"){
+                    toaster_success("Deleting Home Slider...");
+
+                    function redirect(){
+                        window.location = ADMIN_URL;
+                    }
+
+                    setTimeout(redirect(), 2500);
+                } else {
+                    toaster_error(response.message);
+                }
+            },
+            error: function(response){
+                console.log(response.responseText);
+                toaster_error(response.responseText);
+            }
+        })
+    }
+}
+
 function toaster_error(error_message){
     toastr.error(error_message, "Error", {
         positionClass: "toast-top-right",

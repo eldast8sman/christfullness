@@ -11,7 +11,7 @@
         @endslot
         @slot('select_options')
             <option value="">--App. Position--</option>
-            {{ $series_options }}
+            {{ $select_options }}
         @endslot
     @endcomponent
     @component('admin.components.forms.file_input')
