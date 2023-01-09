@@ -20,7 +20,14 @@ class FileController extends Controller
             $extension = $filepath->getClientOriginalExtension();
             $name = $filename.'.'.$extension;
             if(($extension == 'jpg') || ($extension == 'jpeg') || ($extension == 'gif') || ($extension == 'png')){
+                $directory = public_path('img/'.$destination.'/');
+                if(!File::exists($directory)){
+                    File::makeDirectory($directory);
+                }
                 $filepath->move(public_path('img/'.$destination.'/'), $name);
+                if(!File::exists($directory.'compressed/')){
+                    File::makeDirectory($directory.'compressed/');
+                }
                 $Image = Image::make('img/'.$destination.'/'.$name);
                 $Image->resize(120, null, function($constraint){
                     $constraint->aspectRatio();
