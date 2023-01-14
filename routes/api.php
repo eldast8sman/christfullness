@@ -14,6 +14,7 @@ use App\Http\Controllers\DevotionalController;
 use App\Http\Controllers\HomeSliderController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PageHeaderController;
+use App\Http\Controllers\WelcomeMessageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -105,6 +106,10 @@ Route::middleware('auth:sanctum')->group(function(){
         Route::get('/home_sliders/{id}', 'show')->name('homeSlider');
         Route::post('/home_sliders/{id}', 'update')->name('updateHomeSlider');
         Route::delete('/home_sliders/{id}', 'destroy')->name('deleteHomeSlider');
+    });
+
+    Route::controller(WelcomeMessageController::class)->group(function(){
+        Route::post('/welcome_message', 'add_message');
     });
     
 });

@@ -161,7 +161,7 @@ class ArticleController extends Controller
                     $upload = FileController::uploadfile($image_path, 'articles');
                     if($upload){
                         $all['image_path'] = 'img/articles/'.$upload;
-                        $all['compressed_image'] = 'img/compressed/'.$upload;
+                        $all['compressed_image'] = 'img/articles/compressed/'.$upload;
                     }
                 }
             } else {

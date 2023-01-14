@@ -25,6 +25,9 @@
 /public/img/sliders/*.jpg
 /public/img/sliders/*.png
 /public/img/sliders/*.jpeg
+/public/img/welcome_message/*.jpg
+/public/img/welcome_message/*.png
+/public/img/welcome_message/*.jpeg
 /public/img/series/compressed/*.jpg
 /public/img/series/compressed/*.png
 /public/img/series/compressed/*.jpeg
@@ -49,6 +52,9 @@
 /public/img/sliders/compressed/*.jpg
 /public/img/sliders/compressed/*.png
 /public/img/sliders/compressed/*.jpeg
+/public/img/welcome_message/compressed/*.jpg
+/public/img/welcome_message/compressed/*.png
+/public/img/welcome_message/compressed/*.jpeg
 /public/audio/*.mp3
 /public/audio/messages/*.mp3
 /public/document/books/*.pdf

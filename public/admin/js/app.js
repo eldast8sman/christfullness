@@ -1,5 +1,6 @@
-var BASE_URL = "https://cfcing.org/";
-var ADMIN_URL = BASE_URL + "dashboard/"
+// var BASE_URL = "https://cfcing.org/";
+var BASE_URL = "http://127.0.0.1:8000";
+var ADMIN_URL = BASE_URL + "dashboard/";
 var API_URL = BASE_URL + "api/";
 
 $(".loginForm").submit(function(e) {
