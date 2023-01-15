@@ -9,7 +9,7 @@ use Illuminate\Http\UploadedFile;
 
 class WelcomeMessageController extends Controller
 {
-    public function add_message(UpdateWelcomeMessageRequest $request){
+    public function adding_message(UpdateWelcomeMessageRequest $request){
         $welcome = WelcomeMessage::first();
         if(!empty($welcome)){
             $all = $request->all();

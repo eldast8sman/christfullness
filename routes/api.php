@@ -109,7 +109,7 @@ Route::middleware('auth:sanctum')->group(function(){
     });
 
     Route::controller(WelcomeMessageController::class)->group(function(){
-        Route::post('/welcome_message', 'add_message');
+        Route::post('/welcoming', 'adding_message');
     });
     
 });

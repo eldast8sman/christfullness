@@ -1133,6 +1133,7 @@ $("form.welcome_message_form").submit(function(e){
         if(content == ""){
             error_message += "Welcome Message must be procided! ";
         }
+        toaster_error(error_message);
     }
 
     if(image_files.length > 0){
@@ -1147,7 +1148,7 @@ $("form.welcome_message_form").submit(function(e){
     toaster_success("Welcome Message Uploading...");
     $.ajax({
         type: "POST",
-        url: API_URL+"welcome_message",
+        url: API_URL+"welcoming",
         data: fd,
         dataType: "json",
         processData: false,
