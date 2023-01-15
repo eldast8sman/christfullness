@@ -13,7 +13,9 @@ use App\Models\Devotional;
 use App\Models\HomeSlider;
 use App\Models\PageHeader;
 use App\Models\Photo;
+use App\Models\WelcomeMessage;
 use Illuminate\Http\Request;
+use stdClass;
 
 class AdminController extends Controller
 {
@@ -23,9 +25,20 @@ class AdminController extends Controller
             $slider->filename = url($slider->filename);
             $slider->compressed = url($slider->compressed);
         }
+        if(!empty($welcome = WelcomeMessage::first())){
+            $welcome->filename = url($welcome->filename);
+            $welcome->compressed = url($welcome->compressed);
+        } else {
+            $welcome = new stdClass();
+            $welcome->filename = "";
+            $welcome->compressed = "";
+            $welcome->heading = "";
+            $welcome->content = "";
+        }
         return view('admin.index', [
             'sliders' => $sliders,
-            'slider_count' => HomeSlider::count()
+            'slider_count' => HomeSlider::count(),
+            'welcome' => $welcome
         ]);
     }
 

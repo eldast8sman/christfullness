@@ -1,5 +1,5 @@
 // var BASE_URL = "https://cfcing.org/";
-var BASE_URL = "http://127.0.0.1:8000";
+var BASE_URL = "http://127.0.0.1:8000/";
 var ADMIN_URL = BASE_URL + "dashboard/";
 var API_URL = BASE_URL + "api/";
 
@@ -1057,6 +1057,9 @@ $("form.photo_form").submit(function(e){
             if(caption == ""){
                 error_message += "Photo Caption must be provided! ";
             }
+            if(image_files.length < 1){
+                error_message += "Phot was not Uploaded! ";
+            }
             toaster_error(error_message);
             return false;
         }
@@ -1104,6 +1107,59 @@ $("form.photo_form").submit(function(e){
                 } else {
                     window.location = ADMIN_URL+"photos/"+response.data.slug
                 }
+            } else {
+                toaster_error(response.message);
+            }
+        },
+        error: function(response){
+            console.log(response.responseText);
+            toaster_error(response.responseText);
+        }
+    })
+});
+
+$("form.welcome_message_form").submit(function(e){
+    e.preventDefault();
+
+    var heading = $("input#welcome_heading").val();
+    var content = $("textarea#welcome_content").val();
+    var image_files = $("input#image_upload")[0].files;
+
+    if((heading == "") || (content == "") || (image_files.length < 1)){
+        var error_message = "";
+        if(heading == ""){
+            error_message += "Heading must be provided! ";
+        }
+        if(content == ""){
+            error_message += "Welcome Message must be procided! ";
+        }
+    }
+
+    if(image_files.length > 0){
+        image_file = image_files[0].type;
+        if((image_file != "image/jpg") && (image_file != "image/jpeg") && (image_file != "image/png")){
+            toaster_error("Wrong Image Filetype");
+            return false;
+        }
+    }
+
+    var fd = new FormData(document.querySelector(".welcome_message_form"));
+    toaster_success("Welcome Message Uploading...");
+    $.ajax({
+        type: "POST",
+        url: API_URL+"welcome_message",
+        data: fd,
+        dataType: "json",
+        processData: false,
+        contentType: false,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            "Authorization": "Bearer "+sessionStorage.getItem('token')
+        },
+        success: function(response){
+            if(response.status == "success"){
+                toaster_success(response.message);
+                window.location = ADMIN_URL;
             } else {
                 toaster_error(response.message);
             }
@@ -1392,4 +1448,8 @@ if($("textarea#article_article")){
 
 if($("textarea#devotional")){
     $('textarea#devotional').summernote();
+}
+
+if($("textarea#welcome_message")){
+    $('textarea#welcome_message').summernote();
 }

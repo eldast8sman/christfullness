@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use stdClass;
 use App\Models\HomeSlider;
 use Illuminate\Http\Request;
+use App\Models\WelcomeMessage;
 
 class PageController extends Controller
 {
@@ -16,9 +18,20 @@ class PageController extends Controller
             $slider->filename = url($slider->filename);
             $slider->compressed = url($slider->compressed);
         }
+        if(!empty($welcome = WelcomeMessage::first())){
+            $welcome->filename = url($welcome->filename);
+            $welcome->compressed = url($welcome->compressed);
+        } else {
+            $welcome = new stdClass();
+            $welcome->filename = "";
+            $welcome->compressed = "";
+            $welcome->heading = "";
+            $welcome->content = "";
+        }
         return view('index', [
             'first_slider' => $first_slider,
-            'sliders' => $other_sliders
+            'sliders' => $other_sliders,
+            'welcome' => $welcome
         ]);
     }
 }

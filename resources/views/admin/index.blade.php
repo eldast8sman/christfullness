@@ -37,7 +37,7 @@
                                                             <tr><td><strong>Call To Action: </strong></td><td><center>{{ $slider->call_to_action }}</center></td></tr>
                                                         </table>
                                                     </p>
-                                                    <p class="12">
+                                                    <p class="col-12">
                                                         <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#edit_homeslider_modal_{{ $slider->id }}">Edit</button>
                                                         <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#delete_homeslider_modal_{{ $slider->id }}">Delete</button>
                                                     </p>
@@ -142,6 +142,50 @@
                     </div>
                 </div>
                 {{-- Home Sliders Section --}}
+
+                {{-- Welcome Message Section --}}
+                <div class="row">
+                    <div class="col-8 col-md-12">
+                        @component('admin.components.cards')
+                            @slot('title')
+                                {{ $welcome->heading }}
+                            @endslot
+                            @slot('body')
+                                <p class="col-12">
+                                    <img src="{{ $welcome->filename }}" alt="{{ $welcome->heading }}"style="width: 400px; max-width:80%; height:auto; float:left; margin-right:15px; margin-bottom:15px">
+                                    {!! $welcome->content !!}
+                                </p>
+                                <p class="col-12">
+                                    <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#edit_welcome_message_modal">Edit</button>
+                                </p>
+                                @component('admin.components.long_modal')
+                                    @slot('modal_id')
+                                        edit_welcome_message_modal
+                                    @endslot
+                                    @slot('modal_title')
+                                        Edit Welcome Message
+                                    @endslot
+                                    @slot('modal_body')
+                                        <div class="col-12 py-3">
+                                            @component('admin.components.welcome_message_form')
+                                                @slot('heading_value')
+                                                    {{ $welcome->heading }}
+                                                @endslot
+                                                @slot('content_value')
+                                                    {{ $welcome->content }}
+                                                @endslot
+                                            @endcomponent
+                                        </div>
+                                    @endslot
+                                    @slot('modal_footer')
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    @endslot
+                                @endcomponent
+                            @endslot
+                        @endcomponent
+                    </div>
+                </div>
+                {{-- Welcome Message Section --}}
                 <div class="row">
                     
                 </div>

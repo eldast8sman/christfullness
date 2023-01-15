@@ -24,7 +24,7 @@ class UpdateWelcomeMessageRequest extends FormRequest
     public function rules()
     {
         return [
-            'heafing' => 'required|string',
+            'heading' => 'required|string',
             'content' => 'required|string',
             'filename' => 'mimes:jpg,jpeg,png,gif'
         ];
