@@ -11,6 +11,7 @@ use App\Http\Controllers\SeriesController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\MinisterController;
 use App\Http\Controllers\DevotionalController;
+use App\Http\Controllers\HomeBannerController;
 use App\Http\Controllers\HomeSliderController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PageHeaderController;
@@ -110,6 +111,10 @@ Route::middleware('auth:sanctum')->group(function(){
 
     Route::controller(WelcomeMessageController::class)->group(function(){
         Route::post('/welcoming', 'adding_message');
+    });
+
+    Route::controller(HomeBannerController::class)->group(function(){
+        Route::post('/home-banner', 'update_banner');
     });
     
 });

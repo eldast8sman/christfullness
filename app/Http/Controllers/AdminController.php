@@ -10,6 +10,7 @@ use App\Models\Series;
 use App\Models\Message;
 use App\Models\Minister;
 use App\Models\Devotional;
+use App\Models\HomeBanner;
 use App\Models\HomeSlider;
 use App\Models\PageHeader;
 use App\Models\Photo;
@@ -35,10 +36,19 @@ class AdminController extends Controller
             $welcome->heading = "";
             $welcome->content = "";
         }
+        $banner = HomeBanner::first();
+        if(empty($banner)){
+            $banner = new stdClass();
+            $banner->title = "";
+            $banner->content = "";
+            $banner->link = "";
+            $banner->call_to_action = "";
+        }
         return view('admin.index', [
             'sliders' => $sliders,
             'slider_count' => HomeSlider::count(),
-            'welcome' => $welcome
+            'welcome' => $welcome,
+            'banner' => $banner
         ]);
     }
 

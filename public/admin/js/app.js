@@ -1,5 +1,5 @@
 var BASE_URL = "https://www.cfcing.org/";
-// var BASE_URL = "http://127.0.0.1:8000/";
+var BASE_URL = "http://127.0.0.1:8000/";
 var ADMIN_URL = BASE_URL + "dashboard/";
 var API_URL = BASE_URL + "api/";
 
@@ -186,6 +186,63 @@ $(".admin_form").submit(function(e){
 
     return false;
 });
+
+$(".home_banner_form").submit(function(e){
+    e.preventDefault();
+
+    var title = $("#banner_title").val();
+    var content = $("#banner_content").val();
+    var call_to_action = $("#call_to_action").val();
+    var link = $("#banner_link").val();
+
+    if((title == "") || (content == "") || (call_to_action == "") || (link == "")){
+        var error_message = "";
+        if(title == ""){
+            error_message += "Heading must be provided ";
+        }
+        if(content == ""){
+            error_message += "Content must be provided ";
+        }
+        if(call_to_action == ""){
+            error_message += "Call To Action must be provided ";
+        }
+        if(link == ""){
+            error_message += "Call To Action Link must be provided "
+        }
+        toaster_error(error_message);
+    } else {
+        var req = {
+            "title": title,
+            "content": content,
+            "call_to_action": call_to_action,
+            "link": link
+        }
+        $.ajax({
+            type: "POST",
+            url: API_URL+"home-banner",
+            data: JSON.stringify(req),
+            contentType: "json",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                "Content-Type": "application/json"
+            },
+            success: function(response){
+                if(response.status == "success"){
+                    toaster_success(response.message);
+                    window.location = ADMIN_URL;
+                } else {
+                    toaster_error(response.message);
+                }
+            },
+            error: function(response){
+                toaster_error(response.responseText);
+            }
+        });   
+    }
+
+    return false;
+})
 
 var admin_del_buttons = document.querySelectorAll(".del_admin");
 for(let i=0; i < admin_del_buttons.length; i++){

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use stdClass;
+use App\Models\Message;
+use App\Models\Devotional;
+use App\Models\HomeBanner;
 use App\Models\HomeSlider;
 use Illuminate\Http\Request;
 use App\Models\WelcomeMessage;
@@ -28,10 +31,42 @@ class PageController extends Controller
             $welcome->heading = "";
             $welcome->content = "";
         }
+        $devotionals = Devotional::where('devotional_date', '<=', date('Y-m-d'))->orderBy('devotional_date', 'desc')->limit(3)->get();
+        if(!empty($devotionals)){
+            foreach($devotionals as $devotional){
+                $exploded = explode(' ', $devotional->devotional);
+                $dev_array = [];
+                for($i=0; $i<=14; $i++){
+                    $dev_array[] = $exploded[$i];
+                }
+                $devotional->devotional = join(' ', $dev_array);
+                $devotional->devotional_date = date('l, jS \of F, Y', strtotime($devotional->devotional_date));
+            }
+        }
+        $messages = Message::orderBy('date_preached', 'desc')->limit(8)->get();
+        if(!empty($messages)){
+            foreach($messages as $message){
+                $message->image_path = url($message->image_path);
+                $message->compressed_image = url($message->compressed_image);
+            }
+        }
+        $banner = HomeBanner::first();
+        if(!empty($banner)){
+
+        } else {
+            $banner = new stdClass();
+            $banner->title = "";
+            $banner->content = "";
+            $banner->link = "";
+            $banner->call_to_action = "";
+        }
         return view('index', [
             'first_slider' => $first_slider,
             'sliders' => $other_sliders,
-            'welcome' => $welcome
+            'welcome' => $welcome,
+            'devotionals' => $devotionals,
+            'messages' => $messages,
+            'banner' => $banner
         ]);
     }
 }
