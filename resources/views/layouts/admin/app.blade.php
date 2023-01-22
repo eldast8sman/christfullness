@@ -13,7 +13,7 @@
     <link href="{{ asset("admin/vendor/jqvmap/css/jqvmap.min.css") }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset("admin/vendor/toastr/css/toastr.min.css") }}">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
-    {{-- <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> --}}
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <link href="{{ asset("admin/css/style.css") }}" rel="stylesheet">
     <script src="{{ asset("admin/js/login.js") }}"></script>
 </head>
@@ -200,13 +200,13 @@
     <script src="{{asset("admin/js/custom.min.js")}}"></script>
     <script src="{{asset("admin/vendor/toastr/js/toastr.min.js")}}"></script>
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-    {{-- <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     {{-- <script src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script> --}}
-    <script
+    {{-- <script
       src="https://cdn.tiny.cloud/1/k530srq7vhjqq3ygv20mx0yz47dzcas8g8l7x6ctfnjqxc14/tinymce/6/tinymce.min.js"
       referrerpolicy="origin"
     ></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-jquery@2/dist/tinymce-jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-jquery@2/dist/tinymce-jquery.min.js"></script> --}}
     <script src="{{asset("admin/js/app.js")}}"></script>
 </body>
 
