@@ -1,5 +1,5 @@
-var BASE_URL = "https://www.cfcing.org/";
-// var BASE_URL = "http://127.0.0.1:8000/";
+// var BASE_URL = "https://www.cfcing.org/";
+var BASE_URL = "http://127.0.0.1:8000/";
 var ADMIN_URL = BASE_URL + "dashboard/";
 var API_URL = BASE_URL + "api/";
 
@@ -1597,14 +1597,27 @@ if($("table#series_table")){
     });
 }
 
-if($("textarea#article_article")){
-    $('#article_article').summernote();
-}
+// if($("textarea#article_article")){
+//     CKEDITOR.replace('#article_article');
+// }
 
-if($("textarea#devotional")){
-    $('textarea#devotional').summernote();
-}
+// if($("textarea#devotional")){
+//     CKEDITOR.replace('textarea#devotional');
+// }
 
-if($("textarea#welcome_message")){
-    $('textarea#welcome_message').summernote();
-}
+// if($("textarea#welcome_message")){
+//     CKEDITOR.replace('textarea#welcome_message');
+// }
+
+$('textarea#welcome_message').tinymce({
+    height: 500,
+    menubar: false,
+    plugins: [
+      'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+      'anchor', 'searchreplace', 'visualblocks', 'fullscreen',
+      'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
+    ],
+    toolbar: 'undo redo | blocks | bold italic backcolor | ' +
+      'alignleft aligncenter alignright alignjustify | ' +
+      'bullist numlist outdent indent | removeformat | help'
+  });
