@@ -15,6 +15,7 @@ use App\Http\Controllers\HomeBannerController;
 use App\Http\Controllers\HomeSliderController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PageHeaderController;
+use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\WelcomeMessageController;
 
 /*
@@ -115,6 +116,14 @@ Route::middleware('auth:sanctum')->group(function(){
 
     Route::controller(HomeBannerController::class)->group(function(){
         Route::post('/home-banner', 'update_banner');
+    });
+
+    Route::controller(QuoteController::class)->group(function(){
+        Route::get('/quotes', 'index');
+        Route::post('/quotes', 'store');
+        Route::get('/quotes/{id}', 'show');
+        Route::post('/quotes/{id}', 'update');
+        Route::delete('/quotes/{id}', 'destroy');
     });
     
 });

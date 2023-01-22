@@ -7,6 +7,7 @@ use App\Models\Message;
 use App\Models\Devotional;
 use App\Models\HomeBanner;
 use App\Models\HomeSlider;
+use App\Models\Quote;
 use Illuminate\Http\Request;
 use App\Models\WelcomeMessage;
 
@@ -60,13 +61,19 @@ class PageController extends Controller
             $banner->link = "";
             $banner->call_to_action = "";
         }
+        $quotes = Quote::orderBy('created_at', 'asc')->get();
+        foreach($quotes as $quote){
+            $quote->filename = url($quote->filename);
+            $quote->compressed = url($quote->compressed);
+        }
         return view('index', [
             'first_slider' => $first_slider,
             'sliders' => $other_sliders,
             'welcome' => $welcome,
             'devotionals' => $devotionals,
             'messages' => $messages,
-            'banner' => $banner
+            'banner' => $banner,
+            'quotes' => $quotes
         ]);
     }
 }

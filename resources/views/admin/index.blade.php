@@ -240,6 +240,122 @@
                     </div>
                 </div>
                 {{-- Home Banner --}}
+
+                {{-- Quotes --}}
+                <div class="row">
+                    <div class="col-12">
+                        @component('admin.components.cards')
+                            @slot('title')
+                                Quotes
+                            @endslot
+                            @slot('body')
+                                <p class="py-3">
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#add_quote_modal">Add Quote</button>
+                                </p>
+                                <div class="row">
+                                    @foreach ($quotes as $quote)
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            @component('admin.components.cards')
+                                                @slot('title')
+                                                    
+                                                @endslot
+                                                @slot('body')
+                                                    <p class="col-12">
+                                                        {{ $quote->quote; }}
+                                                    </p>
+                                                    <p class="col-12">
+                                                        <b>Author: </b>{{ $quote->author }} <span><img src="{{ $quote->compressed }}" alt="{{ $quote->author }}"></span>
+                                                        <br>
+                                                        <b>Author Title: </b>{{ $quote->author_title }}
+                                                    </p>
+                                                    <p class="col-12">
+                                                        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#edit_quote_modal_{{ $quote->id }}">Edit</button>
+                                                        <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#delete_quote_modal_{{ $quote->id }}">Delete</button>
+                                                    </p>
+                                                    @component('admin.components.long_modal')
+                                                        @slot('modal_id')
+                                                            edit_quote_modal_{{ $quote->id }}
+                                                        @endslot
+                                                        @slot('modal_title')
+                                                            Edit Quote
+                                                        @endslot
+                                                        @slot('modal_body')
+                                                            <div class="col-12 py-3">
+                                                                @component('admin.components.quote_form')
+                                                                    @slot('data_id')
+                                                                        {{ $quote->id }}
+                                                                    @endslot
+                                                                    @slot('quote_value')
+                                                                        {{ $quote->quote }}
+                                                                    @endslot
+                                                                    @slot('author_value')
+                                                                        {{ $quote->author }}
+                                                                    @endslot
+                                                                    @slot('title_value')
+                                                                        {{ $quote->author_title }}
+                                                                    @endslot
+                                                                @endcomponent
+                                                            </div>
+                                                        @endslot
+                                                        @slot('modal_footer')
+                                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                        @endslot
+                                                    @endcomponent
+                                                @endslot
+                                            @endcomponent
+
+                                            @component('admin.components.small_modal')
+                                                @slot('modal_id')
+                                                    delete_quote_modal_{{ $quote->id }}
+                                                @endslot
+                                                @slot('modal_title')
+                                                    Delete Quote
+                                                @endslot
+                                                @slot('modal_body')
+                                                    Do you really want to delete this Quote from this App? <br />
+                                                    Please note that this is not reversible
+                                                    <p class="text-center">
+                                                        <button class="btn btn-danger mt-4 delete_quote" data-id="{{ $quote->id }}">Delete</button>
+                                                    </p>
+                                                @endslot
+                                            @endcomponent
+                                        </div>
+                                    @endforeach
+                                </div>
+                                @component('admin.components.long_modal')
+                                    @slot('modal_id')
+                                        add_quote_modal
+                                    @endslot
+                                    @slot('modal_title')
+                                        Add Quote
+                                    @endslot
+                                    @slot('modal_body')
+                                        <div class="col-12 py-3">
+                                            @component('admin.components.quote_form')
+                                                @slot('data_id')
+                                                    
+                                                @endslot
+                                                @slot('quote_value')
+                                                    
+                                                @endslot
+                                                @slot('author_value')
+                                                    
+                                                @endslot
+                                                @slot('title_value')
+                                                    
+                                                @endslot
+                                            @endcomponent
+                                        </div>
+                                    @endslot
+                                    @slot('modal_footer')
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    @endslot
+                                @endcomponent
+                            @endslot
+                        @endcomponent
+                    </div>
+                </div>
+                {{-- Quotes --}}
             </div>
         </div>
         <!--**********************************

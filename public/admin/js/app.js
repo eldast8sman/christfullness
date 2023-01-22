@@ -1001,7 +1001,7 @@ $("form.article_form").submit(function(e){
             return false;
         }
 
-        image_file = image_files[0].type;
+        var image_file = image_files[0].type;
         if((image_file != "image/jpg") && (image_file != "image/jpeg") && (image_file != "image/png")){
             toaster_error("Wrong Image Filetype");
             return false;
@@ -1072,7 +1072,104 @@ $("form.article_form").submit(function(e){
     })
 });
 
-del_article = document.querySelector("#delete_article");
+var quote_forms = document.querySelectorAll(".quote_form");
+for(let i=0; i < quote_forms.length; i++){
+    var quote_form = quote_forms[i];
+
+    quote_form.onsubmit = function(e){
+        e.preventDefault();
+
+        var quote = $("#quote_quote").val();
+        var author = $("#quote_author").val();
+        var title = $("#author_title").val();
+        var data_id = e.target.dataset['id'];
+        if((quote == "") || (author == "") || (title == "")){
+            var error_message = "";
+            if(quote == ""){
+                error_message += "Quote must be provided! ";
+            }
+            if(author == ""){
+                error_message += "Author must be provided! ";
+            }
+            if(title == ""){
+                error_message += "Author's Title must be provided! ";
+            }
+            toaster_error(error_message);
+            return false;
+        }
+
+        if(data_id == ""){
+            url = API_URL+"quotes";
+        } else {
+            url = API_URL+"quotes/"+data_id;
+        }
+
+        var fd = new FormData(e.target);
+        toaster_success("Quote Uploading...");
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: fd,
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                "Authorization": "Bearer "+sessionStorage.getItem('token')
+            },
+            success: function(response){
+                if(response.status == "success"){
+                    toaster_success(response.message);
+                    window.location = ADMIN_URL;
+                } else {
+                    toaster_error(response.message);
+                }
+            },
+            error: function(response){
+                console.log(response.responseText);
+                toaster_error(response.responseText);
+            }
+        })
+    }
+}
+
+var quote_del_buttons = document.querySelectorAll(".delete_quote");
+for(let i = 0; i < quote_del_buttons.length; i++){
+    del_button = quote_del_buttons[i];
+
+    del_button.onclick = function(e){
+        var quote_id = e.target.dataset['id'];
+
+        $.ajax({
+            type: "DELETE",
+            url: API_URL+"quotes/"+quote_id,
+            dataType: "json",
+            headers: {
+                "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                "Content-Type": "application/json"
+            },
+            success: function(response){
+                if(response.status == "success"){
+                    toaster_success("Deleting Quote...");
+
+                    function redirect(){
+                        window.location = ADMIN_URL;
+                    }
+
+                    setTimeout(redirect(), 2500);
+                } else {
+                    toaster_error(response.message);
+                }
+            },
+            error: function(response){
+                console.log(response.responseText);
+                toaster_error(response.responseText);
+            }
+        });
+    }
+}
+
+var del_article = document.querySelector("#delete_article");
 if(del_article){
     del_article.onclick = function(e){
         var article_id = e.target.dataset['id'];
@@ -1229,7 +1326,7 @@ $("form.welcome_message_form").submit(function(e){
     })
 });
 
-del_photo = document.querySelector("#delete_photo");
+var del_photo = document.querySelector("#delete_photo");
 if(del_photo){
     del_photo.onclick = function(e){
         var photo_id = e.target.dataset['id'];

@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Article;
+use stdClass;
 use App\Models\Book;
 use App\Models\User;
+use App\Models\Photo;
+use App\Models\Quote;
 use App\Models\Video;
 use App\Models\Series;
+use App\Models\Article;
 use App\Models\Message;
 use App\Models\Minister;
 use App\Models\Devotional;
 use App\Models\HomeBanner;
 use App\Models\HomeSlider;
 use App\Models\PageHeader;
-use App\Models\Photo;
-use App\Models\WelcomeMessage;
 use Illuminate\Http\Request;
-use stdClass;
+use App\Models\WelcomeMessage;
 
 class AdminController extends Controller
 {
@@ -44,11 +45,17 @@ class AdminController extends Controller
             $banner->link = "";
             $banner->call_to_action = "";
         }
+        $quotes = Quote::orderBy('created_at', 'desc')->get();
+        foreach($quotes as $quote){
+            $quote->filename = url($quote->filename);
+            $quote->compressed = url($quote->compressed);
+        }
         return view('admin.index', [
             'sliders' => $sliders,
             'slider_count' => HomeSlider::count(),
             'welcome' => $welcome,
-            'banner' => $banner
+            'banner' => $banner,
+            'quotes' => $quotes
         ]);
     }
 
