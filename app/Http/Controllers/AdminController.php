@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\About;
 use stdClass;
 use App\Models\Book;
 use App\Models\User;
@@ -22,7 +23,7 @@ use App\Models\WelcomeMessage;
 class AdminController extends Controller
 {
     public function index(){
-        $sliders = HomeSlider::orderBy('position', 'asc')->get();
+        $sliders = HomeSlider::orderBy('position', 'asc')->orderBy('updated_at', 'desc')->get();
         foreach($sliders as $slider){
             $slider->filename = url($slider->filename);
             $slider->compressed = url($slider->compressed);
@@ -50,6 +51,7 @@ class AdminController extends Controller
             $quote->filename = url($quote->filename);
             $quote->compressed = url($quote->compressed);
         }
+        
         return view('admin.index', [
             'sliders' => $sliders,
             'slider_count' => HomeSlider::count(),
@@ -61,6 +63,19 @@ class AdminController extends Controller
 
     public function login(){
         return view('admin.login');
+    }
+
+    public function about_us(){
+        $abouts = About::orderBy('position', 'asc')->orderBy('updated_at', 'desc')->get();
+        foreach($abouts as $about){
+            $about->filename = url($about->filename);
+            $about->compressed = url($about->compressed);
+        }
+
+        return view('admin.about_us', [
+            'abouts' => $abouts,
+            'about_count' => About::count()
+        ]);
     }
 
     public function admins(){

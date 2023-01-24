@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use stdClass;
+use App\Models\Quote;
+use App\Models\Article;
 use App\Models\Message;
 use App\Models\Devotional;
 use App\Models\HomeBanner;
 use App\Models\HomeSlider;
-use App\Models\Quote;
 use Illuminate\Http\Request;
 use App\Models\WelcomeMessage;
 
@@ -66,6 +67,11 @@ class PageController extends Controller
             $quote->filename = url($quote->filename);
             $quote->compressed = url($quote->compressed);
         }
+        $articles = Article::orderBy('created_at', 'desc')->limit(3)->get();
+        foreach($articles as $article){
+            $article->image_path = url($article->image_path);
+            $article->compressed_image = url($article->compressed_image);
+        }
         return view('index', [
             'first_slider' => $first_slider,
             'sliders' => $other_sliders,
@@ -73,7 +79,8 @@ class PageController extends Controller
             'devotionals' => $devotionals,
             'messages' => $messages,
             'banner' => $banner,
-            'quotes' => $quotes
+            'quotes' => $quotes,
+            'articles' => $articles
         ]);
     }
 }

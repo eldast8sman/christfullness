@@ -47,6 +47,8 @@ Route::prefix('dashboard')->group(function(){
         Route::get('/photos/{slug}', 'photo')->name('photo');
 
         Route::get('/page_headers', 'page_headers')->name('page_headers');
+
+        Route::get('/about-us', 'about_us')->name('about_us');
         
         Route::post('/logout', 'logout');
     });

@@ -1,5 +1,5 @@
-var BASE_URL = "https://www.cfcing.org/";
-// var BASE_URL = "http://127.0.0.1:8000/";
+// var BASE_URL = "https://www.cfcing.org/";
+var BASE_URL = "http://127.0.0.1:8000/";
 var ADMIN_URL = BASE_URL + "dashboard/";
 var API_URL = BASE_URL + "api/";
 
@@ -1448,6 +1448,139 @@ for(let i=0; i<pageheader_del_buttons.length; i++){
     }
 }
 
+var about_forms = document.querySelectorAll('about_us_form');
+for(let i=0; i < about_forms.length; i++){
+    about_form = about_forms[i];
+
+    about_form.onsubmit = function(e){
+        e.preventDefault();
+
+        var position = $("select#about_position").val();
+        var heading = $("input#about_heading").val();
+        var content = $("textarea#about_content").val();
+
+        if((position == "") || (heading == "") || (content == "")){
+            var error_message = "";
+            if(position == ""){
+                error_message += "Position must be provided! ";
+            }
+            if(heading == ""){
+                error_message += "Heading must be provided! ";
+            }
+            if(content == ""){
+                error_message += "Content must be provided! ";
+            }
+            toaster_error(error_message);
+            return false;
+        }
+
+        var data_id = e.target.dataset['id'];
+        if(data_id == ""){
+            var url = API_URL+"about-us";
+        } else {
+            var url = API_URL+"about-us/"+data_id;
+        }
+
+        var fd = new FormData(e.target);
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: fd,
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            headers: {
+                'x-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                "Authorization": "Bearer "+sessionStorage.getItem('token')
+            },
+            success: function(response){
+                if(response.status == "success"){
+                    window.location = ADMIN_URL+"about-us";
+                } else {
+                    toaster_error(response.message);
+                }
+            },
+            error: function(response){
+                console.log(response.responseText);
+                toaster_error(response.responseText);
+            }
+        });
+    }
+}
+
+var about_del_buttons = document.querySelectorAll(".delete_about");
+for(let i=0; i < about_del_buttons.length; i++){
+    del_button = about_del_buttons[i];
+
+    del_button.onclick = function(e){
+        var about_id = e.target.dataset['id'];
+
+        $.ajax({
+            type: "DELETE",
+            url: API_URL+"about-us/"+about_id,
+            dataType: "json",
+            headers: {
+                "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                "Content-Type": "application/json"
+            },
+            success: function(response){
+                if(response.status == "success"){
+                    toaster_success("Deleting About Us Section...");
+
+                    function redirect(){
+                        window.location = ADMIN_URL;
+                    }
+
+                    setTimeout(redirect(), 2500);
+                } else {
+                    toaster_error(response.message);
+                }
+            },
+            error: function(response){
+                console.log(response.responseText);
+                toaster_error(response.responseText);
+            }
+        })
+    }
+}
+
+var about_photo_del_buttons = document.querySelectorAll(".delete_about_photo");
+for(let i=0; i < about_photo_del_buttons.length; i++){
+    del_button = about_photo_del_buttons[i];
+
+    del_button.onclick = function(e){
+        var about_id = e.target.dataset['id'];
+
+        $.ajax({
+            type: "DELETE",
+            url: API_URL+"about-us/photos/"+about_id,
+            dataType: "json",
+            headers: {
+                "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                "Content-Type": "application/json"
+            },
+            success: function(response){
+                if(response.status == "success"){
+                    toaster_success("Deleting About Us Section...");
+
+                    function redirect(){
+                        window.location = ADMIN_URL;
+                    }
+
+                    setTimeout(redirect(), 2500);
+                } else {
+                    toaster_error(response.message);
+                }
+            },
+            error: function(response){
+                console.log(response.responseText);
+                toaster_error(response.responseText);
+            }
+        })
+    }
+}
+
 var slider_forms = document.querySelectorAll(".slider_form");
 for(let i=0; i < slider_forms.length; i++){
     slider_form = slider_forms[i];
@@ -1597,14 +1730,14 @@ if($("table#series_table")){
     });
 }
 
-if($("textarea#article_article")){
-    $('#article_article').summernote();
-}
+// if($("textarea#article_article")){
+//     $('#article_article').summernote();
+// }
 
-if($("textarea#devotional")){
-    $('textarea#devotional').summernote();
-}
+// if($("textarea#devotional")){
+//     $('textarea#devotional').summernote();
+// }
 
-if($("textarea#welcome_message")){
-    $('textarea#welcome_message').summernote();
-}
+// if($("textarea#welcome_message")){
+//     $('textarea#welcome_message').summernote();
+// }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ArticleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -124,6 +125,15 @@ Route::middleware('auth:sanctum')->group(function(){
         Route::get('/quotes/{id}', 'show');
         Route::post('/quotes/{id}', 'update');
         Route::delete('/quotes/{id}', 'destroy');
+    });
+
+    Route::controller(AboutController::class)->group(function(){
+        Route::get('/about-us', 'index');
+        Route::post('/about-us', 'store');
+        Route::get('/about-us/{id}', 'show');
+        Route::post('/about-us/{id}', 'update');
+        Route::delete('/about-us/{id}', 'destroy');
+        Route::delete('/about-us/photos/{id}', 'destroy_photo');
     });
     
 });

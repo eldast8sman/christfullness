@@ -50,10 +50,9 @@ class QuoteController extends Controller
         } else {
             return response([
                 'status' => 'failed',
-                'message' => 'Picture uploade failed'
+                'message' => 'Picture upload failed'
             ], 500);
         }
-        
     }
 
     public function show($id){
@@ -94,7 +93,7 @@ class QuoteController extends Controller
 
                 return response([
                     'status' => 'success',
-                    'message' => 'Quote fetched successfully',
+                    'message' => 'Quote updated successfully',
                     'data' => $quote
                 ], 200);
             } else {
@@ -125,13 +124,13 @@ class QuoteController extends Controller
             } else {
                 return response([
                     'status' => 'failed',
-                    'message' => 'Qupte Deletion failed'
+                    'message' => 'Quote Deletion failed'
                 ], 500);
             }
         } else {
             return response([
                 'status' => 'failed',
-                'No Quote was Fetched'
+                'message' => 'No Quote was Fetched'
             ], 404);
         }
     }
