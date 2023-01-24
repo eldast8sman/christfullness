@@ -147,6 +147,7 @@
                         <a href="javascript:void()" class="has-arrow" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Components</span></a>
                         <ul aria-expanded="false">
                             <li><a href="{{ env('ADMIN_URL') }}page_headers">Page Headers</a></li>
+                            <li><a href="{{ env('ADMIN_URL') }}about-us">About Us</a></li>
                         </ul>
                     </li>
                     <li><a href="widget-basic.html" aria-expanded="false"><i class="icon icon-globe-2"></i><span

@@ -26,7 +26,7 @@
                        @endslot 
                        @slot('body')
                             <p class="py-3">
-                                <button class="btn btn-primary" data-toggle="modal" data-toggle="#add_about_modal">Add Section</button>
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#add_about_modal">Add Section</button>
                             </p>
                             <div class="row">
                                 @foreach ($abouts as $about)
@@ -67,7 +67,7 @@
                                                     </p>
                                                     @component('admin.components.long_modal')
                                                         @slot('modal_id')
-                                                            edit_about_modal
+                                                            edit_about_modal_{{ $about->id }}
                                                         @endslot
                                                         @slot('modal_title')
                                                             Edit About Us Section
@@ -115,11 +115,6 @@
                                                             </p>
                                                         @endslot
                                                     @endcomponent
-                                                </p>
-                                                <p class="col-12">
-                                                    @if (!empty($about->filename))
-                                                        b
-                                                    @endif
                                                 </p>
                                             @endslot
                                         @endcomponent

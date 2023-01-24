@@ -13,10 +13,17 @@ class AboutController extends Controller
     public function index(){
         $abouts = About::orderBy('position', 'asc')->orderBy('updated_at', 'desc');
         if($abouts->count() > 0){
+            $abouts = $abouts->get();
+            foreach($abouts as $about){
+                if(!empty($about->filename)){
+                    $about->filename = url($about->filename);
+                    $about->compressed = url($about->compressed);
+                }
+            }
             return response([
                 'status' => 'success',
                 'message' => 'About Us section fetched successfully',
-                'data' => $abouts->get()
+                'data' => $abouts
             ], 200);
         } else {
             return response([
@@ -29,37 +36,48 @@ class AboutController extends Controller
     public function store(StoreAboutRequest $request){
         $file = $request->file('file');
         $all = $request->except(['file']);
-        if($upload_image = FileController::uploadfile($file, 'about_us')){
-            $all['filename'] = 'img/about_us/'.$upload_image;
-            $all['compressed'] = 'img/about_us/compressed/'.$upload_image;
+        if(!empty($file)){
+            if($file instanceof UploadedFile){
+                if($upload = FileController::uploadfile($file, 'about_us')){
+                    $all['filename'] = 'img/about_us/'.$upload;
+                    $all['compressed'] = 'img/about_us/compressed/'.$upload;
+                } else {
+                    return response([
+                        'status' => 'failed',
+                        'message' => 'Photo Upload Failed'
+                    ], 400);
+                }
+            }
+        } else {
+            $all['filename'] = '';
+            $all['compressed'] = '';
+        }
 
-            if($about = About::create($all)){
+        if($about = About::create($all)){
+            if(!empty($about->filename)){
                 $about->filename = url($about->filename);
                 $about->compressed = url($about->compressed);
-
-                return response([
-                    'status' => 'success',
-                    'message' => 'About us uploaded successfully',
-                    'data' => $about
-                ], 200);
-            } else {
-                return response([
-                    'status' => 'failed',
-                    'message' => 'About Us Upload Failed'
-                ], 500);
             }
+
+            return response([
+                'status' => 'success',
+                'message' => 'About us uploaded successfully',
+                'data' => $about
+            ], 200);
         } else {
             return response([
                 'status' => 'failed',
-                'message' => 'Picture upload failed'
+                'message' => 'About Us Upload Failed'
             ], 500);
         }
     }
 
     public function show($id){
         if(!empty($about = About::find($id))){
-            $about->filename = url($about->filename);
-            $about->compressed = url($about->compressed);
+            if(!empty($about->filename)){
+                $about->filename = url($about->filename);
+                $about->compressed = url($about->compressed);
+            }
 
             return response([
                 'status' => 'success',
@@ -141,6 +159,9 @@ class AboutController extends Controller
             FileController::delete_file($about->filename);
             FileController::delete_file($about->compressed);
 
+            $about->filename = '';
+            $about->compressed = '';
+            $about->save();
             return response([
                 'status' => 'success',
                 'message' => 'About Us successfully deleted',

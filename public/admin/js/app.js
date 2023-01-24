@@ -1448,7 +1448,7 @@ for(let i=0; i<pageheader_del_buttons.length; i++){
     }
 }
 
-var about_forms = document.querySelectorAll('about_us_form');
+var about_forms = document.querySelectorAll(".about_us_form");
 for(let i=0; i < about_forms.length; i++){
     about_form = about_forms[i];
 
@@ -1529,7 +1529,7 @@ for(let i=0; i < about_del_buttons.length; i++){
                     toaster_success("Deleting About Us Section...");
 
                     function redirect(){
-                        window.location = ADMIN_URL;
+                        window.location = ADMIN_URL+"about-us";
                     }
 
                     setTimeout(redirect(), 2500);
@@ -1562,10 +1562,10 @@ for(let i=0; i < about_photo_del_buttons.length; i++){
             },
             success: function(response){
                 if(response.status == "success"){
-                    toaster_success("Deleting About Us Section...");
+                    toaster_success("Deleting Image...");
 
                     function redirect(){
-                        window.location = ADMIN_URL;
+                        window.location = ADMIN_URL+"about-us";
                     }
 
                     setTimeout(redirect(), 2500);

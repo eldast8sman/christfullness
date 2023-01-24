@@ -68,8 +68,10 @@ class AdminController extends Controller
     public function about_us(){
         $abouts = About::orderBy('position', 'asc')->orderBy('updated_at', 'desc')->get();
         foreach($abouts as $about){
-            $about->filename = url($about->filename);
-            $about->compressed = url($about->compressed);
+            if(!empty($about->filename)){
+                $about->filename = url($about->filename);
+                $about->compressed = url($about->compressed);
+            }
         }
 
         return view('admin.about_us', [
