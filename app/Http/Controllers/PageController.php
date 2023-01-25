@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use stdClass;
+use App\Models\About;
 use App\Models\Quote;
 use App\Models\Article;
 use App\Models\Message;
 use App\Models\Devotional;
 use App\Models\HomeBanner;
 use App\Models\HomeSlider;
+use App\Models\PageHeader;
 use Illuminate\Http\Request;
 use App\Models\WelcomeMessage;
 
@@ -81,6 +83,22 @@ class PageController extends Controller
             'banner' => $banner,
             'quotes' => $quotes,
             'articles' => $articles
+        ]);
+    }
+
+    public function about_us(){
+        $abouts = About::orderBy('position', 'asc')->orderBy('updated_at', 'desc')->get();
+        foreach($abouts as $about){
+            if(!empty($about->filename)){
+                $about->filename = url($about->filename);
+                $about->compressed = url($about->compressed);
+            }
+        }
+        $header = PageHeader::where('page', 'About Us')->first();
+        $header->filename = url($header->filename);
+        return view('about_us', [
+            'abouts' => $abouts,
+            'header' => $header
         ]);
     }
 }

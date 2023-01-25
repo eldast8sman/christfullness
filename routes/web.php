@@ -56,4 +56,6 @@ Route::prefix('dashboard')->group(function(){
 
 Route::controller(PageController::class)->group(function(){
     Route::get('/', 'index')->name('home');
+
+    Route::get('/about-us', 'about_us');
 });
