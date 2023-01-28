@@ -14,6 +14,7 @@ use App\Http\Controllers\MinisterController;
 use App\Http\Controllers\DevotionalController;
 use App\Http\Controllers\HomeBannerController;
 use App\Http\Controllers\HomeSliderController;
+use App\Http\Controllers\MagazineController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PageHeaderController;
 use App\Http\Controllers\QuoteController;
@@ -134,6 +135,15 @@ Route::middleware('auth:sanctum')->group(function(){
         Route::post('/about-us/{id}', 'update');
         Route::delete('/about-us/{id}', 'destroy');
         Route::delete('/about-us/photos/{id}', 'destroy_photo');
+    });
+
+    Route::controller(MagazineController::class)->group(function(){
+        Route::get('/magazines', 'index');
+        Route::post('/magazines', 'store');
+        Route::get('/magazines/{id}', 'show');
+        Route::get('/magazines/by-slug/{slug}', 'bySlug');
+        Route::post('/magazines/{id}', 'update');
+        Route::delete('/magazines/{id}', 'destroy');
     });
     
 });
