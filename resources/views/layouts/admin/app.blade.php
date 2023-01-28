@@ -141,6 +141,7 @@
                             <li><a href="{{ env('ADMIN_URL') }}books">Books</a></li>
                             <li><a href="{{ env('ADMIN_URL') }}devotionals">Devotionals</a></li>
                             <li><a href="{{ env('ADMIN_URL') }}articles">Articles</a></li>
+                            <li><a href="{{ env('ADMIN_URL') }}magazines">Magazines</a></li>
                         </ul>
                     </li>
                     <li>

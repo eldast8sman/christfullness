@@ -1,7 +1,7 @@
 @extends('layouts.admin.app')
 
 @section('title')
-    CFCI ADMIN|{{ $book->title }}
+    CFCI ADMIN|{{ $magazine->title }}
 @endsection
 
 @section('content')
@@ -9,69 +9,63 @@
         <div class="container-fluid">
             @component('admin.components.breadcrumbs')
                 @slot('page_header')
-                    Books
+                    Magazines
                 @endslot
                 @slot('page_desc')
-                    {{ $book->title }}
+                    {{ $magazine->title }}
                 @endslot
                 @slot('other_links')
                     <li class="breadcrumb-item"><a href="javascript:void(0)">Resources</a></li>
                     <li class="breadcrumb-item"><a href="javascript:void(0)">Publications</a></li>
-                    <li class="breadcrumb-item"><a href="{{ env('ADMIN_URL') }}books">Books</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)">{{ $book->title }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ env('ADMIN_URL') }}magazines">Magazines</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">{{ $magazine->title }}</a></li>
                 @endslot
             @endcomponent
             <div class="row">
                 <div class="col-12">
                     @component('admin.components.cards')
                         @slot('title')
-                            {{ $book->title }}
+                            {{ $magazine->title }}
                         @endslot
                         @slot('body')
                             <div class="col-lg-6 col-md-9 col-sm-12 mx-auto my-3">
-                                <img src="{{ $book->image_path }}" alt="{{ $book->title }}" style="
+                                <img src="{{ $magazine->image_path }}" alt="{{ $magazine->title }}" style="
                                     width: 600px;
                                     max-width: 90%;
                                     height: auto;
                                     margin: 0 auto;
                                 ">
                                 <p class="mt-3">
-                                    <a href="{{ $book->book_path }}" download="{{ $book->slug }}" class="text-primary">Download</a>
+                                    <a href="{{ $magazine->document_path }}" download="{{ $magazine->slug }}" class="text-primary">Download</a>
                                 </p>
                             </div>
                             <div class="col-lg-9 col-md-12 mx-auto text-justify text-dark">
-                                <p>{{ $book->summary }}</p>
+                                <p>{{ $magazine->summary }}</p>
                                 <p>
-                                    <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#edit_book_modal">Edit</button>
-                                    <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#delete_book_modal">Delete</button>
+                                    <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#edit_magazine_modal">Edit</button>
+                                    <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#delete_magazine_modal">Delete</button>
 
                                     @component('admin.components.long_modal')
                                         @slot('modal_id')
-                                            edit_book_modal
+                                            edit_magazine_modal
                                         @endslot
                                         @slot('modal_title')
-                                            Edit Book
+                                            Edit Magazine
                                         @endslot
                                         @slot('modal_body')
                                             <div class="col-12 py-3">
-                                                @component('admin.components.book_form')
+                                                @component('admin.components.magazine_form')
                                                     @slot('data_id')
-                                                        {{ $book->id }}
+                                                        {{ $magazine->id }}
                                                     @endslot
                                                     @slot('title_value')
-                                                        {{ $book->title }}
+                                                        {{ $magazine->title }}
+                                                    @endslot
+                                                    @slot('publication_date')
+                                                        {{ $magazine->publication_date }}
                                                     @endslot
                                                     @slot('summary_value')
-                                                        {{ $book->summary }}
-                                                    @endslot
-                                                    @slot('author_options')
-                                                        @foreach ($ministers as $minister)
-                                                            <option value="{{ $minister->id }}"
-                                                                @if($minister->id == $book->minister_id)
-                                                                    {{ " selected" }}
-                                                                @endif
-                                                            >{{ $minister->name."(".$minister->title.")" }}</option>
-                                                        @endforeach
+                                                        {{ $magazine->summary }}
                                                     @endslot
                                                 @endcomponent
                                             </div>
@@ -83,16 +77,16 @@
 
                                     @component('admin.components.small_modal')
                                         @slot('modal_id')
-                                            delete_book_modal
+                                            delete_magazine_modal
                                         @endslot
                                         @slot('modal_title')
-                                            Delete {{ $book->tite }}
+                                            Delete {{ $magazine->tite }}
                                         @endslot
                                         @slot('modal_body')
-                                            Do you really want to delete {{ $book->title }} as a Book from this App? <br />
+                                            Do you really want to delete {{ $magazine->title }} as a Magazine from this App? <br />
                                             Please note that this is not reversible
                                             <p class="text-center">
-                                                <button class="btn btn-danger mt-4" data-id="{{ $book->id }}" id="delete_book">Delete</button>
+                                                <button class="btn btn-danger mt-4" data-id="{{ $magazine->id }}" id="delete_magazine">Delete</button>
                                             </p>
                                         @endslot
                                     @endcomponent

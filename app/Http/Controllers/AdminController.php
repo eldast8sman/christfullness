@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\About;
 use stdClass;
 use App\Models\Book;
 use App\Models\User;
+use App\Models\About;
 use App\Models\Photo;
 use App\Models\Quote;
 use App\Models\Video;
 use App\Models\Series;
 use App\Models\Article;
 use App\Models\Message;
+use App\Models\Magazine;
 use App\Models\Minister;
 use App\Models\Devotional;
 use App\Models\HomeBanner;
@@ -243,6 +244,30 @@ class AdminController extends Controller
         return view('admin.book', [
             'book' => $book,
             'ministers' => $ministers
+        ]);
+    }
+
+    public function magazines(){
+        $magazines = Magazine::orderBy('created_at', 'desc')->paginate(20);
+        foreach($magazines as $magazine){
+            $magazine->image_path = url($magazine->image_path);
+            $magazine->compressed = url($magazine->compressed);
+            $magazine->document_path = url($magazine->document_path);
+        }
+
+        return view('admin.magazines', [
+            'magazines' => $magazines
+        ]);
+    }
+
+    public function magazine($slug){
+        $magazine = Magazine::where('slug', $slug)->first();
+        $magazine->image_path = url($magazine->image_path);
+        $magazine->compressed = url($magazine->compressed);
+        $magazine->document_path = url($magazine->document_path);
+
+        return view('admin.magazine', [
+            'magazine' => $magazine
         ]);
     }
 

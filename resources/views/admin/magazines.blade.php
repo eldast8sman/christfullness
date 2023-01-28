@@ -1,39 +1,39 @@
 @extends('layouts.admin.app')
 
 @section('title')
-    CFCI ADMIN|Books
+    CFCI ADMIN|Magazines
 @endsection
 
 @section('content')
-    <div class="content-body">
-        <div class="container-fluid">
+    <div class="content">
+        <div class="content-body">
             @component('admin.components.breadcrumbs')
-                @slot('page_header')
-                    Books
-                @endslot
-                @slot('page_desc')
-                    All Published Books
-                @endslot
-                @slot('other_links')
-                    <li class="breadcrumb-item"><a href="javascript:void(0)">Resources</a></li>
-                    <li class="breadcrumb-item"><a href="javascript:void(0)">Publications</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Books</a></li>
-                @endslot
+            @slot('page_header')
+                Magazines
+            @endslot
+            @slot('page_desc')
+                All Published Magazines
+            @endslot
+            @slot('other_links')
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Resources</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Publications</a></li>
+                <li class="breadcrumb-item active"><a href="javascript:void(0)">Magazines</a></li>
+            @endslot
             @endcomponent
             <div class="row">
                 <div class="col-12">
                     @component('admin.components.cards')
                         @slot('title')
-                            Books
+                            Magazines
                         @endslot
                         @slot('body')
                             <p class="py-3">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_book_modal">Add Book</button>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_magazine_modal">Add Magazine</button>
                             </p>
                             <div class="row">
-                                @foreach ($books as $book)
+                                @foreach ($magazines as $magazine)
                                     <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-                                        <a href="{{ env('ADMIN_URL') }}books/{{ $book->slug }}">
+                                        <a href="{{ env('ADMIN_URL') }}magazines/{{ $magazine->slug }}">
                                             @component('admin.components.cards')
                                                 @slot('title')
                                                     
@@ -41,50 +41,44 @@
                                                 @slot('body')
                                                     <div style="
                                                         height: 200px; 
-                                                        background-image: url({{ $book->compressed_image }});
+                                                        background-image: url({{ $magazine->compressed_image }});
                                                         background-repeat: no-repeat;
                                                         background-size: cover;
                                                         background-position: center center;
                                                         margin: 0 auto;
                                                     "></div>
                                                     <div class="mt-2" style="height: 80px">
-                                                        <h6 class="text-primary">{{ $book->title }}</h6>
-                                                        <i>{{ $book->author->title.' '.$book->author->name }}</i>
+                                                        <h6 class="text-primary">{{ $magazine->title }}</h6>
+                                                        <i>{{ date('l jS \of F Y', strtotime($magazine->publication_date)) }}</i>
                                                     </div>
+                                                    
                                                 @endslot
                                             @endcomponent
                                         </a>
                                     </div>
                                 @endforeach                            
                             </div>
-                            <div class="row">
-                                <div class="col-12">
-                                    {{ $books->links(); }}
-                                </div>
-                            </div>
                             @component('admin.components.long_modal')
                                 @slot('modal_id')
-                                    add_book_modal
+                                    add_magazine_modal
                                 @endslot
                                 @slot('modal_title')
-                                    Add Book
+                                    Add Magazine
                                 @endslot
                                 @slot('modal_body')
                                     <div class="col-12 py-3">
-                                        @component('admin.components.book_form')
+                                        @component('admin.components.magazine_form')
                                             @slot('data_id')
-
+                                                
                                             @endslot
                                             @slot('title_value')
-
+                                                
+                                            @endslot
+                                            @slot('publication_date')
+                                                
                                             @endslot
                                             @slot('summary_value')
                                                 
-                                            @endslot
-                                            @slot('author_options')
-                                                @foreach ($ministers as $minister)
-                                                    <option value="{{ $minister->id }}">{{ $minister->name."(".$minister->title.")" }}</option>
-                                                @endforeach
                                             @endslot
                                         @endcomponent
                                     </div>
