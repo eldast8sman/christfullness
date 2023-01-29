@@ -41,7 +41,7 @@
                                                 @slot('body')
                                                     <div style="
                                                         height: 200px; 
-                                                        background-image: url({{ $magazine->compressed_image }});
+                                                        background-image: url({{ $magazine->compressed }});
                                                         background-repeat: no-repeat;
                                                         background-size: cover;
                                                         background-position: center center;
@@ -57,6 +57,11 @@
                                         </a>
                                     </div>
                                 @endforeach                            
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    {{ $magazines->links(); }}
+                                </div>
                             </div>
                             @component('admin.components.long_modal')
                                 @slot('modal_id')

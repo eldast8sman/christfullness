@@ -33,7 +33,7 @@ class MagazineController extends Controller
 
     public function store(StoreMagazineRequest $request){
         $all = $request->except(['image_file', 'pdf_file']);
-        $all['al_details'] = $all['title'].' '.$all['summary'].' '.date('l jS \of F Y', strtotime($all['publication_date']));
+        $all['all_details'] = $all['title'].' '.$all['summary'].' '.date('l jS \of F Y', strtotime($all['publication_date']));
         if($upload_image = FileController::uploadfile($request->image_file, 'magazines')){
             $all['image_path'] = 'img/magazines/'.$upload_image;
             $all['compressed'] = 'img/magazines/compressed/'.$upload_image;

@@ -75,7 +75,7 @@
     @endcomponent
     @component('admin.components.forms.file_input')
         @slot('input_label')
-            COver Photo
+            Cover Photo
         @endslot
         @slot('input_id')
             image_upload

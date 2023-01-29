@@ -36,7 +36,7 @@ Route::prefix('dashboard')->group(function(){
         Route::get('/books/{slug}', 'book')->name('book');
 
         Route::get('/magazines', 'magazines')->name('magazines');
-        Route::get('/magazine/{slug}', 'magazine')->name('magazine');
+        Route::get('/magazines/{slug}', 'magazine')->name('magazine');
 
         Route::get('/devotionals', 'devotionals')->name('devotionals');
         Route::get('/devotionals/{slug}', 'devotional')->name('devotional');

@@ -622,6 +622,126 @@ if(del_message){
     }
 }
 
+$("form.magazine_form").submit(function(e){
+    e.preventDefault();
+
+    var title = $("input#magazine_title").val();
+    var publication_date = $("input#publication_date").val();
+    var summary = $("textarea#magazine_summary").val();
+    var image_files = $('#image_upload')[0].files;
+    var pdf_files = $("input#pdf_upload")[0].files;
+    var data_id = e.target.dataset['id'];
+
+    if((title == "") || (publication_date == "") || (summary == "")){
+        var error_message = "";
+        if(title == ""){
+            error_message += "Magazine Title must be provided! ";
+        }
+        if(publication_date == ""){
+            error_message += "Magazine Publication Date must be selected! ";
+        }
+        if(summary == ""){
+            error_message += "Magazine Summary must be provided";
+        }
+        toaster_error(error_message);
+        return false;
+    }
+
+    if(data_id == ""){
+        if((image_files.length < 1) || (pdf_files.length < 1)){
+            var error_message = ""
+            if(image_files.length < 1){
+                error_message += "Magazine Cover Photo must be uploaded! ";
+            }
+            if(pdf_files.length < 1){
+                error_message += "Magazine PDF File must be uploaded! ";
+            }
+            toaster_error(error_message);
+            return false;
+        }
+        url = API_URL+"magazines";
+    } else {
+        url = API_URL+"magazines/"+data_id;
+    }
+
+    if(image_files.length > 0){
+        var image_file = image_files[0].type;
+        if((image_file != "image/jpg") && (image_file != "image/jpeg") && (image_file != "image/png")){
+            toaster_error("Wrong Image Filetype");
+            return false;
+        }
+    }
+    
+    if(pdf_files.length > 0){
+        var pdf_file = pdf_files[0].type;
+        if(pdf_file != "application/pdf"){
+            toaster_error("Wrong File Format Uploaded for Books");
+            return false;
+        }
+    }
+
+    var fd = new FormData(document.querySelector(".magazine_form"));
+    toaster_success("Magazine Uploading...");
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: fd,
+        dataType: "json",
+        processData: false,
+        contentType: false,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            "Authorization": "Bearer "+sessionStorage.getItem('token')
+        },
+        success: function(response){
+            if(response.status == "success"){
+                toaster_success(response.message);
+                if(data_id == ""){
+                    window.location = ADMIN_URL+"magazines";
+                } else {
+                    window.location = ADMIN_URL+"magazines/"+response.data.slug;
+                }
+            } else {
+                toaster_error(response.message);
+            }
+        },
+        error: function(response){
+            console.log(response.responseText);
+            toaster_error(response.responseText);
+        }
+    })
+});
+
+del_magazine = document.querySelector("#delete_magazine");
+if(del_magazine){
+    del_magazine.onclick = function(e){
+        var magazine_id = e.target.dataset['id'];
+
+        $.ajax({
+            type: "DELETE",
+            url: API_URL+"magazines/"+magazine_id,
+            dataType: "json",
+            headers: {
+                "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                "Content-Type": "application/json"
+            },
+            success: function(response){
+                if(response.status == "success"){
+                    toaster_success(response.message);
+
+                    window.location = ADMIN_URL+"magazines";
+                } else {
+                    toaster_error(response.message);
+                }
+            },
+            error: function(response){
+                toaster_error(response.responseText);
+            }
+        });
+    }
+}
+
 $("form.book_form").submit(function(e){
     e.preventDefault();
 

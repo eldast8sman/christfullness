@@ -58,6 +58,7 @@
 /public/audio/*.mp3
 /public/audio/messages/*.mp3
 /public/document/books/*.pdf
+/public/document/*
 /public/img/*
 /storage/*.key
 /vendor
