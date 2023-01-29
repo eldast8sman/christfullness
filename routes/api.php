@@ -1,23 +1,24 @@
 <?php
 
-use App\Http\Controllers\AboutController;
-use App\Http\Controllers\ArticleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\VideoController;
 use App\Http\Controllers\SeriesController;
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\MagazineController;
 use App\Http\Controllers\MinisterController;
 use App\Http\Controllers\DevotionalController;
 use App\Http\Controllers\HomeBannerController;
 use App\Http\Controllers\HomeSliderController;
-use App\Http\Controllers\MagazineController;
-use App\Http\Controllers\PageController;
 use App\Http\Controllers\PageHeaderController;
-use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\WelcomeMessageController;
 
 /*
@@ -146,6 +147,14 @@ Route::middleware('auth:sanctum')->group(function(){
         Route::delete('/magazines/{id}', 'destroy');
     });
     
+    Route::controller(EventController::class)->group(function(){
+        Route::get('/events', 'index');
+        Route::post('/events', 'store');
+        Route::get('/events/{id}', 'show');
+        Route::get('/events/by-slug/{slug}', 'bySlug');
+        Route::post('/events/{id}', 'update');
+        Route::delete('/events/{id}', 'destroy');
+    });
 });
 
 Route::post('/register', [AuthController::class, 'register']);

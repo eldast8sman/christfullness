@@ -16,7 +16,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::orderBy('created', 'desc');
+        $articles = Article::orderBy('created_at', 'desc');
         if($articles->count() > 0){
             $articles = $articles->get();
             foreach($articles as $article){
