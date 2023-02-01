@@ -6,6 +6,7 @@ use stdClass;
 use App\Models\Book;
 use App\Models\User;
 use App\Models\About;
+use App\Models\Event;
 use App\Models\Photo;
 use App\Models\Quote;
 use App\Models\Video;
@@ -329,6 +330,28 @@ class AdminController extends Controller
         //print_r($headers);
         return view('admin.page_headers', [
             'page_headers' => $page_headers
+        ]);
+    }
+
+    public function events(){
+        $events = Event::orderBy('created_at', 'desc')->paginate(20);
+        foreach($events as $event){
+            $event->filename = url($event->filename);
+            $event->compressed = url($event->compressed);
+        }
+
+        return view('admin.events', [
+            'events' => $events
+        ]);
+    }
+
+    public function event($slug){
+        $event = Event::where('slug', $slug)->first();
+        $event->filename = url($event->filename);
+        $event->compressed = url($event->compressed);
+
+        return view('admin.event', [
+            'event' => $event
         ]);
     }
 }

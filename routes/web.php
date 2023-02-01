@@ -52,6 +52,9 @@ Route::prefix('dashboard')->group(function(){
         Route::get('/page_headers', 'page_headers')->name('page_headers');
 
         Route::get('/about-us', 'about_us')->name('about_us');
+
+        Route::get('/events', 'events')->name('events');
+        Route::get('/event/{slug}', 'event')->name('event');
         
         Route::post('/logout', 'logout');
     });
