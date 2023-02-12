@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use stdClass;
 use App\Models\About;
+use App\Models\Event;
 use App\Models\Quote;
 use App\Models\Article;
 use App\Models\Message;
@@ -98,6 +99,36 @@ class PageController extends Controller
         $header->filename = url($header->filename);
         return view('about_us', [
             'abouts' => $abouts,
+            'header' => $header
+        ]);
+    }
+
+    public function events(){
+        $events = Event::orderBy('start_date', 'desc')->orderBy('end_date', 'desc')->paginate();
+        foreach($events as $event){
+            $event->filename = url($event->filename);
+            $event->compressed = url($event->compressed);
+            $event->start_date = date('jS F, Y', strtotime($event->start_date));
+            $event->end_date = date('jS F, Y', strtotime($event->end_date));
+        }
+        $header = PageHeader::where('page', 'Events')->first();
+        $header->filename = url($header->filename);
+        return view('events', [
+            'events' => $events,
+            'header' => $header
+        ]);
+    }
+
+    public function event($slug){
+        $event = Event::where('slug', $slug)->first();
+        $event->filename = url($event->filename);
+        $event->start_date = date('l, jS of F, Y', strtotime($event->start_date));
+        $event->end_date = date('l, jS of F, Y', strtotime($event->end_date));
+        
+        $header = PageHeader::where('page', 'Events')->first();
+        $header->filename = url($header->filename);
+        return view('event', [
+            'event' => $event,
             'header' => $header
         ]);
     }

@@ -334,7 +334,7 @@ class AdminController extends Controller
     }
 
     public function events(){
-        $events = Event::orderBy('created_at', 'desc')->paginate(20);
+        $events = Event::orderBy('created_at', 'desc')->paginate(2);
         foreach($events as $event){
             $event->filename = url($event->filename);
             $event->compressed = url($event->compressed);

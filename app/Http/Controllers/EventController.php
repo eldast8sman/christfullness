@@ -107,25 +107,25 @@ class EventController extends Controller
                         FileController::delete_file($event->compressed);
                     }
                 }
-                $all['all_details'] = $all['event'].' '.$all['theme'].' '.$all['timing'].' '.$all['venue'].' '.date('l, jS F, Y', strtotime($all['start_date']));
-                if(isset($all['end_date']) && !empty($all['end_date'])){
-                    $all['all_details'] .= ' '.date('l, jS F, Y', strtotime($all['end_date']));
-                }
+            }
+            $all['all_details'] = $all['event'].' '.$all['theme'].' '.$all['timing'].' '.$all['venue'].' '.date('l, jS F, Y', strtotime($all['start_date']));
+            if(isset($all['end_date']) && !empty($all['end_date'])){
+                $all['all_details'] .= ' '.date('l, jS F, Y', strtotime($all['end_date']));
+            }
 
-                if($event->update($all)){
-                    $event->filename = url($event->filename);
-                    $event->compressed = url($event->compressed);
-                    return response([
-                        'status' => 'success',
-                        'message' => 'Event Updated successfully',
-                        'data' => $event
-                    ], 200);
-                } else {
-                    return response([
-                        'status' => 'failed',
-                        'message' => 'Event Update failed'
-                    ], 500);
-                }
+            if($event->update($all)){
+                $event->filename = url($event->filename);
+                $event->compressed = url($event->compressed);
+                return response([
+                    'status' => 'success',
+                    'message' => 'Event Updated successfully',
+                    'data' => $event
+                ], 200);
+            } else {
+                return response([
+                    'status' => 'failed',
+                    'message' => 'Event Update failed'
+                ], 500);
             }
         } else {
             return response([

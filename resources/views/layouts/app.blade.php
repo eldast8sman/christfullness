@@ -65,7 +65,7 @@
                 <div class="navbar-nav ms-auto p-4 p-lg-0">
                     <a href="{{ env('APP_URL') }}" class="nav-item nav-link active">Home</a>
                     <a href="{{ env('APP_URL') }}/about-us" class="nav-item nav-link">About Us</a>
-                    <a href="product.html" class="nav-item nav-link">Products</a>
+                    <a href="{{ env('APP_URL') }}/events" class="nav-item nav-link">Events</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Media</a>
                         <div class="dropdown-menu m-0">

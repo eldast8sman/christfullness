@@ -54,7 +54,7 @@ Route::prefix('dashboard')->group(function(){
         Route::get('/about-us', 'about_us')->name('about_us');
 
         Route::get('/events', 'events')->name('events');
-        Route::get('/event/{slug}', 'event')->name('event');
+        Route::get('/events/{slug}', 'event')->name('event');
         
         Route::post('/logout', 'logout');
     });
@@ -64,4 +64,7 @@ Route::controller(PageController::class)->group(function(){
     Route::get('/', 'index')->name('home');
 
     Route::get('/about-us', 'about_us');
+
+    Route::get('/events', 'events');
+    Route::get('/events/{slug}', 'event');
 });
