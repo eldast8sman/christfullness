@@ -203,4 +203,23 @@ class PageController extends Controller
             'later_devs' => $later_devs
         ]);
     }
+
+    public function devotional_archive(){
+        $today_date = date('Y-m-d');
+        $devotionals = Devotional::where('devotional_date', '<=', $today_date)->paginate(15);
+        if(!empty($devotionals)){
+            foreach($devotionals as $devotional){
+                $devotional->devotional_date = date('l, jS \of F, Y', strtotime($devotional->devotional_date));
+                $devotional->minister = $devotional->minister();
+            }
+        }
+
+        $header = PageHeader::where('page', 'devotionals')->first();
+        $header->filename = url($header->filename);
+
+        return view('devotional_archive', [
+            'devotionals' => $devotionals,
+            'header' => $header
+        ]);
+    }
 }

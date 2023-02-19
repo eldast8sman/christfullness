@@ -1,5 +1,5 @@
-// var BASE_URL = "https://www.cfcing.org/";
-var BASE_URL = "http://127.0.0.1:8000/";
+var BASE_URL = "https://www.cfcing.org/";
+// var BASE_URL = "http://127.0.0.1:8000/";
 var ADMIN_URL = BASE_URL + "dashboard/";
 var API_URL = BASE_URL + "api/";
 
@@ -31,9 +31,9 @@ $(".loginForm").submit(function(e) {
             success: function(response) {
                 if (response.status == "success") {
                     res = response.data;
-                    sessionStorage.setItem("token", res.token);
-                    sessionStorage.setItem("name", res.name);
-                    sessionStorage.setItem("email", res.email);
+                    localStorage.setItem("token", res.token);
+                    localStorage.setItem("name", res.name);
+                    localStorage.setItem("email", res.email);
                     toaster_success("Login was successful");
 
                     window.location = ADMIN_URL
@@ -58,13 +58,13 @@ $("a#dash_logout").click(function(e){
         type: "POST",
         url: API_URL+"logout",
         headers: {
-            "Authorization": "Bearer "+sessionStorage.getItem('token'),
+            "Authorization": "Bearer "+localStorage.getItem('token'),
             "Content-Type": "application/json"
         },
         success: function(response){
-            sessionStorage.setItem("token", "");
-            sessionStorage.setItem("name", "");
-            sessionStorage.setItem("email", "");
+            localStorage.setItem("token", "");
+            localStorage.setItem("name", "");
+            localStorage.setItem("email", "");
             toaster_success("Successfully Logged Out");
 
             window.location = ADMIN_URL;
@@ -85,7 +85,7 @@ if($("input#action").val() == "update"){
         url: API_URL+"users/"+admin_id,
         dataType: "json",
         headers: {
-            "Authorization": "Bearer "+sessionStorage.getItem('token'),
+            "Authorization": "Bearer "+localStorage.getItem('token'),
             "Content-Type": "application/json"
         },
         success: function(response){
@@ -127,7 +127,7 @@ $(".admin_form").submit(function(e){
                     contentType: "json",
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                        "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                        "Authorization": "Bearer "+localStorage.getItem('token'),
                         "Content-Type": "application/json"
                     },
                     success: function(response){
@@ -156,7 +156,7 @@ $(".admin_form").submit(function(e){
                 data: JSON.stringify(req),
                 contentType: "json",
                 headers: {
-                    "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                    "Authorization": "Bearer "+localStorage.getItem('token'),
                     "Content-Type": "application/json"
                 },
                 success: function(response){
@@ -224,7 +224,7 @@ $(".home_banner_form").submit(function(e){
             contentType: "json",
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                "Authorization": "Bearer "+localStorage.getItem('token'),
                 "Content-Type": "application/json"
             },
             success: function(response){
@@ -256,7 +256,7 @@ for(let i=0; i < admin_del_buttons.length; i++){
             url: API_URL+"users/"+admin_id,
             dataType: "json",
             headers: {
-                "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                "Authorization": "Bearer "+localStorage.getItem('token'),
                 "Content-Type": "application/json"
             },
             success: function(response){
@@ -298,7 +298,7 @@ $("form.minister_form").submit(function(e){
             contentType: false,
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                "Authorization": "Bearer "+sessionStorage.getItem('token')
+                "Authorization": "Bearer "+localStorage.getItem('token')
             },
             success: function(response){
                 if(response.status == "success"){
@@ -343,7 +343,7 @@ if(del_minister){
             url: API_URL+"ministers/"+minister_id,
             dataType: "json",
             headers: {
-                "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                "Authorization": "Bearer "+localStorage.getItem('token'),
                 "Content-Type": "application/json"
             },
             success: function(response){
@@ -387,7 +387,7 @@ $("form.series_form").submit(function(e){
             contentType: false,
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                "Authorization": "Bearer "+sessionStorage.getItem('token')
+                "Authorization": "Bearer "+localStorage.getItem('token')
             },
             success: function(response){
                 if(response.status == "success"){
@@ -424,7 +424,7 @@ for(let i=0; i<=series_message_div.length-1; i++){
             url: API_URL+"messages/"+id,
             dataType: "json",
             headers: {
-                "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                "Authorization": "Bearer "+localStorage.getItem('token'),
                 "Content-Type": "application/json"
             },
             success: function(response){
@@ -465,7 +465,7 @@ if(del_series){
             url: API_URL+"series/"+series_id,
             dataType: "json",
             headers: {
-                "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                "Authorization": "Bearer "+localStorage.getItem('token'),
                 "Content-Type": "application/json"
             },
             success: function(response){
@@ -551,7 +551,7 @@ $("form.event_form").submit(function(e){
         contentType: false,
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            "Authorization": "Bearer "+sessionStorage.getItem('token')
+            "Authorization": "Bearer "+localStorage.getItem('token')
         },
         success: function(response){
             if(response.status == "success"){
@@ -582,7 +582,7 @@ if(del_event){
             url: API_URL+"events/"+event_id,
             dataType: "json",
             headers: {
-                "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                "Authorization": "Bearer "+localStorage.getItem('token'),
                 "Content-Type": "application/json" 
             },
             success: function(response){
@@ -684,7 +684,7 @@ $("form.message_form").submit(function(e){
         contentType: false,
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            "Authorization": "Bearer "+sessionStorage.getItem('token')
+            "Authorization": "Bearer "+localStorage.getItem('token')
         },
         success: function(response){
             if(response.status == "success"){
@@ -720,7 +720,7 @@ if(del_message){
             url: API_URL+"messages/"+msg_id,
             dataType: "json",
             headers: {
-                "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                "Authorization": "Bearer "+localStorage.getItem('token'),
                 "Content-Type": "application/json"
             },
             success: function(response){
@@ -809,7 +809,7 @@ $("form.magazine_form").submit(function(e){
         contentType: false,
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            "Authorization": "Bearer "+sessionStorage.getItem('token')
+            "Authorization": "Bearer "+localStorage.getItem('token')
         },
         success: function(response){
             if(response.status == "success"){
@@ -840,7 +840,7 @@ if(del_magazine){
             url: API_URL+"magazines/"+magazine_id,
             dataType: "json",
             headers: {
-                "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                "Authorization": "Bearer "+localStorage.getItem('token'),
                 "Content-Type": "application/json"
             },
             success: function(response){
@@ -943,7 +943,7 @@ $("form.book_form").submit(function(e){
         contentType: false,
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            "Authorization": "Bearer "+sessionStorage.getItem('token')
+            "Authorization": "Bearer "+localStorage.getItem('token')
         },
         success: function(response){
             if(response.status == "success"){
@@ -974,7 +974,7 @@ if(del_book){
             url: API_URL+"books/"+book_id,
             dataType: "json",
             headers: {
-                "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                "Authorization": "Bearer "+localStorage.getItem('token'),
                 "Content-Type": "application/json"
             },
             success: function(response){
@@ -1051,7 +1051,7 @@ $("form.devotional_form").submit(function(e){
             contentType: false,
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                "Authorization": "Bearer "+sessionStorage.getItem('token')
+                "Authorization": "Bearer "+localStorage.getItem('token')
             },
             success: function(response){
                 if(response.status == "success"){
@@ -1083,7 +1083,7 @@ if(del_dev){
             url: API_URL+"devotionals/"+dev_id,
             dataType: "json",
             headers: {
-                "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                "Authorization": "Bearer "+localStorage.getItem('token'),
                 "Content-Type": "application/json"
             },
             success: function(response){
@@ -1146,7 +1146,7 @@ for(let i=0; i < video_forms.length; i++){
                 contentType: false,
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                    "Authorization": "Bearer "+sessionStorage.getItem('token')
+                    "Authorization": "Bearer "+localStorage.getItem('token')
                 },
                 success: function(response){
                     if(response.status == "success"){
@@ -1182,7 +1182,7 @@ for(let i=0; i < video_del_buttons.length; i++){
             url: API_URL+"videos/"+video_id,
             dataType: "json",
             headers: {
-                "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                "Authorization": "Bearer "+localStorage.getItem('token'),
                 "Content-Type": "application/json"
             },
             success: function(response){
@@ -1288,7 +1288,7 @@ $("form.article_form").submit(function(e){
         contentType: false,
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            "Authorization": "Bearer "+sessionStorage.getItem('token')
+            "Authorization": "Bearer "+localStorage.getItem('token')
         },
         success: function(response){
             if(response.status == "success"){
@@ -1352,7 +1352,7 @@ for(let i=0; i < quote_forms.length; i++){
             contentType: false,
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                "Authorization": "Bearer "+sessionStorage.getItem('token')
+                "Authorization": "Bearer "+localStorage.getItem('token')
             },
             success: function(response){
                 if(response.status == "success"){
@@ -1382,7 +1382,7 @@ for(let i = 0; i < quote_del_buttons.length; i++){
             url: API_URL+"quotes/"+quote_id,
             dataType: "json",
             headers: {
-                "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                "Authorization": "Bearer "+localStorage.getItem('token'),
                 "Content-Type": "application/json"
             },
             success: function(response){
@@ -1416,7 +1416,7 @@ if(del_article){
             url: API_URL+"articles/"+article_id,
             dataType: "json",
             headers: {
-                "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                "Authorization": "Bearer "+localStorage.getItem('token'),
                 "Content-Type": "application/json"
             },
             success: function(response){
@@ -1488,7 +1488,7 @@ $("form.photo_form").submit(function(e){
         contentType: false,
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            "Authorization": "Bearer "+sessionStorage.getItem('token')
+            "Authorization": "Bearer "+localStorage.getItem('token')
         },
         success: function(response){
             if(response.status == "success"){
@@ -1546,7 +1546,7 @@ $("form.welcome_message_form").submit(function(e){
         contentType: false,
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            "Authorization": "Bearer "+sessionStorage.getItem('token')
+            "Authorization": "Bearer "+localStorage.getItem('token')
         },
         success: function(response){
             if(response.status == "success"){
@@ -1573,7 +1573,7 @@ if(del_photo){
             url: API_URL+"photos/"+photo_id,
             dataType: "json",
             headers: {
-                "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                "Authorization": "Bearer "+localStorage.getItem('token'),
                 "Content-Type": "application/json"
             },
             success: function(response){
@@ -1632,7 +1632,7 @@ for(let i=0; i < header_forms.length; i++){
             contentType: false,
             headers: {
                 'x-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                "Authorization": "Bearer "+sessionStorage.getItem('token')
+                "Authorization": "Bearer "+localStorage.getItem('token')
             },
             success: function(response){
                 if(response.status == "success"){
@@ -1661,7 +1661,7 @@ for(let i=0; i<pageheader_del_buttons.length; i++){
             url: API_URL+"page_headers/"+header_id,
             dataType: "json",
             headers: {
-                "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                "Authorization": "Bearer "+localStorage.getItem('token'),
                 "Content-Type": "application/json"
             },
             success: function(response){
@@ -1729,7 +1729,7 @@ for(let i=0; i < about_forms.length; i++){
             contentType: false,
             headers: {
                 'x-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                "Authorization": "Bearer "+sessionStorage.getItem('token')
+                "Authorization": "Bearer "+localStorage.getItem('token')
             },
             success: function(response){
                 if(response.status == "success"){
@@ -1758,7 +1758,7 @@ for(let i=0; i < about_del_buttons.length; i++){
             url: API_URL+"about-us/"+about_id,
             dataType: "json",
             headers: {
-                "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                "Authorization": "Bearer "+localStorage.getItem('token'),
                 "Content-Type": "application/json"
             },
             success: function(response){
@@ -1794,7 +1794,7 @@ for(let i=0; i < about_photo_del_buttons.length; i++){
             url: API_URL+"about-us/photos/"+about_id,
             dataType: "json",
             headers: {
-                "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                "Authorization": "Bearer "+localStorage.getItem('token'),
                 "Content-Type": "application/json"
             },
             success: function(response){
@@ -1866,7 +1866,7 @@ for(let i=0; i < slider_forms.length; i++){
             contentType: false,
             headers: {
                 'x-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                "Authorization": "Bearer "+sessionStorage.getItem('token')
+                "Authorization": "Bearer "+localStorage.getItem('token')
             },
             success: function(response){
                 if(response.status == "success"){
@@ -1895,7 +1895,7 @@ for(let i=0; i < slider_del_buttons.length; i++){
             url: API_URL+"home_sliders/"+header_id,
             dataType: "json",
             headers: {
-                "Authorization": "Bearer "+sessionStorage.getItem('token'),
+                "Authorization": "Bearer "+localStorage.getItem('token'),
                 "Content-Type": "application/json"
             },
             success: function(response){
