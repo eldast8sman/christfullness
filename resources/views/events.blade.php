@@ -13,7 +13,7 @@
             {{ $header->title }}
         @endslot
         @slot('breadcrumbs')
-        <li class="breadcrumb-item text-dark active" aria-current="page">Events</li>
+            <li class="breadcrumb-item text-dark active" aria-current="page">Events</li>
         @endslot
     @endcomponent
 
@@ -37,6 +37,9 @@
                         </div>
                     </div>
                 @endforeach
+            </div>
+            <div class="col-12 text-center wow fadeInUp" data-wow-delay="0.1s">
+                {{ $events->links() }}
             </div>
         </div>
     </div>

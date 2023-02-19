@@ -67,4 +67,8 @@ Route::controller(PageController::class)->group(function(){
 
     Route::get('/events', 'events');
     Route::get('/events/{slug}', 'event');
+
+    Route::get('/publications/devotionals', 'devotionals');
+    Route::get('/publications/devotionals/{slug}', 'devotional');
+    Route::get('/publications/devotional/archive', 'devotional_archive');
 });

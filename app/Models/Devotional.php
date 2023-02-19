@@ -29,5 +29,9 @@ class Devotional extends Model
         return SlugOptions::create()
             ->generateSlugsFrom(['devotional_date', 'topic'])
             ->saveSlugsTo('slug');
-    } 
+    }
+    
+    public function minister(){
+        return Minister::find($this->minister_id);
+    }
 }

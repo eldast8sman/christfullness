@@ -104,12 +104,16 @@ class PageController extends Controller
     }
 
     public function events(){
-        $events = Event::orderBy('start_date', 'desc')->orderBy('end_date', 'desc')->paginate();
+        $events = Event::orderBy('start_date', 'desc')->orderBy('end_date', 'desc')->paginate(2);
         foreach($events as $event){
             $event->filename = url($event->filename);
             $event->compressed = url($event->compressed);
             $event->start_date = date('jS F, Y', strtotime($event->start_date));
-            $event->end_date = date('jS F, Y', strtotime($event->end_date));
+            if(!empty($event->end_date)){
+                $event->end_date = date('jS F, Y', strtotime($event->end_date));
+            } else {
+                $event->end_date = "";
+            }
         }
         $header = PageHeader::where('page', 'Events')->first();
         $header->filename = url($header->filename);
@@ -122,14 +126,57 @@ class PageController extends Controller
     public function event($slug){
         $event = Event::where('slug', $slug)->first();
         $event->filename = url($event->filename);
-        $event->start_date = date('l, jS of F, Y', strtotime($event->start_date));
-        $event->end_date = date('l, jS of F, Y', strtotime($event->end_date));
+        $event->start_date = date('l, jS \of F, Y', strtotime($event->start_date));
+        if(!empty($event->end_date)){
+            $event->end_date = date('l, jS \of F, Y', strtotime($event->end_date));
+        } else {
+            $event->end_date = "";
+        }
         
         $header = PageHeader::where('page', 'Events')->first();
         $header->filename = url($header->filename);
         return view('event', [
             'event' => $event,
             'header' => $header
+        ]);
+    }
+
+    public function devotionals(){
+        $today_date = date('Y-m-d');
+        $todays_dev = Devotional::where('devotional_date', $today_date)->first();
+        if(!empty($todays_dev)){
+            $todays_dev->devotional_date = date('l, jS \of F, Y', strtotime($todays_dev->devotional_date));
+            $todays_dev->minister = $todays_dev->minister();
+        }
+        $today = date('l, jS \of F, Y');
+
+        $previous_devs = Devotional::where('devotional_date', '<', $today_date)->orderBy('devotional_date', 'desc')->limit(6)->get();
+        if(!empty($previous_devs)){
+            foreach($previous_devs as $devotional){
+                $devotional->devotional_date = date('l, jS \of F, Y', strtotime($devotional->devotional_date));
+                $devotional->minister = $devotional->minister();
+            }
+        }
+
+        $header = PageHeader::where('page', 'Devotionals')->first();
+        $header->filename = url($header->filename);
+
+        return view('devotionals', [
+            'header' => $header,
+            'today' => $today,
+            'today_devotional' => $todays_dev,
+            'previous_devs' => $previous_devs
+        ]);
+    }
+
+    public function devotional($slug){
+        $devotional = Devotional::where('slug', $slug)->first();
+        
+        $header = PageHeader::where('page', 'devotionals')->first();
+        $header->filename = url($header->filename);
+
+        return view('devotional', [
+
         ]);
     }
 }

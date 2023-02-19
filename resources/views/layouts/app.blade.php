@@ -75,6 +75,15 @@
                             <a href="{{ env('APP_URL') }}/media/videos" class="dropdown-item">Videos</a>
                         </div>
                     </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle>Publications</a>
+                        <div class="dropdown-menu m-0">
+                            <a href="{{ env('APP_URL') }}/publications/devotionals" class="dropdown-item">Devotionals</a>
+                            <a href="{{ env('APP_URL') }}/publications/books" class="dropdown-item">Books</a>
+                            <a href="{{ env('APP_URL') }}/publications/magazines" class="dropdown-item">Magazines</a>
+                            <a href="{{ env('APP_URL') }}/publications/articles" class="dropdown-item">Articles</a>
+                        </div>
+                    </div>
                     <a href="contact.html" class="nav-item nav-link">Contact Us</a>
                 </div>
                 <div class="d-none d-lg-flex ms-2">

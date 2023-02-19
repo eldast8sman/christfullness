@@ -35,7 +35,6 @@
                                         <div class="col-lg-7">
                                             <h1 class="display-2 mb-5 animated slideInDown">{{ $slider->caption }}</h1>
                                             <a href="{{ $slider->link }}" class="btn btn-primary rounded-pill py-sm-3 px-sm-5">{{ $slider->call_to_action }}</a>
-                                            {{-- <a href="" class="btn btn-secondary rounded-pill py-sm-3 px-sm-5 ms-3">Services</a> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -43,34 +42,6 @@
                         </div>
                     @endforeach
                 @endif
-                {{-- <div class="carousel-item">
-                    <img class="w-100" src="img/carousel-1.jpg" alt="Image">
-                    <div class="carousel-caption">
-                        <div class="container">
-                            <div class="row justify-content-start">
-                                <div class="col-lg-7">
-                                    <h1 class="display-2 mb-5 animated slideInDown">Organic Food Is Good For Health</h1>
-                                    <a href="" class="btn btn-primary rounded-pill py-sm-3 px-sm-5">Products</a>
-                                    <a href="" class="btn btn-secondary rounded-pill py-sm-3 px-sm-5 ms-3">Services</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img class="w-100" src="img/carousel-2.jpg" alt="Image">
-                    <div class="carousel-caption">
-                        <div class="container">
-                            <div class="row justify-content-start">
-                                <div class="col-lg-7">
-                                    <h1 class="display-2 mb-5 animated slideInDown">Natural Food Is Always Healthy</h1>
-                                    <a href="" class="btn btn-primary rounded-pill py-sm-3 px-sm-5">Products</a>
-                                    <a href="" class="btn btn-secondary rounded-pill py-sm-3 px-sm-5 ms-3">Services</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#header-carousel"
                 data-bs-slide="prev">
@@ -125,7 +96,7 @@
                             <h5 class="mb-3">{{ $devotional->devotional_date }}</h5>
                             <h4 class="mb-3">{{ $devotional->topic }}</h4>
                             <p class="mb-4">{{ $devotional->memory_verse }}</p>
-                            <a class="btn btn-outline-primary border-2 py-2 px-4 rounded-pill" href="{{ env('APP_URL') }}/devotionals/{{ $devotional->slug }}">Read More</a>
+                            <a class="btn btn-outline-primary border-2 py-2 px-4 rounded-pill" href="{{ env('APP_URL') }}/publications/devotionals/{{ $devotional->slug }}">Read More</a>
                         </div>
                     </div>
                 @endforeach
