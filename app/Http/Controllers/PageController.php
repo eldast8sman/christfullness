@@ -171,12 +171,36 @@ class PageController extends Controller
 
     public function devotional($slug){
         $devotional = Devotional::where('slug', $slug)->first();
+        $the_date = $devotional->devotional_date;
+        $devotional->devotional_date = date('l, jS \of F, Y', strtotime($devotional->devotional_date));
+        $devotional->minister = $devotional->minister();
+
+        $previous_devs = Devotional::where('devotional_date', '<', $the_date)->orderBy('devotional_date', 'desc')->limit(3)->get();
+        if(!empty($previous_devs)){
+            foreach($previous_devs as $old_dev){
+                $old_dev->devotional_date = date('l, jS \of F, Y', strtotime($old_dev->devotional_date));
+                $old_dev->minister = $old_dev->minister();
+            }
+        }
         
+        $later_devs = Devotional::where('devotional_date', '>', $the_date)->where('devotional_date', '<=', date('Y-m-d'))->orderBy('devotional_date', 'asc')->limit(3)->get();
+        if(!empty($later_devs)){
+            foreach($later_devs as $new_dev){
+                $new_dev->devotional_date = date('l, jS \of F, Y', strtotime($new_dev->devotional_date));
+                $new_dev->minister = $new_dev->minister();
+            }
+        }
+
+        $today_date = date('l, jS \of F, Y', strtotime($the_date));
         $header = PageHeader::where('page', 'devotionals')->first();
         $header->filename = url($header->filename);
 
         return view('devotional', [
-
+            'header' => $header,
+            'today' => $today_date,
+            'today_devotional' => $devotional,
+            'previous_devs' => $previous_devs,
+            'later_devs' => $later_devs
         ]);
     }
 }
