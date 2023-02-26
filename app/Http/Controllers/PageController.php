@@ -298,4 +298,38 @@ class PageController extends Controller
             'header' => $header
         ]);
     }
+
+    public function articles(){
+        $today = date('Y-m-d');
+
+        $articles = Article::where('published', '<=', $today)->paginate(20);
+        foreach($articles as $article){
+            $article->image_path = url($article->image_path);
+            $article->compressed_image = url($article->compressed_image);
+            $article->published = date('l, jS \of F, Y', strtotime($article->published));
+        }
+
+        $header = PageHeader::where('page', 'articles')->first();
+        $header->filename = url($header->filename);
+
+        return view('articles', [
+            'articles' => $articles,
+            'header' => $header
+        ]);
+    }
+
+    public function article($slug){
+        $article = Article::where('slug', $slug)->first();
+        $article->image_path = url($article->image_path);
+        $article->compressed_image = url($article->compressed_image);
+        $article->published = date('l, jS \of F, Y', strtotime($article->published));
+
+        $header = PageHeader::where('page', 'articles')->first();
+        $header->filename = url($header->filename);
+
+        return view('article', [
+            'article' => $article,
+            'header' => $header
+        ]);
+    }
 }

@@ -78,6 +78,9 @@ Route::controller(PageController::class)->group(function(){
 
     Route::get('/publications/magazines', 'magazines');
     Route::get('/publications/magazines/{slug}', 'magazine');
+
+    Route::get('/publications/articles', 'articles');
+    Route::get('/publications/articles/{slug}', 'article');
 });
 
 Route::controller(DownloadController::class)->group(function(){

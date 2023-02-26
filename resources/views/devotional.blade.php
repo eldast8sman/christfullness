@@ -13,7 +13,7 @@
             {{ $header->title }}
         @endslot
         @slot('breadcrumbs')
-            <li class="breadcrumb-item"><a class="text-body" href="{{ env('APP_URL') }}/devotionals">Devotionals</a></li>
+            <li class="breadcrumb-item"><a class="text-body" href="{{ env('APP_URL') }}/publications/devotionals">Devotionals</a></li>
             <li class="breadcrumb-item text-dark active" aria-current="page">{{ $today }}</li>
         @endslot
     @endcomponent

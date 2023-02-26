@@ -28,7 +28,7 @@
                                 <img class="img-fluid w-100" src="{{ $about->filename }}" alt="{{ $about->heading }}">
                             </div>
                         </div>   
-                            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+                        <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
                             <h1 class="display-5 mb-4">{{ $about->heading }}</h1>
                             <p class="mb-4">{!! $about->content !!}</p>
                         </div>   
