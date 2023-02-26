@@ -38,7 +38,7 @@ $(".loginForm").submit(function(e) {
 
                     // console.log(localStorage);
 
-                    window.location = "dashboard"
+                    window.location = "../dashboard"
                 } else {
                     toaster_error(response.message);
                 }
