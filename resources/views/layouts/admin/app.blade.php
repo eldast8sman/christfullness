@@ -111,7 +111,7 @@
             <div class="quixnav-scroll">
                 <ul class="metismenu" id="menu">
                     <li class="nav-label first">Main Menu</li>
-                    <li><a href="{{ env('ADMIN_URL') }}">Home</a></li>
+                    <li><a href="dashboard">Home</a></li>
                     <li><a href="dashboard/events">Events</a></li>
                     {{-- <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
                                 class="icon icon-single-04"></i><span class="nav-text">Dashboard</span></a>
@@ -121,8 +121,8 @@
                         </ul>
                     </li> --}}
                     <li class="nav-label">Persons</li>
-                    <li><a href="{{ env('ADMIN_URL') }}ministers"><i class="icon icon-single-04"></i><span class="nav-text">Ministers</span></a></li>
-                    <li><a href="{{ env('ADMIN_URL') }}admins"><i class="icon icon-single-04"></i><span class="nav-text">Admins</span></a></li>
+                    <li><a href="dashboard/ministers"><i class="icon icon-single-04"></i><span class="nav-text">Ministers</span></a></li>
+                    <li><a href="dashboard/admins"><i class="icon icon-single-04"></i><span class="nav-text">Admins</span></a></li>
                     
                     
                     
@@ -130,26 +130,26 @@
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
                                 class="icon icon-app-store"></i><span class="nav-text">Media</span></a>
                         <ul aria-expanded="false">
-                            <li><a href="{{ env('ADMIN_URL') }}message-series">Message Series</a></li>
-                            <li><a href="{{ env('ADMIN_URL') }}messages">Messages</a></li>
-                            <li><a href="{{ env('ADMIN_URL') }}photos">Photos</a></li>
-                            <li><a href="{{ env('ADMIN_URL') }}videos">Videos</a></li>
+                            <li><a href="dashboard/message-series">Message Series</a></li>
+                            <li><a href="dashboard/messages">Messages</a></li>
+                            <li><a href="dashboard/photos">Photos</a></li>
+                            <li><a href="dashboard/videos">Videos</a></li>
                         </ul>
                     </li>
                     <li>
                         <a href="javascript:void()" class="has-arrow" aria-expanded="false"><i class="icon icon-form"></i><span class="nav-text">Publications</span></a>
                         <ul aria-expanded="false">
-                            <li><a href="{{ env('ADMIN_URL') }}books">Books</a></li>
-                            <li><a href="{{ env('ADMIN_URL') }}devotionals">Devotionals</a></li>
-                            <li><a href="{{ env('ADMIN_URL') }}articles">Articles</a></li>
-                            <li><a href="{{ env('ADMIN_URL') }}magazines">Magazines</a></li>
+                            <li><a href="dashboard/books">Books</a></li>
+                            <li><a href="dashboard/devotionals">Devotionals</a></li>
+                            <li><a href="dashboard/articles">Articles</a></li>
+                            <li><a href="dashboard/magazines">Magazines</a></li>
                         </ul>
                     </li>
                     <li>
                         <a href="javascript:void()" class="has-arrow" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Components</span></a>
                         <ul aria-expanded="false">
-                            <li><a href="{{ env('ADMIN_URL') }}page_headers">Page Headers</a></li>
-                            <li><a href="{{ env('ADMIN_URL') }}about-us">About Us</a></li>
+                            <li><a href="dashboard/page_headers">Page Headers</a></li>
+                            <li><a href="dashboard/about-us">About Us</a></li>
                         </ul>
                     </li>
                     <li><a href="widget-basic.html" aria-expanded="false"><i class="icon icon-globe-2"></i><span
