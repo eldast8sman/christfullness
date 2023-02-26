@@ -1,4 +1,4 @@
-@extends('layouts.admin.app')
+@extends('layouts.admin.ackup_app')
 
 @section('title')
     CFCI ADMIN|{{ $magazine->title }}
