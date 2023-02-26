@@ -9,6 +9,7 @@ use App\Models\Event;
 use App\Models\Quote;
 use App\Models\Article;
 use App\Models\Message;
+use App\Models\Magazine;
 use App\Models\Devotional;
 use App\Models\HomeBanner;
 use App\Models\HomeSlider;
@@ -258,6 +259,42 @@ class PageController extends Controller
 
         return view('book', [
             'book' => $book,
+            'header' => $header
+        ]);
+    }
+
+    public function magazines(){
+        $today = date('Y-m-d');
+
+        $magazines = Magazine::where('publication_date', '<=', $today)->paginate(20);
+        foreach($magazines as $magazine){
+            $magazine->image_path = url($magazine->image_path);
+            $magazine->compressed = url($magazine->compressed);
+            $magazine->document_path = url($magazine->document_path);
+            $magazine->publication_date = date('l, jS \of F, Y', strtotime($magazine->publication_date));
+        }
+
+        $header = PageHeader::where('page', 'magazines');
+        $header->filename = url($header->filename);
+
+        return view('magazines', [
+            'magazines' => $magazines,
+            'header' => $header
+        ]);
+    }
+
+    public function magazine($slug){
+        $magazine = Magazine::where('slug', $slug)->first();
+        $magazine->image_path = url($magazine->image_path);
+        $magazine->compressed = url($magazine->compressed);
+        $magazine->document_path = url($magazine->document_path);
+        $magazine->publication_date = date('l, jS \of F, Y', strtotime($magazine->publication_date));
+
+        $header = PageHeader::where('page', 'magazines');
+        $header->filename = url($header->filename);
+        
+        return view('magazine', [
+            'magazine' => $magazine,
             'header' => $header
         ]);
     }

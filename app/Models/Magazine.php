@@ -19,7 +19,8 @@ class Magazine extends Model
         'all_details',
         'image_path',
         'compressed',
-        'document_path'
+        'document_path',
+        'downloads'
     ];
 
     public function getSlugOptions(): SlugOptions
