@@ -40,6 +40,7 @@
                                 </p>
                             </div>
                             <div class="col-lg-9 col-md-12 mx-auto text-justify text-dark">
+                                <p><strong>Downloads: </strong> {{ $book->downloads }}</p>
                                 <p>{{ $book->summary }}</p>
                                 <p>
                                     <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#edit_book_modal">Edit</button>

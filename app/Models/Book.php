@@ -11,7 +11,17 @@ class Book extends Model
 {
     use HasFactory, HasSlug;
     
-    protected $fillable = ['title', 'slug', 'summary', 'minister_id', 'details', 'book_path', 'image_path', 'compressed_image'];
+    protected $fillable = [
+        'title',
+        'slug',
+        'summary',
+        'minister_id',
+        'details',
+        'book_path',
+        'image_path',
+        'compressed_image',
+        'downloads'
+    ];
 
     public function getSlugOptions(): SlugOptions
     {

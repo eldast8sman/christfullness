@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\PageController;
 
 /*
@@ -56,7 +57,7 @@ Route::prefix('dashboard')->group(function(){
         Route::get('/events', 'events')->name('events');
         Route::get('/events/{slug}', 'event')->name('event');
         
-        Route::post('/logout', 'logout');
+        Route::get('/logout', 'logout');
     });
 });
 
@@ -71,4 +72,11 @@ Route::controller(PageController::class)->group(function(){
     Route::get('/publications/devotionals', 'devotionals');
     Route::get('/publications/devotionals/{slug}', 'devotional');
     Route::get('/publications/devotional/archive', 'devotional_archive');
+
+    Route::get('/publications/books', 'books');
+    Route::get('/publications/books/{slug}', 'book');
+});
+
+Route::controller(DownloadController::class)->group(function(){
+    Route::get('/downloads/books/{slug}', 'download_book');
 });

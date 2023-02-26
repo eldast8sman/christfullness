@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use stdClass;
+use App\Models\Book;
 use App\Models\About;
 use App\Models\Event;
 use App\Models\Quote;
@@ -219,6 +220,44 @@ class PageController extends Controller
 
         return view('devotional_archive', [
             'devotionals' => $devotionals,
+            'header' => $header
+        ]);
+    }
+
+    public function books(){
+        $books = Book::orderBy('created_at', 'desc')->paginate(20);
+        if(!empty($books)){
+            foreach($books as $book){
+                $book->book_path = url($book->book_path);
+                $book->image_path = url($book->image_path);
+                $book->compressed_image = url($book->compressed_image);
+                $book->author = $book->author();
+            }
+        }
+
+        $header = PageHeader::where('page', 'books')->first();
+        $header->filename = url($header->filename);
+
+        return view('books', [
+            'books' => $books,
+            'header' => $header
+        ]);
+    }
+
+    public function book($slug){
+        $book = Book::where('slug', $slug)->first();
+        $book->book_path = url($book->book_path);
+        $book->image_path = url($book->image_path);
+        $book->compressed_image = url($book->compressed_image);
+        $book->author = $book->author();
+        $book->author->filepath = url($book->author->filepath);
+        $book->author->compressed = url($book->author->compressed);
+
+        $header = PageHeader::where('page', 'books')->first();
+        $header->filename = url($header->filename);
+
+        return view('book', [
+            'book' => $book,
             'header' => $header
         ]);
     }
