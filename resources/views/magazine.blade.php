@@ -32,6 +32,7 @@
                     <center><a class="btn btn-outline-primary border-2 py-2 px-4 rounded-pill mt-3" href="{{ env('APP_URL') }}/downloads/magazines/{{ $magazine->slug }}">Download <i class="fa fa-download"></i></a></center>
                 </div>
                 <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+                    <p><strong>Publication Date: </strong>{{ $magazine->publication_date }}</p>
                     <p>{!! nl2br($magazine->summary) !!}</p>
                 </div>
             </div>

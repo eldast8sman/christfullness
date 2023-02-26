@@ -274,7 +274,7 @@ class PageController extends Controller
             $magazine->publication_date = date('l, jS \of F, Y', strtotime($magazine->publication_date));
         }
 
-        $header = PageHeader::where('page', 'magazines');
+        $header = PageHeader::where('page', 'magazines')->first();
         $header->filename = url($header->filename);
 
         return view('magazines', [
@@ -290,7 +290,7 @@ class PageController extends Controller
         $magazine->document_path = url($magazine->document_path);
         $magazine->publication_date = date('l, jS \of F, Y', strtotime($magazine->publication_date));
 
-        $header = PageHeader::where('page', 'magazines');
+        $header = PageHeader::where('page', 'magazines')->first();
         $header->filename = url($header->filename);
         
         return view('magazine', [
