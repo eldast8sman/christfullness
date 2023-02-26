@@ -36,9 +36,9 @@ $(".loginForm").submit(function(e) {
                     localStorage.setItem("email", res.email);
                     toaster_success("Login was successful");
 
-                    console.log(localStorage);
+                    // console.log(localStorage);
 
-                    window.location = "../dashboard";
+                    window.location = ADMIN_URL
                 } else {
                     toaster_error(response.message);
                 }
