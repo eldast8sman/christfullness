@@ -38,7 +38,7 @@ $(".loginForm").submit(function(e) {
 
                     console.log(localStorage);
 
-                    // window.location = ADMIN_URL
+                    window.location = ADMIN_URL
                 } else {
                     toaster_error(response.message);
                 }
