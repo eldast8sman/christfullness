@@ -353,6 +353,6 @@ class PageController extends Controller
     }
 
     public function show_series($slug){
-        $series = Series::where('slug', $slug)
+        $series = Series::where('slug', $slug)->first();
     }
 }
