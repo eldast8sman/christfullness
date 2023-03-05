@@ -81,6 +81,9 @@ Route::controller(PageController::class)->group(function(){
 
     Route::get('/publications/articles', 'articles');
     Route::get('/publications/articles/{slug}', 'article');
+
+    Route::get('/media/message-series', 'message_series');
+    Route::get('/media/message-series/{slug}', 'show_series');
 });
 
 Route::controller(DownloadController::class)->group(function(){

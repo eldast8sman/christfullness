@@ -12,7 +12,11 @@ class WelcomeMessageController extends Controller
     public function adding_message(UpdateWelcomeMessageRequest $request){
         $welcome = WelcomeMessage::first();
         if(!empty($welcome)){
-            $all = $request->all();
+            // $all = $request->all();
+            $all = [
+                'heading' => $request->heading,
+                'content' => htmlentities($request->content)
+            ];
             if(!empty($all['filename'])){
                 $image_path = $all['filename'];
                 unset($all['filename']);
@@ -42,7 +46,11 @@ class WelcomeMessageController extends Controller
                 ], 500);
             }
         } else {
-            $all = $request->all();
+            // $all = $request->all();
+            $all = [
+                'heading' => $request->heading,
+                'content' => htmlentities($request->content)
+            ];
             if(!empty($all['filename'])){
                 $image_path = $all['filename'];
                 unset($all['filename']);

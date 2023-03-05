@@ -13,7 +13,7 @@
             {{ $header->title }}
         @endslot
         @slot('breadcrumbs')
-            <li class="breadcrumb-item"><a class="text-body" href="{{ env('APP_URL') }}/publicatioins/articles">Articles</a></li>
+            <li class="breadcrumb-item"><a class="text-body" href="{{ env('APP_URL') }}/publications/articles">Articles</a></li>
             <li class="breadcrumb-item text-dark active" aria-current="page">{{ $article->title }}</li>
         @endslot
     @endcomponent
@@ -31,7 +31,7 @@
                     <small class="text-center me-3 text-primary"><center><i class="fa fa-user"></i> {{ $article->author }}</center></small>
                     <small class="text-center me-3 text-primary"><center><i class="fa fa-calendar"></i> {{ $article->published }}</center></small>
                     <div>
-                        <img src="{{ $article->image_path }}" width="350px" height="auto" style="max-width: 100%; float:left; margin-right: 10px; margin-bottom:10px;" alt="" class="img-fluid">
+                        <center><img src="{{ $article->image_path }}" width="500px" height="auto" style="max-width: 100%; margin:10px auto;" alt="" class="img-fluid"></center>
                         {!! nl2br($article->article) !!}
                     </div>
                 </div>

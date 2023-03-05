@@ -7,6 +7,7 @@ use App\Models\Book;
 use App\Models\About;
 use App\Models\Event;
 use App\Models\Quote;
+use App\Models\Series;
 use App\Models\Article;
 use App\Models\Message;
 use App\Models\Magazine;
@@ -331,5 +332,27 @@ class PageController extends Controller
             'article' => $article,
             'header' => $header
         ]);
+    }
+
+    public function message_series(){
+        $serieses = Series::orderBy('start_date', 'desc')->orderBy('end_date', 'desc')->get();
+        foreach($serieses as $series){
+            $series->filepath = url($series->filepath);
+            $series->compressed = url($series->compressed);
+            $series->start_date =  date('l, jS \of F, Y', strtotime($series->start_date));
+            $series->end_date =  date('l, jS \of F, Y', strtotime($series->end_date));
+        }
+
+        $header = PageHeader::where('page', 'message series')->first();
+        $header->filename = url($header->filename);
+
+        return view('message-series', [
+            'message_series' => $serieses,
+            'header' => $header
+        ]);
+    }
+
+    public function show_series($slug){
+        $series = Series::where('slug', $slug)
     }
 }

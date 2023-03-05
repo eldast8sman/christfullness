@@ -1963,20 +1963,20 @@ function toaster_success(success_message){
     })
 }
 
-// if($("table#series_table")){
-//     $('#series_table').DataTable({
-//         order: [[2, 'desc']],
-//     });
-// }
+if($("table#series_table")){
+    $('#series_table').DataTable({
+        order: [[2, 'desc']],
+    });
+}
 
-// if($("textarea#article_article")){
-//     $('#article_article').summernote();
-// }
+if($("textarea#article_article")){
+    $('#article_article').summernote();
+}
 
-// if($("textarea#devotional")){
-//     $('textarea#devotional').summernote();
-// }
+if($("textarea#devotional")){
+    $('textarea#devotional').summernote();
+}
 
-// if($("textarea#welcome_message")){
-//     $('textarea#welcome_message').summernote();
-// }
+if($("textarea#welcome_message")){
+    $('textarea#welcome_message').summernote();
+}
