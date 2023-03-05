@@ -28,6 +28,7 @@
     <link href="{{ asset("css/bootstrap.min.css") }}" rel="stylesheet">
 
     <!-- Template Stylesheet -->
+    <link rel="stylesheet" href="{{ asset("css/magnific-popup.css") }}">
     <link href="{{ asset("css/style.css") }}" rel="stylesheet">
 </head>
 
@@ -173,7 +174,9 @@
     <script src="{{ asset("lib/owlcarousel/owl.carousel.min.js") }}"></script>
 
     <!-- Template Javascript -->
+    <script src="{{ asset("js/magnific-popup.js") }}"></script>
     <script src="{{ asset("js/main.js") }}"></script>
+    <script src="{{ asset("js/app.js") }}"></script>
 </body>
 
 </html>

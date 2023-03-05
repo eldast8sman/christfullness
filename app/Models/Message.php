@@ -21,7 +21,8 @@ class Message extends Model
                             'image_path',
                             'compressed_image',
                             'audio_path',
-                            'details'
+                            'details',
+                            'downloads'
                         ];
 
     public function getSlugOptions(): SlugOptions

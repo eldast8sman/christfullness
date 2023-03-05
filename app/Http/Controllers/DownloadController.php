@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Message;
 use App\Models\Magazine;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
@@ -40,6 +41,21 @@ class DownloadController extends Controller
             }
         } else {
             die("Magazine not found");
+        }
+    }
+
+    public function download_message($slug){
+        $message = Message::where('slug', $slug)->first();
+        if(!empty($message)){
+            if(file_exists($message->audio_path)){
+                $filename = $message->date_preached."-".$message->slug.".mp3";
+                $message->downloads += 1;
+                $message->save();
+
+                return Response::download($message->audio_path, $filename, ['Content-Type: audio/mp3']);
+            }
+        } else {
+            die("Message not found");
         }
     }
 }

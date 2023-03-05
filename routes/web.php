@@ -84,9 +84,15 @@ Route::controller(PageController::class)->group(function(){
 
     Route::get('/media/message-series', 'message_series');
     Route::get('/media/message-series/{slug}', 'show_series');
+
+    Route::get('/media/messages', 'messages');
+    Route::get('/media/messages/{slug}', 'message');
+
+    Route::get('/media/photos', 'photos');
 });
 
 Route::controller(DownloadController::class)->group(function(){
     Route::get('/downloads/books/{slug}', 'download_book');
     Route::get('/downloads/magazines/{slug}', 'download_magazine');
+    Route::get('/downloads/messages/{slug}', 'download_message');
 });

@@ -6,6 +6,7 @@ use stdClass;
 use App\Models\Book;
 use App\Models\About;
 use App\Models\Event;
+use App\Models\Photo;
 use App\Models\Quote;
 use App\Models\Series;
 use App\Models\Article;
@@ -227,7 +228,7 @@ class PageController extends Controller
     }
 
     public function books(){
-        $books = Book::orderBy('created_at', 'desc')->paginate(20);
+        $books = Book::orderBy('created_at', 'desc')->paginate(30);
         if(!empty($books)){
             foreach($books as $book){
                 $book->book_path = url($book->book_path);
@@ -267,7 +268,7 @@ class PageController extends Controller
     public function magazines(){
         $today = date('Y-m-d');
 
-        $magazines = Magazine::where('publication_date', '<=', $today)->paginate(20);
+        $magazines = Magazine::where('publication_date', '<=', $today)->paginate(30);
         foreach($magazines as $magazine){
             $magazine->image_path = url($magazine->image_path);
             $magazine->compressed = url($magazine->compressed);
@@ -303,7 +304,7 @@ class PageController extends Controller
     public function articles(){
         $today = date('Y-m-d');
 
-        $articles = Article::where('published', '<=', $today)->paginate(20);
+        $articles = Article::where('published', '<=', $today)->paginate(30);
         foreach($articles as $article){
             $article->image_path = url($article->image_path);
             $article->compressed_image = url($article->compressed_image);
@@ -335,7 +336,7 @@ class PageController extends Controller
     }
 
     public function message_series(){
-        $serieses = Series::orderBy('start_date', 'desc')->orderBy('end_date', 'desc')->get();
+        $serieses = Series::orderBy('start_date', 'desc')->orderBy('end_date', 'desc')->paginate(30);
         foreach($serieses as $series){
             $series->filepath = url($series->filepath);
             $series->compressed = url($series->compressed);
@@ -354,5 +355,91 @@ class PageController extends Controller
 
     public function show_series($slug){
         $series = Series::where('slug', $slug)->first();
+        $series->filepath = url($series->filepath);
+        $series->compressed = url($series->compressed);
+        $series->start_date =  date('l, jS \of F, Y', strtotime($series->start_date));
+        $series->end_date =  date('l, jS \of F, Y', strtotime($series->end_date));
+
+        $messages = Message::where('series_id', $series->id)->orderBy('date_preached', 'desc')->get();
+        if(!empty($messages)){
+            foreach($messages as $message){
+                $message->date_preached = date('l jS \of F, Y', strtotime($message->date_preached));
+                $message->image_path = url($message->image_path);
+                $message->compressed_image = url($message->compressed_image);
+                $message->minister = $message->minister()->first();
+                $message->minister->filepath = url($message->minister->filepath);
+                $message->minister->compressed = url($message->minister->compressed);
+            }
+        }
+
+        $header = PageHeader::where('page', 'message series')->first();
+        $header->filename = url($header->filename);
+        
+        return view('single-series', [
+            'series' => $series,
+            'messages' => $messages,
+            'header' => $header
+        ]);
+    }
+
+    public function messages(){
+        $messages = Message::orderBy('date_preached', 'desc')->orderBy('created_at', 'desc')->paginate(30);
+        foreach($messages as $message){
+            $message->date_preached = date('l jS \of F, Y', strtotime($message->date_preached));
+            $message->image_path = url($message->image_path);
+            $message->compressed_image = url($message->compressed_image);
+            $message->minister = $message->minister()->first();
+            $message->minister->filepath = url($message->minister->filepath);
+            $message->minister->compressed = url($message->minister->compressed);
+            $message->series = $message->series()->first();
+            $message->series->filepath = url($message->series->filepath);
+            $message->series->compressed = url($message->series->compressed);
+        }
+
+        $header = PageHeader::where('page', 'messages')->first();
+        $header->filename = url($header->filename);
+
+        return view('messages', [
+            'messages' => $messages,
+            'header' => $header
+        ]);
+    }
+
+    public function message($slug){
+        $message = Message::where('slug', $slug)->first();
+        $message->date_preached = date('l jS \of F, Y', strtotime($message->date_preached));
+        $message->image_path = url($message->image_path);
+        $message->compressed_image = url($message->compressed_image);
+        $message->audio_path = url($message->audio_path);
+        $message->minister = $message->minister()->first();
+        $message->minister->filepath = url($message->minister->filepath);
+        $message->minister->compressed = url($message->minister->compressed);
+        $message->series = $message->series()->first();
+        $message->series->filepath = url($message->series->filepath);
+        $message->series->compressed = url($message->series->compressed);
+
+        $header = PageHeader::where('page', 'messages')->first();
+        $header->filename = url($header->filename);
+
+        return view('message', [
+            'message' => $message,
+            'header' => $header
+        ]);
+    }
+
+    public function photos(){
+        $photos = Photo::orderBy('created_at', 'desc')->paginate(30);
+        foreach($photos as $photo){
+            $photo->filepath = url($photo->filepath);
+            $photo->compressed = url($photo->compressed);
+        }
+
+        $header = PageHeader::where('page', 'photos')->first();
+        $header->filename = url($header->filename);
+
+        return view('photos', [
+            'photos' => $photos,
+            'header' => $header
+        ]);
     }
 }
