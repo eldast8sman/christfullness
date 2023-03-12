@@ -193,3 +193,5 @@ Route::get('/page_headers', [PageController::class, 'index'])->name('pageHeaders
 Route::get('/page_headers/{id}', [PageHeaderController::class, 'show'])->name('pageHeader');
 
 Route::get('/home_sliders', [HomeSliderController::class, 'index'])->name('homeSliders');
+
+Route::post('/send-message', [AboutController::class, 'contact_us']);

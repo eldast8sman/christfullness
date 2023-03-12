@@ -174,4 +174,30 @@ class AboutController extends Controller
             ], 404);
         }
     }
+
+    public function contact_us(Request $request){
+        $from = $request->name."<{$request->email}>";
+        $message = "From {$request->name}<br />".nl2br($request->message);
+        // To send HTML mail, the Content-type header must be set
+        $headers  = 'MIME-Version: 1.0' . "\r\n";
+        $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
+        
+        // Create email headers
+        $headers .= 'From: '.$from."\r\n".
+            'Reply-To: '.$from."\r\n" .
+            'X-Mailer: PHP/' . phpversion();
+
+
+        if(mail("omotolaniolurotimi@gmail.com", $request->subject, $message, $headers)){
+            return response([
+                'status' => 'success',
+                'message' => 'Message recieved. Be assured that we\'ll attent to it as soon as possible'
+            ], 200);
+        } else {
+            return response([
+                'status' => 'failed',
+                'message' => 'Message sending failed'
+            ], 200);
+        }
+    }
 }

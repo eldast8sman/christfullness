@@ -8,6 +8,7 @@ use App\Models\About;
 use App\Models\Event;
 use App\Models\Photo;
 use App\Models\Quote;
+use App\Models\Video;
 use App\Models\Series;
 use App\Models\Article;
 use App\Models\Message;
@@ -439,6 +440,27 @@ class PageController extends Controller
 
         return view('photos', [
             'photos' => $photos,
+            'header' => $header
+        ]);
+    }
+
+    public function videos(){
+        $videos = Video::orderBy('created_at', 'desc')->paginate(30);
+        
+        $header = PageHeader::where('page', 'videos')->first();
+        $header->filename = url($header->filename);
+
+        return view('videos', [
+            'videos' => $videos,
+            'header' => $header
+        ]);
+    }
+
+    public function contact_us(){
+        $header = PageHeader::where('page', 'contact us')->first();
+        $header->filename = url($header->filename);
+
+        return view('contact', [
             'header' => $header
         ]);
     }

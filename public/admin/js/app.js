@@ -1437,7 +1437,7 @@ if(del_article){
     }
 }
 
-$("form.photo_form").submit(function(e){
+$("form.photo_form").on("submit", function(e){
     e.preventDefault();
 
     var caption = $("input#article_title").val();
@@ -1511,7 +1511,7 @@ $("form.photo_form").submit(function(e){
     })
 });
 
-$("form.welcome_message_form").submit(function(e){
+$("form.welcome_message_form").on("submit", function(e){
     e.preventDefault();
 
     var heading = $("input#welcome_heading").val();

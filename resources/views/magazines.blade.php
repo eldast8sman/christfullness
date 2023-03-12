@@ -22,6 +22,18 @@
             <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
                 <h1 class="display-5">Magazines</h1>
                 <p>All Published Magazines</p>
+
+                @component('components.search_bar')
+                    @slot('search_id')
+                        magazines_search                       
+                    @endslot
+                    @slot('placeholder')
+                        Search Magazines
+                    @endslot
+                    @slot('submit_id')
+                        magazines_search_submit
+                    @endslot
+                @endcomponent
             </div>
             <div class="row g-4">
                 @foreach ($magazines as $magazine)

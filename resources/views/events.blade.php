@@ -21,7 +21,19 @@
         <div class="container">
             <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
                 <h1 class="display-5 mb-3">Events</h1>
-                <p>Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed rebum vero dolor duo.</p>
+                <p>All Upcoming and Past Events</p>
+
+                @component('components.search_bar')
+                    @slot('search_id')
+                        events_search                       
+                    @endslot
+                    @slot('placeholder')
+                        Search Events
+                    @endslot
+                    @slot('submit_id')
+                        events_search_submit
+                    @endslot
+                @endcomponent
             </div>
 
             <div class="row g-4">

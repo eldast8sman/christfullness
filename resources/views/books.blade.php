@@ -22,6 +22,18 @@
             <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
                 <h1 class="display-5">Books</h1>
                 <p>All Published Books</p>
+
+                @component('components.search_bar')
+                    @slot('search_id')
+                        books_search                       
+                    @endslot
+                    @slot('placeholder')
+                        Search Books
+                    @endslot
+                    @slot('submit_id')
+                        books_search_submit
+                    @endslot
+                @endcomponent
             </div>
             <div class="row g-4">
                 @foreach ($books as $book)

@@ -89,6 +89,9 @@ Route::controller(PageController::class)->group(function(){
     Route::get('/media/messages/{slug}', 'message');
 
     Route::get('/media/photos', 'photos');
+    Route::get('/media/videos', 'videos');
+
+    Route::get('/contact-us', 'contact_us');
 });
 
 Route::controller(DownloadController::class)->group(function(){
