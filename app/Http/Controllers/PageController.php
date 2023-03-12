@@ -337,21 +337,74 @@ class PageController extends Controller
     }
 
     public function message_series(){
-        $serieses = Series::orderBy('start_date', 'desc')->orderBy('end_date', 'desc')->paginate(30);
-        foreach($serieses as $series){
-            $series->filepath = url($series->filepath);
-            $series->compressed = url($series->compressed);
-            $series->start_date =  date('l, jS \of F, Y', strtotime($series->start_date));
-            $series->end_date =  date('l, jS \of F, Y', strtotime($series->end_date));
-        }
-
         $header = PageHeader::where('page', 'message series')->first();
         $header->filename = url($header->filename);
 
-        return view('message-series', [
-            'message_series' => $serieses,
-            'header' => $header
-        ]);
+        $search_param = !empty($_GET['search']) ? (string)$_GET['search'] : "";
+        if(!empty($search_param)){
+            $page = !empty($_GET['page']) ? (int)$_GET['page'] : 1;
+            $found = [];
+            $search_array = explode(' ', $search_param);
+            foreach($search_array as $search){
+                if(($search != 'a') && ($search != 'an') && ($search != 'the') && ($search != 'is') && ($search != 'of') && ($search != 'with')
+                && ($search != 'are') && ($search != 'was') && ($search != 'were') && ($search != 'for') && ($search != 'on') && ($search != 'to')
+                && ($search != 'on') && ($search != 'Rev\'d')){
+                    $serieses = Series::where('title', 'like', '%'.$search.'%')->orWhere('description', 'like', '%'.$search.'%')->get();
+                    if(!empty($serieses)){
+                        foreach($serieses as $series){
+                            if(isset($found[$series->id])){
+                                $found[$series->id] = $found[$series->id] + 1;
+                            } else {
+                                $found[$series->id] = 1;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if(!empty($found)){
+                arsort($found);
+                $keys = array_keys($found);
+                $serieses = [];
+                foreach($keys as $id){
+                    if(!empty($series = Series::find($id))){
+                        $serieses[] = $series;
+                    }
+                }
+
+                if(!empty($serieses)){
+                    $serieses = self::paginate_array($serieses, 30, $page, []);
+                    foreach($serieses as $series){
+                        $series->filepath = url($series->filepath);
+                        $series->compressed = url($series->compressed);
+                        $series->start_date =  date('l, jS \of F, Y', strtotime($series->start_date));
+                        $series->end_date =  date('l, jS \of F, Y', strtotime($series->end_date));
+                    }
+                }
+            } else {
+                $serieses = [];
+            }
+
+            return view('message-series', [
+                'message_series' => $serieses,
+                'header' => $header,
+                'search' => $search_param
+            ]);
+        } else {
+            $serieses = Series::orderBy('start_date', 'desc')->orderBy('end_date', 'desc')->paginate(30);
+            foreach($serieses as $series){
+                $series->filepath = url($series->filepath);
+                $series->compressed = url($series->compressed);
+                $series->start_date =  date('l, jS \of F, Y', strtotime($series->start_date));
+                $series->end_date =  date('l, jS \of F, Y', strtotime($series->end_date));
+            }
+
+            return view('message-series', [
+                'message_series' => $serieses,
+                'header' => $header,
+                'search' => $search_param
+            ]);
+        }
     }
 
     public function show_series($slug){

@@ -163,6 +163,7 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/series', [SeriesController::class, 'index'])->name('series');
 Route::get('/series/{slug}', [SeriesController::class, 'show'])->name('getSeriesBySlug');
+Route::get('/series/search/{search}', [SeriesController::class, 'search']);
 
 
 Route::get('/ministers/internal', [MinisterController::class, 'internalMinisters'])->name('internaalMinisters');

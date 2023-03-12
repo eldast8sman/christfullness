@@ -32,6 +32,9 @@
                     @slot('submit_id')
                         series_search_submit
                     @endslot
+                    @slot('search_value')
+                        {{ $search }}
+                    @endslot
                 @endcomponent
             </div>
 

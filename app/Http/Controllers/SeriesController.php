@@ -112,15 +112,26 @@ class SeriesController extends Controller
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Series  $series
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Series $series)
-    {
-        
+    public function search($search){
+        $search_array = explode(' ', $search);
+        foreach($search_array as $search){
+            if(($search != 'a') && ($search != 'an') && ($search != 'the') && ($search != 'is') && ($search != 'of') && ($search != 'with')
+            && ($search != 'are') && ($search != 'was') && ($search != 'were') && ($search != 'for') && ($search != 'on') && ($search != 'to')
+            && ($search != 'on') && ($search != 'Rev\'d')){
+                $series = Series::where('title', 'like', '%'.$search.'%')->orWhere('description', 'like', '%'.$search.'%');
+                if($series->count() > 0){
+                    return response([
+                        'status' => 'success',
+                        'message' => 'Search Param Valid'
+                    ], 200);
+                    exit;
+                }
+            }
+        }
+        return response([
+            'status' => 'failed',
+            'message' => 'No Message Series was found'
+        ], 200);
     }
 
     /**
