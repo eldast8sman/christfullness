@@ -198,6 +198,8 @@ Route::get('/articles/search/{search}', [ArticleController::class, 'search']);
 Route::get('/page_headers', [PageController::class, 'index'])->name('pageHeaders');
 Route::get('/page_headers/{id}', [PageHeaderController::class, 'show'])->name('pageHeader');
 
+Route::get('/events/search/{search}', [EventController::class, 'search']);
+
 Route::get('/home_sliders', [HomeSliderController::class, 'index'])->name('homeSliders');
 
 Route::get('/magazines/search/{search}', [MagazineController::class, 'search']);

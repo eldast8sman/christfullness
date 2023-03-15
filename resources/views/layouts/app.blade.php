@@ -57,7 +57,8 @@
 
         <nav class="navbar navbar-expand-lg navbar-light py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
             <a href="{{ env('APP_URL') }}" class="navbar-brand ms-4 ms-lg-0">
-                <h1 class="fw-bold text-primary m-0">F<span class="text-secondary">oo</span>dy</h1>
+                {{-- <h1 class="fw-bold text-primary m-0">F<span class="text-secondary">oo</span>dy</h1> --}}
+                <img src="{{ asset('cfci_logo.png') }}" style="width: 150px; max-width: 40%">
             </a>
             <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
@@ -110,7 +111,8 @@
         <div class="container py-5">
             <div class="row g-5">
                 <div class="col-lg-3 col-md-6">
-                    <h1 class="fw-bold text-primary mb-4">F<span class="text-secondary">oo</span>dy</h1>
+                    {{-- <h1 class="fw-bold text-primary mb-4">F<span class="text-secondary">oo</span>dy</h1> --}}
+                    <img src="{{ asset('cfci_logo.png') }}" style="width: 300px; max-width: 40%; margin-top: -20px; margin-bottom: 20px">
                     <p>Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita</p>
                     <div class="d-flex pt-2">
                         {{-- <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i class="fab fa-twitter"></i></a> --}}

@@ -33,21 +33,27 @@
                     @slot('submit_id')
                         events_search_submit
                     @endslot
+                    @slot('search_value')
+                        {{ $search }}
+                    @endslot
                 @endcomponent
             </div>
 
             <div class="row g-4">
                 @foreach ($events as $event)
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <img class="img-fluid" width="100%" height="auto" src="{{ $event->compressed }}" alt="{{ $event->event }}">
-                        <div class="bg-light p-4">
-                            <a href="{{ env('APP_URL') }}/events/{{ $event->slug }}" class="d-block h5 lh-base mb-4">{{ $event->event }}</a>
-                            <div class="text-muted border-top pt-4">
+                    <div class="col-lg-4 col-md-6 wow fadeInUp rounded" data-wow-delay="0.1s">
+                        <div class="bg-white text-center h-100 p-4 p-xl-5">
+                            <div style="height:350px; background-image:url({{ $event->filename }}); background-size:contain; background-position: center center; background-repeat: no-repeat"></div>
+                            <p>
+                                <h5>{{ $event->event }}</h5>  
+                                <hr>
                                 <small class="me-3"><i class="fa fa-info text-primary me-2"></i>{{ $event->theme }}</small>
+                                <br>
                                 <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>{{ $event->start_date }}</small>
-                            </div>
+                            </p>
+                            <a class="btn btn-outline-primary border-2 py-2 px-4 rounded-pill" href="{{ env('APP_URL') }}/events/{{ $event->slug }}">More Details</a>
                         </div>
-                    </div>
+                    </div> 
                 @endforeach
             </div>
             <div class="col-12 text-center wow fadeInUp" data-wow-delay="0.1s">

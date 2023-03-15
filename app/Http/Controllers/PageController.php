@@ -109,23 +109,82 @@ class PageController extends Controller
     }
 
     public function events(){
-        $events = Event::orderBy('start_date', 'desc')->orderBy('end_date', 'desc')->paginate(2);
-        foreach($events as $event){
-            $event->filename = url($event->filename);
-            $event->compressed = url($event->compressed);
-            $event->start_date = date('jS F, Y', strtotime($event->start_date));
-            if(!empty($event->end_date)){
-                $event->end_date = date('jS F, Y', strtotime($event->end_date));
-            } else {
-                $event->end_date = "";
-            }
-        }
         $header = PageHeader::where('page', 'Events')->first();
         $header->filename = url($header->filename);
-        return view('events', [
-            'events' => $events,
-            'header' => $header
-        ]);
+
+        $search_param = !empty($_GET['search']) ? (string)$_GET['search'] : "";
+        if(!empty($search_param)){
+            $page = !empty($_GET['page']) ? (int)$_GET['page'] : 1;
+            $found = [];
+            $search_array = explode(' ', $search_param);
+            foreach($search_array as $search){
+                $search = strtolower($search);
+                if(($search != 'a') && ($search != 'an') && ($search != 'the') && ($search != 'is') && ($search != 'of') && ($search != 'with')
+                && ($search != 'are') && ($search != 'was') && ($search != 'were') && ($search != 'for') && ($search != 'on') && ($search != 'to')
+                && ($search != 'on') && ($search != 'Rev\'d') && ($search != 'the')){
+                    $events = Event::where('all_details', 'like', '%'.$search.'%')->get();
+                    if(!empty($events)){
+                        foreach($events as $event){
+                            if(isset($found[$event->id])){
+                                $found[$event->id] = $found[$event->id] + 1;
+                            } else {
+                                $found[$event->id] = 1;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if(!empty($found)){
+                arsort($found);
+                $keys = array_keys($found);
+                $events = [];
+                foreach($keys as $id){
+                    if(!empty($event = Event::find($id))){
+                        $events[] = $event;
+                    }
+                }
+
+                if(!empty($events)){
+                    $events = self::paginate_array($events, 30, $page, []);
+                    foreach($events as $event){
+                        $event->filename = url($event->filename);
+                        $event->compressed = url($event->compressed);
+                        $event->start_date = date('jS F, Y', strtotime($event->start_date));
+                        if(!empty($event->end_date)){
+                            $event->end_date = date('jS F, Y', strtotime($event->end_date));
+                        } else {
+                            $event->end_date = "";
+                        }
+                    }
+                }
+            } else {
+                $events = [];
+            }
+
+            return view('events', [
+                'events' => $events,
+                'header' => $header,
+                'search' => $search_param
+            ]);
+        } else {
+            $events = Event::orderBy('start_date', 'desc')->orderBy('end_date', 'desc')->paginate(30);
+            foreach($events as $event){
+                $event->filename = url($event->filename);
+                $event->compressed = url($event->compressed);
+                $event->start_date = date('jS F, Y', strtotime($event->start_date));
+                if(!empty($event->end_date)){
+                    $event->end_date = date('jS F, Y', strtotime($event->end_date));
+                } else {
+                    $event->end_date = "";
+                }
+            }
+            return view('events', [
+                'events' => $events,
+                'header' => $header,
+                'search' => $search_param
+            ]);
+        }
     }
 
     public function event($slug){

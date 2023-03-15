@@ -76,6 +76,28 @@ class EventController extends Controller
         }
     }
 
+    public function search($search){
+        $search_array = explode(' ', $search);
+        foreach($search_array as $search){
+            if(($search != 'a') && ($search != 'an') && ($search != 'the') && ($search != 'is') && ($search != 'of') && ($search != 'with')
+            && ($search != 'are') && ($search != 'was') && ($search != 'were') && ($search != 'for') && ($search != 'on') && ($search != 'to')
+            && ($search != 'on') && ($search != 'Rev\'d') && ($search != 'the')){
+                $events = Event::where('all_details', 'like', '%'.$search.'%');
+                if($events->count() > 0){
+                    return response([
+                        'status' => 'success',
+                        'message' => 'Search Param Valid'
+                    ], 200);
+                    exit;
+                }
+            }
+        }
+        return response([
+            'status' => 'failed',
+            'message' => 'No Photo was found'
+        ], 200);
+    }
+
     public function bySlug($slug){
         if(!empty($event = Event::where('slug', $slug)->first())){
             $event->filename = url($event->filename);
