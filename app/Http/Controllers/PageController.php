@@ -703,31 +703,131 @@ class PageController extends Controller
     }
 
     public function photos(){
-        $photos = Photo::orderBy('created_at', 'desc')->paginate(30);
-        foreach($photos as $photo){
-            $photo->filepath = url($photo->filepath);
-            $photo->compressed = url($photo->compressed);
-        }
-
         $header = PageHeader::where('page', 'photos')->first();
         $header->filename = url($header->filename);
 
-        return view('photos', [
-            'photos' => $photos,
-            'header' => $header
-        ]);
+        $search_param = !empty($_GET['search']) ? (string)$_GET['search'] : "";
+        if(!empty($search_param)){
+            $page = !empty($_GET['page']) ? (int)$_GET['page'] : 1;
+            $found = [];
+            $search_array = explode(' ', $search_param);
+            foreach($search_array as $search){
+                $search = strtolower($search);
+                if(($search != 'a') && ($search != 'an') && ($search != 'the') && ($search != 'is') && ($search != 'of') && ($search != 'with')
+                && ($search != 'are') && ($search != 'was') && ($search != 'were') && ($search != 'for') && ($search != 'on') && ($search != 'to')
+                && ($search != 'on') && ($search != 'Rev\'d') && ($search != 'the')){
+                    $photos = Photo::where('all_details', 'like', '%'.$search.'%')->get();
+                    if(!empty($photos)){
+                        foreach($photos as $photo){
+                            if(isset($found[$photo->id])){
+                                $found[$photo->id] = $found[$photo->id] + 1;
+                            } else {
+                                $found[$photo->id] = 1;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if(!empty($found)){
+                arsort($found);
+                $keys = array_keys($found);
+                $photos = [];
+                foreach($keys as $id){
+                    if(!empty($photo = Photo::find($id))){
+                        $photos[] = $photo;
+                    }
+                }
+
+                if(!empty($photos)){
+                    $photos = self::paginate_array($photos, 30, $page, []);
+                    foreach($photos as $photo){
+                        $photo->filepath = url($photo->filepath);
+                        $photo->compressed = url($photo->compressed);
+                    }
+                }
+            } else {
+                $photos = [];
+            }
+
+            return view('photos', [
+                'photos' => $photos,
+                'header' => $header,
+                'search' => $search_param
+            ]);
+        } else {
+            $photos = Photo::orderBy('created_at', 'desc')->paginate(30);
+            foreach($photos as $photo){
+                $photo->filepath = url($photo->filepath);
+                $photo->compressed = url($photo->compressed);
+            }
+
+            return view('photos', [
+                'photos' => $photos,
+                'header' => $header,
+                'search' => $search_param
+            ]);
+        }
     }
 
     public function videos(){
-        $videos = Video::orderBy('created_at', 'desc')->paginate(30);
-        
         $header = PageHeader::where('page', 'videos')->first();
         $header->filename = url($header->filename);
 
-        return view('videos', [
-            'videos' => $videos,
-            'header' => $header
-        ]);
+        $search_param = !empty($_GET['search']) ? (string)$_GET['search'] : "";
+        if(!empty($search_param)){
+            $page = !empty($_GET['page']) ? (int)$_GET['page'] : 1;
+            $found = [];
+            $search_array = explode(' ', $search_param);
+            foreach($search_array as $search){
+                $search = strtolower($search);
+                if(($search != 'a') && ($search != 'an') && ($search != 'the') && ($search != 'is') && ($search != 'of') && ($search != 'with')
+                && ($search != 'are') && ($search != 'was') && ($search != 'were') && ($search != 'for') && ($search != 'on') && ($search != 'to')
+                && ($search != 'on') && ($search != 'Rev\'d') && ($search != 'the')){
+                    $videos = Video::where('all_details', 'like', '%'.$search.'%')->get();
+                    if(!empty($videos)){
+                        foreach($videos as $video){
+                            if(isset($found[$video->id])){
+                                $found[$video->id] = $found[$video->id] + 1;
+                            } else {
+                                $found[$video->id] = 1;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if(!empty($found)){
+                arsort($found);
+                $keys = array_keys($found);
+                $videos = [];
+                foreach($keys as $id){
+                    if(!empty($video = Video::find($id))){
+                        $videos[] = $video;
+                    }
+                }
+
+                if(!empty($videos)){
+                    $videos = self::paginate_array($videos, 30, $page, []);
+                }
+            } else {
+                $videos = [];
+            }
+
+            return view('videos', [
+                'videos' => $videos,
+                'header' => $header,
+                'search' => $search_param
+            ]);
+        } else {
+            $videos = Video::orderBy('created_at', 'desc')->paginate(30);
+
+            return view('videos', [
+                'videos' => $videos,
+                'header' => $header,
+                'search' => $search_param
+            ]);
+        }
     }
 
     public function contact_us(){

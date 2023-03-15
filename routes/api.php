@@ -180,9 +180,11 @@ Route::get('/books/search/{search}', [BookController::class, 'search']);
 
 Route::get('/videos', [VideoController::class, 'index'])->name('videos');
 Route::get('/videos/by-slug/{slug}', [VideoController::class, 'bySlug'])->name('getVideoBySlug');
+Route::get('/videos/search/{search}', [VideoController::class, 'search']);
 
 Route::get('/photos', [PhotoController::class, 'index'])->name('photos');
 Route::get('/photos/by-slug/{slug}', [PhotoController::class, 'bySlug'])->name('getPhotoBySlug');
+Route::get('/photos/search/{search}', [PhotoController::class, 'search']);
 
 Route::get('/devotionals', [DevotionalController::class, 'index'])->name('allDevotionals');
 Route::get('/devotionals/by-date/today', [DevotionalController::class, 'todayDevotional'])->name('todayDevotional');

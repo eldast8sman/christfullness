@@ -112,15 +112,26 @@ class VideoController extends Controller
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Video  $video
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Video $video)
-    {
-        //
+    public function search($search){
+        $search_array = explode(' ', $search);
+        foreach($search_array as $search){
+            if(($search != 'a') && ($search != 'an') && ($search != 'the') && ($search != 'is') && ($search != 'of') && ($search != 'with')
+            && ($search != 'are') && ($search != 'was') && ($search != 'were') && ($search != 'for') && ($search != 'on') && ($search != 'to')
+            && ($search != 'on') && ($search != 'Rev\'d') && ($search != 'the')){
+                $videos = Video::where('all_details', 'like', '%'.$search.'%');
+                if($videos->count() > 0){
+                    return response([
+                        'status' => 'success',
+                        'message' => 'Search Param Valid'
+                    ], 200);
+                    exit;
+                }
+            }
+        }
+        return response([
+            'status' => 'failed',
+            'message' => 'No Video was found'
+        ], 200);
     }
 
     /**

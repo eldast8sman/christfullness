@@ -126,7 +126,7 @@ class MagazineController extends Controller
         }
         return response([
             'status' => 'failed',
-            'message' => 'No Message was found'
+            'message' => 'No Magazine was found'
         ], 200);
     }
 

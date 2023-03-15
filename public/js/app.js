@@ -232,3 +232,67 @@ $("button#articles_search_submit").on("click", function(e){
         });
     }
 });
+
+$("button#photo_search_submit").on("click", function(e){
+    $(".response").remove();
+    var search = $("input.search_param").val();
+    if(search == ""){
+        $("div#submit_div").after('<div class="col-12 text-danger response">Please input a Search Parametre!</div>');
+    } else {
+        $("div#submit_div").after('<div class="col-12 text-danger response">Searching...</div>');
+        var url = API_URL+"photos/search/"+search;
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: "",
+            dataType: "json",
+            contentType: "application/x-json",
+            headers: {
+                "Accept": "application/json"
+            },
+            success: function(response){
+                if(response.status == "success"){
+                    window.location = BASE_URL+"media/photos?search="+search;
+                } else {
+                    $(".response").remove();
+                    $("div#submit_div").after('<div class="col-12 text-danger response">'+response.message+'</div>');
+                }
+            },
+            error: function(response){
+                console.log(response.responseText);
+            }
+        });
+    }
+});
+
+$("button#videos_search_submit").on("click", function(e){
+    $(".response").remove();
+    var search = $("input.search_param").val();
+    if(search == ""){
+        $("div#submit_div").after('<div class="col-12 text-danger response">Please input a Search Parametre!</div>');
+    } else {
+        $("div#submit_div").after('<div class="col-12 text-danger response">Searching...</div>');
+        var url = API_URL+"videos/search/"+search;
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: "",
+            dataType: "json",
+            contentType: "application/x-json",
+            headers: {
+                "Accept": "application/json"
+            },
+            success: function(response){
+                if(response.status == "success"){
+                    window.location = BASE_URL+"media/videos?search="+search;
+                } else {
+                    $(".response").remove();
+                    $("div#submit_div").after('<div class="col-12 text-danger response">'+response.message+'</div>');
+                }
+            },
+            error: function(response){
+                console.log(response.responseText);
+            }
+        });
+    }
+});

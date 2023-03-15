@@ -146,7 +146,7 @@ class ArticleController extends Controller
         }
         return response([
             'status' => 'failed',
-            'message' => 'No Message was found'
+            'message' => 'No Article was found'
         ], 200);
     }
 
