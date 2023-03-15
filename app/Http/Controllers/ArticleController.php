@@ -127,16 +127,27 @@ class ArticleController extends Controller
             ], 404);
         }
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Article  $article
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Article $article)
-    {
-        //
+    
+    public function search($search){
+        $search_array = explode(' ', $search);
+        foreach($search_array as $search){
+            if(($search != 'a') && ($search != 'an') && ($search != 'the') && ($search != 'is') && ($search != 'of') && ($search != 'with')
+            && ($search != 'are') && ($search != 'was') && ($search != 'were') && ($search != 'for') && ($search != 'on') && ($search != 'to')
+            && ($search != 'on') && ($search != 'Rev\'d') && ($search != 'the')){
+                $articles = Article::where('all_details', 'like', '%'.$search.'%')->where('published', '<=', date('Y-m-d'));
+                if($articles->count() > 0){
+                    return response([
+                        'status' => 'success',
+                        'message' => 'Search Param Valid'
+                    ], 200);
+                    exit;
+                }
+            }
+        }
+        return response([
+            'status' => 'failed',
+            'message' => 'No Message was found'
+        ], 200);
     }
 
     /**

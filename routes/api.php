@@ -191,6 +191,7 @@ Route::get('/devotionals/by-slug/{slug}', [DevotionalController::class, 'bySlug'
 
 Route::get('/articles', [ArticleController::class, 'index'])->name('articles');
 Route::get('/articles/{slug}', [ArticleController::class, 'bySlug'])->name('getArticleBySlug');
+Route::get('/articles/search/{search}', [ArticleController::class, 'search']);
 
 Route::get('/page_headers', [PageController::class, 'index'])->name('pageHeaders');
 Route::get('/page_headers/{id}', [PageHeaderController::class, 'show'])->name('pageHeader');

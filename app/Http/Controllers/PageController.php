@@ -411,22 +411,75 @@ class PageController extends Controller
     }
 
     public function articles(){
-        $today = date('Y-m-d');
-
-        $articles = Article::where('published', '<=', $today)->paginate(30);
-        foreach($articles as $article){
-            $article->image_path = url($article->image_path);
-            $article->compressed_image = url($article->compressed_image);
-            $article->published = date('l, jS \of F, Y', strtotime($article->published));
-        }
-
         $header = PageHeader::where('page', 'articles')->first();
         $header->filename = url($header->filename);
 
-        return view('articles', [
-            'articles' => $articles,
-            'header' => $header
-        ]);
+        $today = date('Y-m-d');
+
+        $search_param = !empty($_GET['search']) ? (string)$_GET['search'] : "";
+        if(!empty($search_param)){
+            $page = !empty($_GET['page']) ? (int)$_GET['page'] : 1;
+            $found = [];
+            $search_array = explode(' ', $search_param);
+            foreach($search_array as $search){
+                $search = strtolower($search);
+                if(($search != 'a') && ($search != 'an') && ($search != 'the') && ($search != 'is') && ($search != 'of') && ($search != 'with')
+                && ($search != 'are') && ($search != 'was') && ($search != 'were') && ($search != 'for') && ($search != 'on') && ($search != 'to')
+                && ($search != 'on') && ($search != 'Rev\'d') && ($search != 'the')){
+                    $articles = Article::where('all_details', 'like', '%'.$search.'%')->where('published', '<=', $today)->get();
+                    if(!empty($articles)){
+                        foreach($articles as $article){
+                            if(isset($found[$article->id])){
+                                $found[$article->id] = $found[$article->id] + 1;
+                            } else {
+                                $found[$article->id] = 1;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if(!empty($found)){
+                arsort($found);
+                $keys = array_keys($found);
+                $articles = [];
+                foreach($keys as $id){
+                    if(!empty($article = Article::find($id))){
+                        $articles[] = $article;
+                    }
+                }
+
+                if(!empty($articles)){
+                    $articles = self::paginate_array($articles, 30, $page, []);
+                    foreach($articles as $article){
+                        $article->image_path = url($article->image_path);
+                        $article->compressed_image = url($article->compressed_image);
+                        $article->published = date('l, jS \of F, Y', strtotime($article->published));
+                    }
+                }
+            } else {
+                $articles = [];
+            }
+
+            return view('articles', [
+                'articles' => $articles,
+                'header' => $header,
+                'search' => $search_param
+            ]);
+        } else {
+            $articles = Article::where('published', '<=', $today)->paginate(30);
+            foreach($articles as $article){
+                $article->image_path = url($article->image_path);
+                $article->compressed_image = url($article->compressed_image);
+                $article->published = date('l, jS \of F, Y', strtotime($article->published));
+            }
+
+            return view('articles', [
+                'articles' => $articles,
+                'header' => $header,
+                'search' => $search_param
+            ]);
+        }
     }
 
     public function article($slug){
