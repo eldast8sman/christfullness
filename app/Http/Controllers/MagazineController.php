@@ -108,6 +108,28 @@ class MagazineController extends Controller
         }
     }
 
+    public function search($search){
+        $search_array = explode(' ', $search);
+        foreach($search_array as $search){
+            if(($search != 'a') && ($search != 'an') && ($search != 'the') && ($search != 'is') && ($search != 'of') && ($search != 'with')
+            && ($search != 'are') && ($search != 'was') && ($search != 'were') && ($search != 'for') && ($search != 'on') && ($search != 'to')
+            && ($search != 'on') && ($search != 'Rev\'d') && ($search != 'the')){
+                $magazines = Magazine::where('all_details', 'like', '%'.$search.'%')->where('publication_date', '<=', date('Y-m-d'));
+                if($magazines->count() > 0){
+                    return response([
+                        'status' => 'success',
+                        'message' => 'Search Param Valid'
+                    ], 200);
+                    exit;
+                }
+            }
+        }
+        return response([
+            'status' => 'failed',
+            'message' => 'No Message was found'
+        ], 200);
+    }
+
     public function update(UpdateMagazineRequest $request, $id){
         if(!empty($magazine = Magazine::find($id))){
             $all = $request->except(['image_file', 'pdf_file']);

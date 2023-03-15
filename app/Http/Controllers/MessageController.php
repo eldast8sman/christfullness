@@ -162,7 +162,7 @@ class MessageController extends Controller
         foreach($search_array as $search){
             if(($search != 'a') && ($search != 'an') && ($search != 'the') && ($search != 'is') && ($search != 'of') && ($search != 'with')
             && ($search != 'are') && ($search != 'was') && ($search != 'were') && ($search != 'for') && ($search != 'on') && ($search != 'to')
-            && ($search != 'on') && ($search != 'Rev\'d')){
+            && ($search != 'on') && ($search != 'Rev\'d') && ($search != 'the')){
                 $messages = Message::where('details', 'like', '%'.$search.'%');
                 if($messages->count() > 0){
                     return response([

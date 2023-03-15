@@ -336,7 +336,7 @@ class PageController extends Controller
                 if(($search != 'a') && ($search != 'an') && ($search != 'the') && ($search != 'is') && ($search != 'of') && ($search != 'with')
                 && ($search != 'are') && ($search != 'was') && ($search != 'were') && ($search != 'for') && ($search != 'on') && ($search != 'to')
                 && ($search != 'on') && ($search != 'Rev\'d') && ($search != 'the')){
-                    $magazines = Magazine::where('all_details', 'like', '%'.$search.'%')->get();
+                    $magazines = Magazine::where('all_details', 'like', '%'.$search.'%')->where('publication_date', '<=', $today)->get();
                     if(!empty($magazines)){
                         foreach($magazines as $magazine){
                             if(isset($found[$magazine->id])){
@@ -354,7 +354,7 @@ class PageController extends Controller
                 $keys = array_keys($found);
                 $magazines = [];
                 foreach($keys as $id){
-                    if(!empty($magazine = Message::find($id))){
+                    if(!empty($magazine = Magazine::find($id))){
                         $magazines[] = $magazine;
                     }
                 }
@@ -367,16 +367,16 @@ class PageController extends Controller
                         $magazine->document_path = url($magazine->document_path);
                         $magazine->publication_date = date('l, jS \of F, Y', strtotime($magazine->publication_date));
                     }
-        
-                    return view('magazines', [
-                        'magazines' => $magazines,
-                        'header' => $header,
-                        'search' => $search_param
-                    ]);
                 }
             } else {
                 $magazines = [];
             }
+
+            return view('magazines', [
+                'magazines' => $magazines,
+                'header' => $header,
+                'search' => $search_param
+            ]);
         } else {
             $magazines = Magazine::where('publication_date', '<=', $today)->paginate(30);
             foreach($magazines as $magazine){

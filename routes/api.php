@@ -197,4 +197,6 @@ Route::get('/page_headers/{id}', [PageHeaderController::class, 'show'])->name('p
 
 Route::get('/home_sliders', [HomeSliderController::class, 'index'])->name('homeSliders');
 
+Route::get('/magazines/search/{search}', [MagazineController::class, 'search']);
+
 Route::post('/send-message', [AboutController::class, 'contact_us']);
