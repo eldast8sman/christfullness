@@ -172,9 +172,11 @@ Route::get('ministers/by-slug/{slug}', [MinisterController::class, 'bySlug'])->n
 Route::get('/messages', [MessageController::class, 'index'])->name('messages');
 Route::get('/messages/{id}', [MessageController::class, 'show'])->name('getMessageById');
 Route::get('/messages/by-slug/{slug}', [MessageController::class, 'bySlug'])->name('getMessageBySlug');
+Route::get("/messages/search/{search}", [MessageController::class, 'search']);
 
 Route::get('/books', [BookController::class, 'index'])->name('books');
 Route::get('/books/by-slug/{slug}', [BookController::class, 'bySlug'])->name('getBookBySlug');
+Route::get('/books/search/{search}', [BookController::class, 'search']);
 
 Route::get('/videos', [VideoController::class, 'index'])->name('videos');
 Route::get('/videos/by-slug/{slug}', [VideoController::class, 'bySlug'])->name('getVideoBySlug');

@@ -41,16 +41,6 @@ class MessageController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreMessageRequest  $request
@@ -167,15 +157,26 @@ class MessageController extends Controller
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Message  $message
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Message $message)
-    {
-        //
+    public function search($search){
+        $search_array = explode(' ', $search);
+        foreach($search_array as $search){
+            if(($search != 'a') && ($search != 'an') && ($search != 'the') && ($search != 'is') && ($search != 'of') && ($search != 'with')
+            && ($search != 'are') && ($search != 'was') && ($search != 'were') && ($search != 'for') && ($search != 'on') && ($search != 'to')
+            && ($search != 'on') && ($search != 'Rev\'d')){
+                $messages = Message::where('details', 'like', '%'.$search.'%');
+                if($messages->count() > 0){
+                    return response([
+                        'status' => 'success',
+                        'message' => 'Search Param Valid'
+                    ], 200);
+                    exit;
+                }
+            }
+        }
+        return response([
+            'status' => 'failed',
+            'message' => 'No Message was found'
+        ], 200);
     }
 
     /**

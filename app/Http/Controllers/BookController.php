@@ -148,15 +148,26 @@ class BookController extends Controller
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Book  $book
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Book $book)
-    {
-        //
+    public function search($search){
+        $search_array = explode(' ', $search);
+        foreach($search_array as $search){
+            if(($search != 'a') && ($search != 'an') && ($search != 'the') && ($search != 'is') && ($search != 'of') && ($search != 'with')
+            && ($search != 'are') && ($search != 'was') && ($search != 'were') && ($search != 'for') && ($search != 'on') && ($search != 'to')
+            && ($search != 'on') && ($search != 'Rev\'d')){
+                $books = Book::where('details', 'like', '%'.$search.'%');
+                if($books->count() > 0){
+                    return response([
+                        'status' => 'success',
+                        'message' => 'Search Param Valid'
+                    ], 200);
+                    exit;
+                }
+            }
+        }
+        return response([
+            'status' => 'failed',
+            'message' => 'No Book was found'
+        ], 200);
     }
 
     /**

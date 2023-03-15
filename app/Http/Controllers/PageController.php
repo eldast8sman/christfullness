@@ -229,23 +229,77 @@ class PageController extends Controller
     }
 
     public function books(){
-        $books = Book::orderBy('created_at', 'desc')->paginate(30);
-        if(!empty($books)){
-            foreach($books as $book){
-                $book->book_path = url($book->book_path);
-                $book->image_path = url($book->image_path);
-                $book->compressed_image = url($book->compressed_image);
-                $book->author = $book->author();
-            }
-        }
-
         $header = PageHeader::where('page', 'books')->first();
         $header->filename = url($header->filename);
 
-        return view('books', [
-            'books' => $books,
-            'header' => $header
-        ]);
+        $search_param = !empty($_GET['search']) ? (string)$_GET['search'] : "";
+        if(!empty($search_param)){
+            $page = !empty($_GET['page']) ? (int)$_GET['page'] : 1;
+            $found = [];
+            $search_array = explode(' ', $search_param);
+            foreach($search_array as $search){
+                $search = strtolower($search);
+                if(($search != 'a') && ($search != 'an') && ($search != 'the') && ($search != 'is') && ($search != 'of') && ($search != 'with')
+                && ($search != 'are') && ($search != 'was') && ($search != 'were') && ($search != 'for') && ($search != 'on') && ($search != 'to')
+                && ($search != 'on') && ($search != 'Rev\'d') && ($search != 'the')){
+                    $books = Book::where('details', 'like', '%'.$search.'%')->get();
+                    if(!empty($books)){
+                        foreach($books as $book){
+                            if(isset($found[$book->id])){
+                                $found[$book->id] = $found[$book->id] + 1;
+                            } else {
+                                $found[$book->id] = 1;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if(!empty($found)){
+                arsort($found);
+                $keys = array_keys($found);
+                $books = [];
+                foreach($keys as $id){
+                    if(!empty($book = Book::find($id))){
+                        $books[] = $book;
+                    }
+                }
+
+                if(!empty($books)){
+                    $books = self::paginate_array($books, 30, $page, []);
+                    foreach($books as $book){
+                        $book->book_path = url($book->book_path);
+                        $book->image_path = url($book->image_path);
+                        $book->compressed_image = url($book->compressed_image);
+                        $book->author = $book->author();
+                    }
+                }
+            } else {
+                $books = [];
+            }
+
+            return view('books', [
+                'books' => $books,
+                'header' => $header,
+                'search' => $search_param
+            ]);
+        } else {
+            $books = Book::orderBy('created_at', 'desc')->paginate(30);
+            if(!empty($books)){
+                foreach($books as $book){
+                    $book->book_path = url($book->book_path);
+                    $book->image_path = url($book->image_path);
+                    $book->compressed_image = url($book->compressed_image);
+                    $book->author = $book->author();
+                }
+            }
+
+            return view('books', [
+                'books' => $books,
+                'header' => $header,
+                'search' => $search_param
+            ]);
+        }
     }
 
     public function book($slug){
@@ -267,23 +321,77 @@ class PageController extends Controller
     }
 
     public function magazines(){
-        $today = date('Y-m-d');
-
-        $magazines = Magazine::where('publication_date', '<=', $today)->paginate(30);
-        foreach($magazines as $magazine){
-            $magazine->image_path = url($magazine->image_path);
-            $magazine->compressed = url($magazine->compressed);
-            $magazine->document_path = url($magazine->document_path);
-            $magazine->publication_date = date('l, jS \of F, Y', strtotime($magazine->publication_date));
-        }
-
         $header = PageHeader::where('page', 'magazines')->first();
         $header->filename = url($header->filename);
 
-        return view('magazines', [
-            'magazines' => $magazines,
-            'header' => $header
-        ]);
+        $today = date('Y-m-d');
+
+        $search_param = !empty($_GET['search']) ? (string)$_GET['search'] : "";
+        if(!empty($search_param)){
+            $page = !empty($_GET['page']) ? (int)$_GET['page'] : 1;
+            $found = [];
+            $search_array = explode(' ', $search_param);
+            foreach($search_array as $search){
+                $search = strtolower($search);
+                if(($search != 'a') && ($search != 'an') && ($search != 'the') && ($search != 'is') && ($search != 'of') && ($search != 'with')
+                && ($search != 'are') && ($search != 'was') && ($search != 'were') && ($search != 'for') && ($search != 'on') && ($search != 'to')
+                && ($search != 'on') && ($search != 'Rev\'d') && ($search != 'the')){
+                    $magazines = Magazine::where('all_details', 'like', '%'.$search.'%')->get();
+                    if(!empty($magazines)){
+                        foreach($magazines as $magazine){
+                            if(isset($found[$magazine->id])){
+                                $found[$magazine->id] = $found[$magazine->id] + 1;
+                            } else {
+                                $found[$magazine->id] = 1;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if(!empty($found)){
+                arsort($found);
+                $keys = array_keys($found);
+                $magazines = [];
+                foreach($keys as $id){
+                    if(!empty($magazine = Message::find($id))){
+                        $magazines[] = $magazine;
+                    }
+                }
+
+                if(!empty($magazines)){
+                    $magazines = self::paginate_array($magazines, 30, $page, []);
+                    foreach($magazines as $magazine){
+                        $magazine->image_path = url($magazine->image_path);
+                        $magazine->compressed = url($magazine->compressed);
+                        $magazine->document_path = url($magazine->document_path);
+                        $magazine->publication_date = date('l, jS \of F, Y', strtotime($magazine->publication_date));
+                    }
+        
+                    return view('magazines', [
+                        'magazines' => $magazines,
+                        'header' => $header,
+                        'search' => $search_param
+                    ]);
+                }
+            } else {
+                $magazines = [];
+            }
+        } else {
+            $magazines = Magazine::where('publication_date', '<=', $today)->paginate(30);
+            foreach($magazines as $magazine){
+                $magazine->image_path = url($magazine->image_path);
+                $magazine->compressed = url($magazine->compressed);
+                $magazine->document_path = url($magazine->document_path);
+                $magazine->publication_date = date('l, jS \of F, Y', strtotime($magazine->publication_date));
+            }
+
+            return view('magazines', [
+                'magazines' => $magazines,
+                'header' => $header,
+                'search' => $search_param
+            ]);
+        }
     }
 
     public function magazine($slug){
@@ -346,9 +454,10 @@ class PageController extends Controller
             $found = [];
             $search_array = explode(' ', $search_param);
             foreach($search_array as $search){
+                $search = strtolower($search);
                 if(($search != 'a') && ($search != 'an') && ($search != 'the') && ($search != 'is') && ($search != 'of') && ($search != 'with')
                 && ($search != 'are') && ($search != 'was') && ($search != 'were') && ($search != 'for') && ($search != 'on') && ($search != 'to')
-                && ($search != 'on') && ($search != 'Rev\'d')){
+                && ($search != 'on') && ($search != 'Rev\'d') && ($search != 'the')){
                     $serieses = Series::where('title', 'like', '%'.$search.'%')->orWhere('description', 'like', '%'.$search.'%')->get();
                     if(!empty($serieses)){
                         foreach($serieses as $series){
@@ -437,26 +546,85 @@ class PageController extends Controller
     }
 
     public function messages(){
-        $messages = Message::orderBy('date_preached', 'desc')->orderBy('created_at', 'desc')->paginate(30);
-        foreach($messages as $message){
-            $message->date_preached = date('l jS \of F, Y', strtotime($message->date_preached));
-            $message->image_path = url($message->image_path);
-            $message->compressed_image = url($message->compressed_image);
-            $message->minister = $message->minister()->first();
-            $message->minister->filepath = url($message->minister->filepath);
-            $message->minister->compressed = url($message->minister->compressed);
-            $message->series = $message->series()->first();
-            $message->series->filepath = url($message->series->filepath);
-            $message->series->compressed = url($message->series->compressed);
-        }
-
         $header = PageHeader::where('page', 'messages')->first();
         $header->filename = url($header->filename);
 
-        return view('messages', [
-            'messages' => $messages,
-            'header' => $header
-        ]);
+        $search_param = !empty($_GET['search']) ? (string)$_GET['search'] : "";
+        if(!empty($search_param)){
+            $page = !empty($_GET['page']) ? (int)$_GET['page'] : 1;
+            $found = [];
+            $search_array = explode(' ', $search_param);
+            foreach($search_array as $search){
+                $search = strtolower($search);
+                if(($search != 'a') && ($search != 'an') && ($search != 'the') && ($search != 'is') && ($search != 'of') && ($search != 'with')
+                && ($search != 'are') && ($search != 'was') && ($search != 'were') && ($search != 'for') && ($search != 'on') && ($search != 'to')
+                && ($search != 'on') && ($search != 'Rev\'d') && ($search != 'the')){
+                    $messages = Message::where('details', 'like', '%'.$search.'%')->get();
+                    if(!empty($messages)){
+                        foreach($messages as $message){
+                            if(isset($found[$message->id])){
+                                $found[$message->id] = $found[$message->id] + 1;
+                            } else {
+                                $found[$message->id] = 1;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if(!empty($found)){
+                arsort($found);
+                $keys = array_keys($found);
+                $messages = [];
+                foreach($keys as $id){
+                    if(!empty($message = Message::find($id))){
+                        $messages[] = $message;
+                    }
+                }
+
+                if(!empty($messages)){
+                    $messages = self::paginate_array($messages, 30, $page, []);
+                    foreach($messages as $message){
+                        $message->date_preached = date('l jS \of F, Y', strtotime($message->date_preached));
+                        $message->image_path = url($message->image_path);
+                        $message->compressed_image = url($message->compressed_image);
+                        $message->minister = $message->minister()->first();
+                        $message->minister->filepath = url($message->minister->filepath);
+                        $message->minister->compressed = url($message->minister->compressed);
+                        $message->series = $message->series()->first();
+                        $message->series->filepath = url($message->series->filepath);
+                        $message->series->compressed = url($message->series->compressed);
+                    }
+                }
+            } else {
+                $messages = [];
+            }
+
+            return view('messages', [
+                'messages' => $messages,
+                'header' => $header,
+                'search' => $search_param
+            ]);
+        } else {
+            $messages = Message::orderBy('date_preached', 'desc')->orderBy('created_at', 'desc')->paginate(30);
+            foreach($messages as $message){
+                $message->date_preached = date('l jS \of F, Y', strtotime($message->date_preached));
+                $message->image_path = url($message->image_path);
+                $message->compressed_image = url($message->compressed_image);
+                $message->minister = $message->minister()->first();
+                $message->minister->filepath = url($message->minister->filepath);
+                $message->minister->compressed = url($message->minister->compressed);
+                $message->series = $message->series()->first();
+                $message->series->filepath = url($message->series->filepath);
+                $message->series->compressed = url($message->series->compressed);
+            }
+
+            return view('messages', [
+                'messages' => $messages,
+                'header' => $header,
+                'search' => $search_param
+            ]);
+        }
     }
 
     public function message($slug){

@@ -33,6 +33,9 @@
                     @slot('submit_id')
                         books_search_submit
                     @endslot
+                    @slot('search_value')
+                        {{ $search }}
+                    @endslot
                 @endcomponent
             </div>
             <div class="row g-4">
