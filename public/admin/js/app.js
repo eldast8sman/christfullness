@@ -3,6 +3,25 @@ var BASE_URL = "https://www.cfcing.org/";
 var ADMIN_URL = BASE_URL + "dashboard/";
 var API_URL = BASE_URL + "api/";
 
+function encode_html(rawStr) {
+    return rawStr.replace(/[\u00A0-\u9999<>\&]/g, ((i) => `&#${i.charCodeAt(0)};`));
+}
+
+function decode_html(rawStr) {
+    return rawStr.replace(/&#(\d+);/g, ((match, dec) => `${String.fromCharCode(dec)}`));
+  }
+  function html_encode(text) {
+    return $("<textarea/>")
+      .text(text)
+      .html();
+  }
+
+  function html_decode(text) {
+    return $("<textarea/>")
+      .html(text)
+      .text();
+  }
+
 $(".loginForm").submit(function(e) {
     e.preventDefault();
 
@@ -1511,6 +1530,32 @@ $("form.photo_form").on("submit", function(e){
     })
 });
 
+if($("p#welcomed_content")){
+    $.ajax({
+        type: "GET",
+        url: API_URL+"welcome-message",
+        data: [],
+        dataType: "json",
+        contentType: "application/x-json",
+        headers: {
+            "Accept": "application/json"
+        },
+        success: function(response){
+            message = response.data;
+            var data = '<img src="'+message.filename+'" alt="'+message.heading+'"style="width: 400px; max-width:80%; height:auto; float:left; margin-right:15px; margin-bottom:15px">'
+            data += html_decode(message.content);
+
+            $("p#welcomed_content").html(data);
+            $("textarea#welcome_message").val(message.content)
+        },
+        error: function(response){
+            message = JSON.parse(response.responseTe);
+            toaster_error(message.message);
+            console.log(message);
+        }
+    })
+}
+
 $("form.welcome_message_form").on("submit", function(e){
     e.preventDefault();
 
@@ -1529,6 +1574,9 @@ $("form.welcome_message_form").on("submit", function(e){
         toaster_error(error_message);
     }
 
+    edited = tinymce.activeEditor.getContent();
+    encoded = html_encode(edited);
+
     if(image_files.length > 0){
         image_file = image_files[0].type;
         if((image_file != "image/jpg") && (image_file != "image/jpeg") && (image_file != "image/png")){
@@ -1538,6 +1586,7 @@ $("form.welcome_message_form").on("submit", function(e){
     }
 
     var fd = new FormData(document.querySelector(".welcome_message_form"));
+    fd.set('content', encoded);
     toaster_success("Welcome Message Uploading...");
     $.ajax({
         type: "POST",
@@ -1969,14 +2018,27 @@ if($("table#series_table")){
     });
 }
 
-if($("textarea#article_article")){
-    $('#article_article').summernote();
-}
+// if($("textarea#article_article")){
+//     $('#article_article').summernote();
+// }
 
-if($("textarea#devotional")){
-    $('textarea#devotional').summernote();
-}
+// if($("textarea#devotional")){
+//     $('textarea#devotional').summernote();
+// }
 
-if($("textarea#welcome_message")){
-    $('textarea#welcome_message').summernote();
-}
+// if($("textarea#welcome_message")){
+//     $('textarea#welcome_message').summernote();
+// }
+
+$('textarea#welcome_message').tinymce({
+    height: 500,
+    menubar: false,
+    plugins: [
+      'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+      'anchor', 'searchreplace', 'visualblocks', 'fullscreen',
+      'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
+    ],
+    toolbar: 'undo redo | blocks | bold italic backcolor | ' +
+      'alignleft aligncenter alignright alignjustify | ' +
+      'bullist numlist outdent indent | removeformat | help'
+  });

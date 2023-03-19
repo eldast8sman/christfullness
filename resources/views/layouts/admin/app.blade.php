@@ -203,13 +203,13 @@
     <script src="{{asset("admin/js/custom.min.js")}}"></script>
     <script src="{{asset("admin/vendor/toastr/js/toastr.min.js")}}"></script>
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script> --}}
     {{-- <script src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script> --}}
-    {{-- <script
+    <script
       src="https://cdn.tiny.cloud/1/k530srq7vhjqq3ygv20mx0yz47dzcas8g8l7x6ctfnjqxc14/tinymce/6/tinymce.min.js"
       referrerpolicy="origin"
     ></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-jquery@2/dist/tinymce-jquery.min.js"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-jquery@2/dist/tinymce-jquery.min.js"></script>
     <script src="{{asset("admin/js/app.js")}}"></script>
 </body>
 

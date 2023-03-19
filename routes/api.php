@@ -161,6 +161,8 @@ Route::post('/register', [AuthController::class, 'register']);
 
 Route::post('/login', [AuthController::class, 'login']);
 
+Route::get('/welcome-message', [WelcomeMessageController::class, 'index']);
+
 Route::get('/series', [SeriesController::class, 'index'])->name('series');
 Route::get('/series/{slug}', [SeriesController::class, 'show'])->name('getSeriesBySlug');
 Route::get('/series/search/{search}', [SeriesController::class, 'search']);

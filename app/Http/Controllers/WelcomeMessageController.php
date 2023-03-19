@@ -9,13 +9,32 @@ use Illuminate\Http\UploadedFile;
 
 class WelcomeMessageController extends Controller
 {
+    public function index(){
+        $welcome = WelcomeMessage::first();
+
+        if(!empty($welcome)){
+            $welcome->filename = url($welcome->filename);
+
+            return response([
+                'status' => 'success',
+                'message' => 'Welcome Message successfully fetched',
+                'data' => $welcome
+            ], 200);
+        } else {
+            return response([
+                'status' => 'success',
+                'message' => 'Welcome Message not fetched'
+            ], 404);
+        }
+    }
+
     public function adding_message(UpdateWelcomeMessageRequest $request){
         $welcome = WelcomeMessage::first();
         if(!empty($welcome)){
             // $all = $request->all();
             $all = [
                 'heading' => $request->heading,
-                'content' => htmlentities($request->content)
+                'content' => $request->content
             ];
             if(!empty($all['filename'])){
                 $image_path = $all['filename'];

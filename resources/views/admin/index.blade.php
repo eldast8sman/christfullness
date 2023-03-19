@@ -151,9 +151,9 @@
                                 {{ $welcome->heading }}
                             @endslot
                             @slot('body')
-                                <p class="col-12">
-                                    <img src="{{ $welcome->filename }}" alt="{{ $welcome->heading }}"style="width: 400px; max-width:80%; height:auto; float:left; margin-right:15px; margin-bottom:15px">
-                                    {!! $welcome->content !!}
+                                <p class="col-12" id="welcomed_content">
+                                    {{-- <img src="{{ $welcome->filename }}" alt="{{ $welcome->heading }}"style="width: 400px; max-width:80%; height:auto; float:left; margin-right:15px; margin-bottom:15px"> --}}
+                                    {{-- {!! html_entity_decode($welcome->content) !!} --}}
                                 </p>
                                 <p class="col-12">
                                     <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#edit_welcome_message_modal">Edit</button>
