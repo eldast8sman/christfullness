@@ -40,7 +40,7 @@
                             </p>
 
                             <p class="text-justify" style="text-align: justify">
-                                <blockquote>{!! nl2br($today_devotional->devotional) !!}</blockquote>
+                                <blockquote>{!! html_entity_decode($today_devotional->devotional) !!}</blockquote>
                             </p>
                             <p>
                                 <strong>Further Reading</strong>

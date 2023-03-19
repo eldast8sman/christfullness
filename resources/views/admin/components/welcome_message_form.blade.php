@@ -19,7 +19,7 @@
             {{ $heading_value }}
         @endslot
     @endcomponent
-    @component('admin.components.forms.textarea')
+    @component('admin.components.forms.wysiwyg_textarea')
         @slot('textarea_label')
             Welcome Message
         @endslot

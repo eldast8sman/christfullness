@@ -38,7 +38,7 @@
                                     {{ $devotional->memory_verse_text }}
                                 </p>
                                 <p>
-                                    <blockquote>{!! $devotional->devotional !!}</blockquote>
+                                    <blockquote>{!! html_entity_decode($devotional->devotional) !!}</blockquote>
                                 </p>
                                 <p>
                                     <strong>Further Reading</strong><br />
@@ -90,7 +90,7 @@
                                                     {{ $devotional->memory_verse }}
                                                 @endslot
                                                 @slot('devotional_value')
-                                                    {{ $devotional->devotional }}
+                                                    {!! html_entity_decode($devotional->devotional) !!}
                                                 @endslot
                                                 @slot('further_reading_value')
                                                     {{ $devotional->further_reading }}

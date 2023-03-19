@@ -10,17 +10,18 @@ function encode_html(rawStr) {
 function decode_html(rawStr) {
     return rawStr.replace(/&#(\d+);/g, ((match, dec) => `${String.fromCharCode(dec)}`));
   }
+
   function html_encode(text) {
     return $("<textarea/>")
       .text(text)
       .html();
   }
 
-  function html_decode(text) {
+function html_decode(text) {
     return $("<textarea/>")
-      .html(text)
-      .text();
-  }
+        .html(text)
+        .text();
+}
 
 $(".loginForm").submit(function(e) {
     e.preventDefault();
@@ -1058,7 +1059,11 @@ $("form.devotional_form").submit(function(e){
             var method = "POST";
         }
 
+        edited = tinymce.activeEditor.getContent();
+        encoded = html_encode(edited);
+
         var fd = new FormData(document.querySelector(".devotional_form"));
+        fd.set('devotional', encoded);
         // console.log(method);
         // console.log(url);
         // console.log(fd.get());
@@ -1298,7 +1303,13 @@ $("form.article_form").submit(function(e){
         
         url = API_URL+"articles/"+data_id;
     }
+
+    edited = tinymce.activeEditor.getContent();
+    encoded = html_encode(edited);
+
     var fd = new FormData(document.querySelector(".article_form"));
+    fd.set('article', encoded);
+
     toaster_success("Article Uploading...");
     $.ajax({
         type: "POST",
@@ -1530,31 +1541,31 @@ $("form.photo_form").on("submit", function(e){
     })
 });
 
-if($("p#welcomed_content")){
-    $.ajax({
-        type: "GET",
-        url: API_URL+"welcome-message",
-        data: [],
-        dataType: "json",
-        contentType: "application/x-json",
-        headers: {
-            "Accept": "application/json"
-        },
-        success: function(response){
-            message = response.data;
-            var data = '<img src="'+message.filename+'" alt="'+message.heading+'"style="width: 400px; max-width:80%; height:auto; float:left; margin-right:15px; margin-bottom:15px">'
-            data += html_decode(message.content);
+// if($("p#welcomed_content")){
+//     $.ajax({
+//         type: "GET",
+//         url: API_URL+"welcome-message",
+//         data: [],
+//         dataType: "json",
+//         contentType: "application/x-json",
+//         headers: {
+//             "Accept": "application/json"
+//         },
+//         success: function(response){
+//             message = response.data;
+//             var data = '<img src="'+message.filename+'" alt="'+message.heading+'"style="width: 400px; max-width:80%; height:auto; float:left; margin-right:15px; margin-bottom:15px">'
+//             data += html_decode(message.content);
 
-            $("p#welcomed_content").html(data);
-            $("textarea#welcome_message").val(message.content)
-        },
-        error: function(response){
-            message = JSON.parse(response.responseTe);
-            toaster_error(message.message);
-            console.log(message);
-        }
-    })
-}
+//             $("p#welcomed_content").html(data);
+//             $("textarea#welcome_message").val(message.content)
+//         },
+//         error: function(response){
+//             message = JSON.parse(response.responseText);
+//             toaster_error(message.message);
+//             console.log(message);
+//         }
+//     })
+// }
 
 $("form.welcome_message_form").on("submit", function(e){
     e.preventDefault();
@@ -2030,7 +2041,7 @@ if($("table#series_table")){
 //     $('textarea#welcome_message').summernote();
 // }
 
-$('textarea#welcome_message').tinymce({
+$('textarea.wysiwyg_editor').tinymce({
     height: 500,
     menubar: false,
     plugins: [
@@ -2041,4 +2052,4 @@ $('textarea#welcome_message').tinymce({
     toolbar: 'undo redo | blocks | bold italic backcolor | ' +
       'alignleft aligncenter alignright alignjustify | ' +
       'bullist numlist outdent indent | removeformat | help'
-  });
+});

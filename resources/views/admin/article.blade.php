@@ -40,7 +40,7 @@
                                 <p>
                                     <strong>Publication Date: </strong>{{ date('l, jS F, Y', strtotime($article->published)) }}
                                 </p>
-                                <p>{!! $article->article !!}</p>
+                                <p>{!! html_entity_decode($article->article) !!}</p>
                                 <p>
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit_article_modal">Edit</button>
                                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_article_modal">Delete</button>
@@ -65,7 +65,7 @@
                                                         {{ $article->author }}
                                                     @endslot
                                                     @slot('article_value')
-                                                        {{ $article->article }}
+                                                        {!! html_entity_decode($article->article) !!}
                                                     @endslot
                                                     @slot('published_value')
                                                         {{ $article->published }}

@@ -32,7 +32,7 @@
                     <small class="text-center me-3 text-primary"><center><i class="fa fa-calendar"></i> {{ $article->published }}</center></small>
                     <div>
                         <center><img src="{{ $article->image_path }}" width="500px" height="auto" style="max-width: 100%; margin:10px auto;" alt="" class="img-fluid"></center>
-                        {!! nl2br($article->article) !!}
+                        {!! html_entity_decode($article->article) !!}
                     </div>
                 </div>
             </div>

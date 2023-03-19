@@ -69,7 +69,9 @@
                 </div>
                 <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
                     <h1 class="display-5 mb-4">{{ $welcome->heading }}</h1>
-                    <p class="mb-4">{!! $welcome->content !!}</p>
+                    <p class="mb-4" id="welcome_message">
+                        {!! html_entity_decode($welcome->content) !!}
+                    </p>
                     {{-- <p><i class="fa fa-check text-primary me-3"></i>Tempor erat elitr rebum at clita</p>
                     <p><i class="fa fa-check text-primary me-3"></i>Aliqu diam amet diam et eos</p>
                     <p><i class="fa fa-check text-primary me-3"></i>Clita duo justo magna dolore erat amet</p>
