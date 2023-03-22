@@ -48,6 +48,26 @@
             {{ $caption_value }}
         @endslot
     @endcomponent
+    @component('admin.components.forms.textarea')
+        @slot('textarea_label')
+            Body
+        @endslot
+        @slot('textarea_id')
+            slider_body
+        @endslot
+        @slot('textarea_name')
+            body
+        @endslot
+        @slot('textarea_placeholder')
+            Slider Body
+        @endslot
+        @slot('textarea_rows')
+            3
+        @endslot
+        @slot('textarea_value')
+            {{ $body_value }}
+        @endslot
+    @endcomponent
     @component('admin.components.forms.input')
         @slot('input_label')
             Call To Action

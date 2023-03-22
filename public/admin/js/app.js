@@ -1,5 +1,5 @@
-var BASE_URL = "https://www.cfcing.org/";
-// var BASE_URL = "http://127.0.0.1:8000/";
+// var BASE_URL = "https://www.cfcing.org/";
+var BASE_URL = "http://127.0.0.1:8000/";
 var ADMIN_URL = BASE_URL + "dashboard/";
 var API_URL = BASE_URL + "api/";
 
@@ -64,7 +64,8 @@ $(".loginForm").submit(function(e) {
                 }
             },
             error: function(response) {
-                toaster_error("Oops! Something went wrong "+response.responseText);
+                var message = JSON.parse(response.responseText);
+                toaster_error("Oops! Something went wrong "+message.message);
             }
         })
     }
@@ -89,7 +90,7 @@ $("a#dash_logout").click(function(e){
             localStorage.setItem("email", "");
             toaster_success("Successfully Logged Out");
 
-            window.location = ADMIN_URL;
+            window.location = BASE_URL+"dashboard";
         },
         error: function(response){
             console.log(response.responseText);

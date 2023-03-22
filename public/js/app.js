@@ -1,5 +1,5 @@
-var BASE_URL = "https://www.cfcing.org/";
-// var BASE_URL = "http://127.0.0.1:8000/";
+// var BASE_URL = "https://www.cfcing.org/";
+var BASE_URL = "http://127.0.0.1:8000/";
 var API_URL = BASE_URL + "api/";
 
 function html_decode(text) {
@@ -334,26 +334,3 @@ $("button#events_search_submit").on("click", function(e){
         });
     }
 });
-
-// if($("p#welcome_message")){
-//     $.ajax({
-//         type: "GET",
-//         url: API_URL+"welcome-message",
-//         data: [],
-//         dataType: "json",
-//         contentType: "application/x-json",
-//         headers: {
-//             "Accept": "application/json"
-//         },
-//         success: function(response){
-//             message = response.data;
-//             var data = html_decode(message.content);
-//             $("p#welcome_message").html(data);
-//         },
-//         error: function(response){
-//             message = JSON.parse(response.responseText);
-//             toaster_error(message.message);
-//             console.log(message);
-//         }
-//     })
-// }

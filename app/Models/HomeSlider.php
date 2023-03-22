@@ -14,6 +14,7 @@ class HomeSlider extends Model
         'filename',
         'compressed',
         'caption',
+        'body',
         'call_to_action',
         'link'
     ];

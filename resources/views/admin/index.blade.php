@@ -31,6 +31,7 @@
                                                 @endslot
                                                 @slot('body')
                                                     <img src="{{ $slider->filename }}" alt="{{ $slider->caption }}" style="width: 100%; height: auto">
+                                                    <p class="col-12">{{ $slider->body }}</p>
                                                     <p class="col-12">
                                                         <table>
                                                             <tr><td><strong>Link: </strong></td><td><a href="{{ $slider->link }}">{{ $slider->link }}</a></td></tr>
@@ -71,6 +72,9 @@
                                                                     @endslot
                                                                     @slot('link_value')
                                                                         {{ $slider->link }}
+                                                                    @endslot
+                                                                    @slot('body_value')
+                                                                        {{ $slider->body }}
                                                                     @endslot
                                                                 @endcomponent
                                                             </div>
@@ -128,6 +132,9 @@
                                                     
                                                 @endslot
                                                 @slot('link_value')
+                                                    
+                                                @endslot
+                                                @slot('body_value')
                                                     
                                                 @endslot
                                             @endcomponent

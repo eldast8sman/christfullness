@@ -152,9 +152,7 @@
                             <li><a href="dashboard/about-us">About Us</a></li>
                         </ul>
                     </li>
-                    <li><a href="widget-basic.html" aria-expanded="false"><i class="icon icon-globe-2"></i><span
-                                class="nav-text">Widget</span></a></li>
-                    <li class="nav-label">Forms</li>
+                    <li><a href="#" id="dash_logout">Logout</a></li>
                 </ul>
             </div>
 

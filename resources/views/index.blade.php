@@ -16,7 +16,10 @@
                             <div class="container">
                                 <div class="row justify-content-start">
                                     <div class="col-lg-7">
-                                        <h1 class="display-2 mb-5 animated slideInDown">{{ $first_slider->caption }}</h1>
+                                        <h1 class="display-2 mb-2 animated slideInDown">{{ $first_slider->caption }}</h1>
+                                        @if (!empty($first_slider->body))
+                                            <p class="mb-5 animated slideInDown text-dark" style="font-weight: bold;">{{ $first_slider->body }}</p>
+                                        @endif
                                         <a href="{{ $first_slider->link }}" class="btn btn-primary rounded-pill py-sm-3 px-sm-5">{{ $first_slider->call_to_action }}</a>
                                         {{-- <a href="" class="btn btn-secondary rounded-pill py-sm-3 px-sm-5 ms-3">Services</a> --}}
                                     </div>
@@ -34,6 +37,9 @@
                                     <div class="row justify-content-start">
                                         <div class="col-lg-7">
                                             <h1 class="display-2 mb-5 animated slideInDown">{{ $slider->caption }}</h1>
+                                            @if (!empty($slider->body))
+                                                <p class="mb-5 animated slideInDown text-dark" style="font-weight: bold">{{ $slider->body }}</p>
+                                            @endif
                                             <a href="{{ $slider->link }}" class="btn btn-primary rounded-pill py-sm-3 px-sm-5">{{ $slider->call_to_action }}</a>
                                         </div>
                                     </div>

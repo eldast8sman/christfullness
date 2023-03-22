@@ -152,6 +152,7 @@
                             <li><a href="about-us">About Us</a></li>
                         </ul>
                     </li>
+                    <li><a href="#" id="dash_logout">Logout</a></li>
                 </ul>
             </div>
 

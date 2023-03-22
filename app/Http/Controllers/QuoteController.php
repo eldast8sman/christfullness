@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreQuoteRequest;
 use App\Models\Quote;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use App\Http\Requests\StoreQuoteRequest;
+use App\Http\Requests\UpdateQuoteRequest;
 
 class QuoteController extends Controller
 {
@@ -73,7 +74,7 @@ class QuoteController extends Controller
         }
     }
 
-    public function update(StoreQuoteRequest $request, $id){
+    public function update(UpdateQuoteRequest $request, $id){
         if(!empty($quote = Quote::find($id))){
             $all = $request->except(['file']);
             if(!empty($file = $request->file('file'))){
