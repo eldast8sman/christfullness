@@ -57,31 +57,43 @@ class MessageController extends Controller
         if($upload_image){
             $all['image_path'] = 'img/messages/'.$upload_image;
             $all['compressed_image'] = 'img/messages/compressed/'.$upload_image;
-        }
-        $upload_audio = FileController::uploadfile($audio, 'messages');
-        if($upload_audio){
-            $all['audio_path'] = 'audio/messages/'.$upload_audio;
-        }
-        $series = Series::where('id', $all['series_id'])->first();
-        $minister = Minister::where('id', $all['minister_id'])->first();
-        $all['details'] = $all['title'].' '.$all['description'].' '.$series->title.' '.$minister->name.' '.date('l, jS \of F, Y');
-        $message = Message::create($all);
-        if($message){
-            $series = $message->series()->get();
-            $minister = $message->minister()->get();
-            $message->image_path = url($message->image_path);
-            $message->compressed_image = url($message->compressed_image);
-            $message->audio_path = url($message->audio_path);
-            return response([
-                'status' => 'success',
-                'message' => 'Message Uploaded successfully',
-                'data' => $message
-            ], 200);
+
+            $upload_audio = FileController::uploadfile($audio, 'messages');
+            if($upload_audio){
+                $all['audio_path'] = 'audio/messages/'.$upload_audio;
+
+                $series = Series::where('id', $all['series_id'])->first();
+                $minister = Minister::where('id', $all['minister_id'])->first();
+                $all['details'] = $all['title'].' '.$all['description'].' '.$series->title.' '.$minister->name.' '.date('l, jS \of F, Y');
+                $message = Message::create($all);
+                if($message){
+                    $series = $message->series()->get();
+                    $minister = $message->minister()->get();
+                    $message->image_path = url($message->image_path);
+                    $message->compressed_image = url($message->compressed_image);
+                    $message->audio_path = url($message->audio_path);
+                    return response([
+                        'status' => 'success',
+                        'message' => 'Message Uploaded successfully',
+                        'data' => $message
+                    ], 200);
+                } else {
+                    return response([
+                        'status' => 'failed',
+                        'message' => 'There was an error uploading message'
+                    ], 500);
+                }
+            } else {
+                return response([
+                    'status' => 'failed',
+                    'message' => 'Audio Upload failed'
+                ], 400);
+            }
         } else {
             return response([
                 'status' => 'failed',
-                'message' => 'There was an error uploading message'
-            ], 500);
+                'message' => 'Image upload Failed'
+            ], 400);
         }
     }
 
