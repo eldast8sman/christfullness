@@ -1,6 +1,26 @@
 <form class="message_form" data-id="{{ $data_id }}" enctype="multipart/form-data">
     @component('admin.components.forms.input')
         @slot('input_label')
+            
+        @endslot
+        @slot('input_type')
+            hidden
+        @endslot
+        @slot('input_name')
+            redirect
+        @endslot
+        @slot('input_id')
+            redirect
+        @endslot
+        @slot('input_placeholder')
+            
+        @endslot
+        @slot('input_value')
+            {{ $redirect_value }}
+        @endslot
+    @endcomponent
+    @component('admin.components.forms.input')
+        @slot('input_label')
             Message Title
         @endslot
         @slot('input_type')

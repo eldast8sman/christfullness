@@ -52,6 +52,9 @@
                                                     @slot('data_id')
                                                         
                                                     @endslot
+                                                    @slot('redirect_value')
+                                                        {{ $series->slug }}
+                                                    @endslot
                                                     @slot('title_value')
                                                         
                                                     @endslot

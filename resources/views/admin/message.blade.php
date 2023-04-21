@@ -61,6 +61,9 @@
                                                     @slot('data_id')
                                                         {{ $message->id }}
                                                     @endslot
+                                                    @slot('redirect_value')
+                                                        
+                                                    @endslot
                                                     @slot('title_value')
                                                         {{ $message->title }}
                                                     @endslot

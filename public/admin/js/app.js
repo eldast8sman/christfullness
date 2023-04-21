@@ -713,11 +713,11 @@ $("form.message_form").submit(function(e){
             if(response.status == "success"){
                 toaster_success(response.message);
                 if(data_id == ""){
-                    var redirect = document.querySelector("#redirect");
-                    if(redirect){
-                        window.location= ADMIN_URL+"message-series/"+redirect.val();
-                    } else {
+                    var redirect = $("input#redirect").val();
+                    if(redirect == ""){
                         window.location = ADMIN_URL+"messages";
+                    } else {
+                        window.location= ADMIN_URL+"message-series/"+redirect;
                     }
                 } else {
                     window.location = ADMIN_URL+"messages/"+response.data.slug

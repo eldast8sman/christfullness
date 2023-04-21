@@ -49,6 +49,7 @@ class MessageController extends Controller
     public function store(StoreMessageRequest $request)
     {
         $all = $request->all();
+        unset($all['redirect']);
         $image = $all['image_path'];
         unset($all['image_path']);
         $audio = $all['audio_path'];
