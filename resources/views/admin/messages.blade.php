@@ -76,6 +76,9 @@
                                             @slot('data_id')
                                                 
                                             @endslot
+                                            @slot('redirect_value')
+                                                
+                                            @endslot
                                             @slot('title_value')
                                                 
                                             @endslot
