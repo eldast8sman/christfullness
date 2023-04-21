@@ -231,7 +231,7 @@
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                         <img class="img-fluid" src="{{ $article->image_path }}" alt="{{ $article->title }}">
                         <div class="bg-light p-4">
-                            <a class="d-block h5 lh-base mb-4" href="">{{ $article->title }}</a>
+                            <a class="d-block h5 lh-base mb-4" href="{{ env('APP_URL') }}/publications/articles/{{ $article->slug }}">{{ $article->title }}</a>
                             <div class="text-muted border-top pt-4">
                                 <small class="me-3"><i class="fa fa-user text-primary me-2"></i>{{ $article->author }}</small>
                                 <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>{{ date('l jS \of F Y', strtotime($article->created_at)) }}</small>

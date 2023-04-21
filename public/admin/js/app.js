@@ -9,7 +9,7 @@ function encode_html(rawStr) {
 
 function decode_html(rawStr) {
     return rawStr.replace(/&#(\d+);/g, ((match, dec) => `${String.fromCharCode(dec)}`));
-  }
+}
 
   function html_encode(text) {
     return $("<textarea/>")
