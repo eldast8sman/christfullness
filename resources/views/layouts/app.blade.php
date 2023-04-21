@@ -78,7 +78,7 @@
                         </div>
                     </div>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle>Publications</a>
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Publications</a>
                         <div class="dropdown-menu m-0">
                             <a href="{{ env('APP_URL') }}/publications/devotionals" class="dropdown-item">Devotionals</a>
                             <a href="{{ env('APP_URL') }}/publications/books" class="dropdown-item">Books</a>
