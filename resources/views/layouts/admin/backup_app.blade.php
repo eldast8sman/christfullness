@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <link href="{{ asset("admin/css/style.css") }}" rel="stylesheet">
-    <script src="{{ asset("admin/js/login.js") }}"></script>
+    {{-- <script src="{{ asset("admin/js/login.js") }}"></script> --}}
 </head>
 
 <body>
