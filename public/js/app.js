@@ -1,5 +1,5 @@
-// var BASE_URL = "https://www.cfcing.org/";
-var BASE_URL = "http://127.0.0.1:8000/";
+var BASE_URL = "https://www.cfcing.org/";
+// var BASE_URL = "http://127.0.0.1:8000/";
 var API_URL = BASE_URL + "api/";
 
 function html_decode(text) {
